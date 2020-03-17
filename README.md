@@ -1,13 +1,18 @@
 # BuddyApp
 **PHP 2020 BuddyApp**
+
 Soetkin Dieltiens, projectmanager
+
 Davy Ceuppens, lead frontend
+
 Fre Hermans, lead frontend
+
 Medina Dadurgova, lead backend
 
 
 ## OOP Richtlijnen — [crash course](https://courses.goodbytes.be/course/5e6e800577759b00123beb10/0)
 1. Welke functies zijn broodnodig in de app? users, posts, comments, locations...
+
         -> elke functie krijgt zijn eigen class
 
 2. Let op volgende richtlijnen bij het creëeren van een nieuwe class:
@@ -21,6 +26,7 @@ Medina Dadurgova, lead backend
 5. Hergebruik database connectie via het [singleton patroon](https://courses.goodbytes.be/course/5e6e800577759b00123beb10/5)
 
 6. Voor variabelen en functienamen opteer voor camel case
+
         -> e.g; buyTicket ipv buyticket of buy_ticket
 
 7. Indien [interfaces](https://courses.goodbytes.be/course/5e6e800577759b00123beb10/8) bestaan, implementeer deze in alle classes.
