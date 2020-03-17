@@ -17,7 +17,7 @@
 
 3. Zet variabelen private in classes en gebruik getters & setters. In geval van [overervende classes](https://courses.goodbytes.be/course/5e6e800577759b00123beb10/7), zet variabelen op protected.
 
-4. Gebruik exceptions & try/catch om errors op te vangen en weer te geven.
+4. Gebruik exceptions & try/catch om errors op te vangen en weer te geven ipv echo.
 
 5. Hergebruik database connectie via het [singleton patroon](https://courses.goodbytes.be/course/5e6e800577759b00123beb10/5)
 
