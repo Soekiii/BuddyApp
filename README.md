@@ -1,13 +1,10 @@
 # BuddyApp
 **PHP 2020 BuddyApp**
 
-Soetkin Dieltiens, projectmanager
-
-Davy Ceuppens, lead frontend
-
-Fre Hermans, lead frontend
-
-Medina Dadurgova, lead backend
+> Soetkin Dieltiens, projectmanager
+> Davy Ceuppens, lead frontend
+> Fre Hermans, lead frontend
+> Medina Dadurgova, lead backend
 
 
 ## OOP Richtlijnen — [crash course](https://courses.goodbytes.be/course/5e6e800577759b00123beb10/0)
