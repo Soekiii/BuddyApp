@@ -33,7 +33,6 @@ include_once (__DIR__ . "/classes/Validate.php");
     <!-- error message weergeven -->
     <?php if(isset($error)): ?>
         <div class="error"><p><?php echo $error?></p></div>
-        <div class="emailError"><p><?php echo $emailError?></p></div>
     <?php endif; ?>
 	 <div class="container">
 			<div class="container1">
@@ -55,7 +54,7 @@ include_once (__DIR__ . "/classes/Validate.php");
 			<div class="container3">
 				<input type="submit" value="Sign in" class="btn">	
 			</div>
-		<p>geen account? </p><a href="register.php" class="link">registreer hier!</a>
+		<a href="register.php" class="link">registreer hier!</a>
 		</div>
 	</form>
 </body>
