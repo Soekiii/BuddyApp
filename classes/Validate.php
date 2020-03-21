@@ -17,6 +17,26 @@ class Validate {
         return;
       }
     }
+    $this->validateEmail();
     return $this->errors;
   }
+  // Is email leeg of geen emailadress
+  private function validateEmail(){
+
+    $val = trim($this->data['email']);
+
+    if(empty($val)){
+      $this->addError('email', 'email cannot be empty');
+    } else {
+      if(!filter_var($val, FILTER_VALIDATE_EMAIL)){
+        $this->addError('email', 'email must be a valid email address');
+      }
+    }
+
+  }
+  // Welke input veld en welke error laat ik zien
+  private function addError($key, $val){
+    $this->errors[$key] = $val;
+  }
+
 }
