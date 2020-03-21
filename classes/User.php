@@ -7,7 +7,7 @@ include_once (__DIR__ . "/Db.php");
     {
     $conn = Db::getConnection();
 
-    $statement = $conn->prepare('select * from users where email = :email');
+    $statement = $conn->prepare('select * from user where email = :email');
     $statement->bindParam(':email', $email);
     $statement->execute();
 
