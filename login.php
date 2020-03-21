@@ -1,5 +1,6 @@
 <?php
 include_once (__DIR__ . "/classes/User.php");
+include_once (__DIR__ . "/classes/Validate.php");
 
     // Wanneer er op het formulier word gedrukt voort men deze if uit
     if (!empty($_POST)) {
