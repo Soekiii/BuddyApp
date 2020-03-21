@@ -11,6 +11,6 @@ if ($_SESSION['loggedin'] == false) {
     <title>Home | Amigos</title>
 </head>
 <body>
-    
+<a href="logout.php" class="link">logout <?php echo $_SESSION['email'] ?></a>
 </body>
 </html>
