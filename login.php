@@ -1,4 +1,24 @@
-<!DOCTYPE html>
+<?php
+include_once (__DIR__ . "/classes/User.php");
+
+    // Wanneer er op het formulier word gedrukt voort men deze if uit
+    if (!empty($_POST)) {
+        $email = htmlspecialchars($_POST['email']);
+        $password = htmlspecialchars($_POST['password']);
+
+        $user = new User();
+
+        if ($user->canILogin($email, $password)) {
+            session_start();
+            $_SESSION['email'] = $email;
+            $_SESSION['loggedin'] = true;
+            
+            header('Location: index.php');
+        } else {
+            $error = "Emailadress en passwoord komen niet overeen, probeer opnieuw.";       
+        }
+    }
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
