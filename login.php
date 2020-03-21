@@ -27,7 +27,11 @@ include_once (__DIR__ . "/classes/User.php");
 </head>
 <body>
 <form action="" method="post" >
-	<h2>Login Amigos</h2>	
+    <h2>Login Amigos</h2>	
+    <!-- error message weergeven -->
+    <?php if(isset($error)): ?>
+        <div class="error"><p><?php echo $error?></p></div>
+    <?php endif; ?>
 	 <div class="container">
 			<div class="container1">
                 <label for="email">Email</label>
