@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if ($_SESSION['loggedin'] == false) {
+if (empty($_SESSION['email'])) {
     header('Location: login.php');
 }
 ?><!DOCTYPE html>
