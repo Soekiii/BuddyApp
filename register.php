@@ -5,7 +5,36 @@ include_once (__DIR__ . "/classes/Db.php");
 
 $conn= Db::getConnection(); // database connectie
 
+if(isset($_POST["register"])){
 
+
+// check email!!! ---> Dit adres moet eindigen op @student.thomasmore.be
+$email = trim($_POST['email']); //trim = om alle overbodige whitespace uit het tekstvak te halen
+$email = explode ("@", $email); //explode = knipt email in 2 delen, waarvan we enkel het achterste deel van de email willen checken
+
+if ($email[1] === "student.thomasmore.be") {
+    echo "het werkt 🎈 ";
+}
+else {
+    echo "het werkt niet 😣";
+}
+
+
+//                      ---> Dit adres mag nog niet bestaan, dubbele accounts aanmaken mag dus niet mogelijk zijn, 
+//                      ---> Toon een fout als het email adres reeds in gebruik is
+// voornaam:            ---> check of voornaam is ingevuld! + melding indien niet ingevuld
+// achternaam:          ---> check of achternaam is ingevuld! + melding indien niet ingevuld
+// Password: 
+//                      ---> password (veilig bewaard via bcrypt!)     
+//       check password ---> als het niet lang genoeg is
+
+// alles ok?            ---> doorverwijzen naar home
+
+// zorg voor een foutmelding indien het aanmaken van een account niet lukt
+// valideer al wat kan mislopen in dit formulier via PHP en toon gebruiksvriendelijke foutmeldingen
+
+
+}
 
 ?>
 
@@ -18,7 +47,7 @@ $conn= Db::getConnection(); // database connectie
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <title>Register | Amigos</title>
+    <title>Registreer | Amigos</title>
 </head>
 <body>
 <h1>Registreer je hier</h1>
