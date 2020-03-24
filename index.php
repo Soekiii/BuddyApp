@@ -4,9 +4,9 @@ if (empty($_SESSION['email'])) {
     header('Location: login.php');
 }
 include_once (__DIR__ . "/classes/User.php");
-
+$searchResult = "";
         if(isset($_POST['submit-search'])){
-            $search = htmlspecialchars('search');
+            $search = htmlspecialchars($_POST['search']);
             $searchResult = User::userSearch($search);
             //echo var_dump($search);
             // als de array gelijk is aan NULL of O dan geeft die error weer
@@ -25,6 +25,7 @@ include_once (__DIR__ . "/classes/User.php");
     <title>Home | Amigos</title>
 </head>
 <body>
+    <a href="logout.php" class="link">logout <?php echo $_SESSION['email'] ?></a>
     <!-- search form -->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <input type="text" name="search" placeholder="search">
@@ -37,7 +38,10 @@ include_once (__DIR__ . "/classes/User.php");
 
     <!-- zoekresultaten uitlezen-->
     <div class="result-container">
+        <?php foreach($searchResult as $r): ?>
+        <h3><?php echo($r['firstname'] . " " . $r['lastname']); ?></h3>
+        <?php endforeach; ?>
     </div>
-    <a href="logout.php" class="link">logout <?php echo $_SESSION['email'] ?></a>
+    
 </body>
 </html>
