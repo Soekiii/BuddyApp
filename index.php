@@ -3,6 +3,9 @@ session_start();
 if (empty($_SESSION['email'])) {
     header('Location: login.php');
 }
+
+
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +14,14 @@ if (empty($_SESSION['email'])) {
     <title>Home | Amigos</title>
 </head>
 <body>
-<a href="logout.php" class="link">logout <?php echo $_SESSION['email'] ?></a>
+    <!-- search form -->
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+    <input type="text" name="search" placeholder="search">
+    </form>
+
+    <!-- zoekresultaten uitlezen-->
+    <div class="result-container">
+    </div>
+    <a href="logout.php" class="link">logout <?php echo $_SESSION['email'] ?></a>
 </body>
 </html>
