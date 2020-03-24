@@ -3,7 +3,13 @@ session_start();
 if (empty($_SESSION['email'])) {
     header('Location: login.php');
 }
+include_once (__DIR__ . "/classes/User.php");
 
+        if(isset($_POST['submit-search'])){
+            $search = htmlspecialchars('search');
+            $searchResult = User::userSearch($search);
+            echo var_dump($search);
+        }
 
 
 ?><!DOCTYPE html>
@@ -17,6 +23,7 @@ if (empty($_SESSION['email'])) {
     <!-- search form -->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <input type="text" name="search" placeholder="search">
+    <button type="submit" name="submit-search">Search</button>
     </form>
 
     <!-- zoekresultaten uitlezen-->
