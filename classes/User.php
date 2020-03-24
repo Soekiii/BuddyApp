@@ -18,4 +18,14 @@ include_once (__DIR__ . "/Db.php");
         return false;
     }
     }
+    public static function userSearch($search)
+    {
+    $conn = Db::getConnection();
+
+    $statement = $conn->prepare("select * from user where firstname like :search or lastname like :search");
+    $statement->bindValue(':search', '%' . $search . '%');
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+    }
 }
