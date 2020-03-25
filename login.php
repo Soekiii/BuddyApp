@@ -13,6 +13,7 @@ include_once (__DIR__ . "/classes/Validate.php");
             if ($user->canILogin($email, $password)) {
                 session_start();
                 $_SESSION['email'] = $email;
+                $_SESSION['user_id'] = $user->getUserId($email);
                 
                 header('Location: index.php');
             } else {
@@ -34,18 +35,21 @@ include_once (__DIR__ . "/classes/Validate.php");
 <div class="form-row no-gutters">
     <div class="col-md-6 no-gutters">
     <div class="container-left d-flex justify-content-center align-items-center">
-        <h2>Leer hier je nieuwe IMD amigos kennen.</h2>
+        <h2>Leer hier je nieuwe imd amigos kennen.</h2>
     </div>
     </div>
     <div class="col-md-6 col-md-3 no-gutters">
     <div class="container-right d-flex justify-content-center align-items-center">
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" class="justify-content-center">
+<div class="form-group">
     <h2>Login Amigos</h2>	
+</div>
     <!-- error message weergeven -->
     <?php if(isset($error)): ?>
         <div class="alert alert-danger col-30" role="alert"><p><?php echo $error?></p></div>
     <?php endif; ?>
         <div class="form-group">
+       
             <label for="email">Email</label>
             <input type="text" class="form-control" id="Email" name="email">
         </div>
@@ -61,7 +65,7 @@ include_once (__DIR__ . "/classes/Validate.php");
             <div class="error">
             <?php echo $errors['password'] ?? '' ?>
             </div>
-        <div class="form-group mb-2">
+        <div class="form-group">
             <button type="submit" class="btn">Log in</button>
         
 		<a href="register.php" class="link">registreer hier!</a>
