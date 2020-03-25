@@ -1,11 +1,10 @@
 <?php 
 session_start();
-if (empty($_SESSION['email'])) {
+if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
 }
 include_once (__DIR__ . "/classes/User.php");
 $searchResult = "";
-
         if(isset($_POST['submit-search'])){
             $search = htmlspecialchars($_POST['search']);
             $searchResult = User::userSearch($search);
