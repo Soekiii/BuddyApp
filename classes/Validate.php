@@ -31,12 +31,14 @@ class Validate {
 
     if(empty($val)){
       $this->addError('email', 'email cannot be empty');
+    
     } else {
       if(!filter_var($val, FILTER_VALIDATE_EMAIL)){
         $this->addError('email', 'email must be a valid email address');
+     
       }
     }
-
+    
   }
   // Checkt of het password leeg is
   private function validatePassword(){
@@ -52,5 +54,43 @@ class Validate {
   private function addError($key, $val){
     $this->errors[$key] = $val;
   }
+
+ 
+
+ public function Emailvalidator(){
+
+  $val = trim($this->data['email']);
+
+  if(empty($val)){
+    $this->addError('email', ' leeg invullen met @student.thomasmore.be E-mailadres');
+  //email leeg
+  }
+  if(!empty($val)){ //als hij niet leeg is dan kijken naar fouten
+    
+    if (!filter_var($val, FILTER_VALIDATE_EMAIL)){ //email niet correct met @ enz...
+      $this->addError('email', 'email niet correct');
+
+    }
+    else { //is niet leeg en staan geen fouten in dan kijken of mailadres student.thomasmore.be juist is
+      $val = explode ("@", $val); 
+      //explode = knipt email in 2 delen, waarvan we enkel het achterste deel van de email willen checken
+  
+      if ($val[1] != "student.thomasmore.be") {
+        $this->addError('email', 'enkel toegankelijk met @student.thomasmore.be');
+        }
+    }
+
+  }
+
+
+
+    return $this->errors;
+  }
+
+  
+  
+
+
+
 
 }

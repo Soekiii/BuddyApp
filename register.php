@@ -3,24 +3,26 @@ include_once (__DIR__ . "/classes/User.php");
 include_once (__DIR__ . "/classes/Validate.php");
 include_once (__DIR__ . "/classes/Db.php");
 
-$conn= Db::getConnection(); // database connectie
+
+
 
 if(isset($_POST["register"])){
+    
+    $validation = new Validate(($_POST));  //nieuw object aanmaken & constructor opvullen
+    $errorMessage =$validation->Emailvalidator(); //stuur errors door naar variabele
 
+    if(empty($errorMessage)){ // als variabele leeg is 
 
-// check email!!! ---> Dit adres moet eindigen op @student.thomasmore.be
-$email = trim($_POST['email']); //trim = om alle overbodige whitespace uit het tekstvak te halen
-$email = explode ("@", $email); //explode = knipt email in 2 delen, waarvan we enkel het achterste deel van de email willen checken
-
-if ($email[1] === "student.thomasmore.be") {
-    echo "het werkt 🎈 ";
+        $email = htmlspecialchars($_POST['email']);
+        $user=new User();
+        $dumpen= $user->checkValidEmail($email);
+        //var_dump($dumpen);
+       echo $dumpen['email'];
+    } 
+ 
 }
-else {
-    echo "het werkt niet 😣";
-}
 
-
-//                      ---> Dit adres mag nog niet bestaan, dubbele accounts aanmaken mag dus niet mogelijk zijn, 
+//---> Dit adres mag nog niet bestaan, dubbele accounts aanmaken mag dus niet mogelijk zijn,
 //                      ---> Toon een fout als het email adres reeds in gebruik is
 // voornaam:            ---> check of voornaam is ingevuld! + melding indien niet ingevuld
 // achternaam:          ---> check of achternaam is ingevuld! + melding indien niet ingevuld
@@ -28,13 +30,13 @@ else {
 //                      ---> password (veilig bewaard via bcrypt!)     
 //       check password ---> als het niet lang genoeg is
 
-// alles ok?            ---> doorverwijzen naar home
+// alles ok?   alles in de database bewaren en afsluiten en daarna ---> doorverwijzen naar home
 
 // zorg voor een foutmelding indien het aanmaken van een account niet lukt
 // valideer al wat kan mislopen in dit formulier via PHP en toon gebruiksvriendelijke foutmeldingen
 
 
-}
+
 
 ?>
 
@@ -55,25 +57,40 @@ else {
             
             <div class="form__field">
             <label for="email">Emailadres</label>
-            <input type="text"id="email" name="email" type="text"><br>
+            <input type="text"id="email" name="email" type="text"> <br>
+            
+            <div class="errorMessage">
+                <?php echo $errorMessage['email'] ?? '' ?>
+                </div>
+            
             </div>
 
-            <div class="form__field">
+            <div class="form__field" >
             <label for="firstName">Voornaam</label>
-            <input type="text" id="firstName" name="firstName" type="text"><br>
+            <input type="text" id="firstName" name="firstName" type="text"  ><br>
+            
+            <div class="errorMessage">
+                <?php echo $errors['password'] ?? '' ?>
+                </div>
             </div>
 
             <div class="form__field">
             <label for="lastName">Naam</label>
             <input type="text" id="lastName" name="lastName" type="text"><br>
+            <div class="errorMessage">
+                <?php echo $errors['password'] ?? '' ?>
+                </div>
             </div>
             
             <div class="form__field">
             <label for="password">Paswoord</label>
             <input type="password" id="password" name="password" type="password"><br>
+            <div class="errorMessage">
+                <?php echo $errors['password'] ?? '' ?>
+                </div>
             </div>
             <div class="form__field">
-            <input type="submit" name="register" value="Registreer"></button>
+            <input type="submit" id="register" name="register" value="register" >
             </div>
         </form>
 </body>

@@ -18,4 +18,18 @@ include_once (__DIR__ . "/Db.php");
         return false;
     }
     }
+
+    public function checkValidEmail($email)
+    {
+    $conn = Db::getConnection();
+
+    $statement = $conn->prepare('SELECT * from user WHERE email = :email');
+    $statement->bindParam(':email', $email);
+    $statement->execute();
+
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+   
+    return $result;
+    }
+
 }
