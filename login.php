@@ -5,21 +5,24 @@ include_once (__DIR__ . "/classes/Validate.php");
 if ($_POST){
     if (!empty($_POST)) {
         try {
+            $user = new User();
             $validate = new Validate($_POST);
             $errors = $validate->validateForm();
-            $user = new User();
             $user->setEmail(htmlspecialchars($_POST['email']));
             $user->setPassword(htmlspecialchars($_POST['password']));
-            $user->canILogin();
-            session_start();
-            $_SESSION['email'] = $user->getEmail();
-            $_SESSION['user_id'] = $user->getUserId();
-            header('Location: index.php');
+            if($user->canILogin() == true){
+                session_start();
+                $_SESSION['email'] = $user->getEmail();
+                $_SESSION['user_id'] = $user->getUserId();
+                header('Location: index.php');
+            } else {
+                $error = "Email en passwoord komen niet overeen.";  
+            }
         } catch (\Throwable $t) {
-            $error = "Email en passwoord komen niet overeen.";    
+              
            
-        }    
-        }
+        }  
+    }  
     }
         
             
