@@ -43,6 +43,7 @@ include_once (__DIR__ . "/classes/Validate.php");
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" class="justify-content-center">
 <div class="form-group">
     <h2>Login Amigos</h2>	
+
 </div>
     <!-- error message weergeven -->
     <?php if(isset($error)): ?>

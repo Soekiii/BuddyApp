@@ -32,9 +32,9 @@ class Validate {
     if(empty($val)){
       $this->addError('email', 'email cannot be empty');
     } else {
-      if(!filter_var($val, FILTER_VALIDATE_EMAIL)){
-        $this->addError('email', 'email must be valid');
-      }
+        if(!preg_match('|@student.thomasmore.be$|', $val)){
+          $this->addError('email', 'email must end with @student.thomasmore.be');
+        }
     }
 
   }
