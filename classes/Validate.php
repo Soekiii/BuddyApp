@@ -33,7 +33,7 @@ class Validate {
       $this->addError('email', 'email cannot be empty');
     } else {
       if(!filter_var($val, FILTER_VALIDATE_EMAIL)){
-        $this->addError('email', 'email must be a valid email address');
+        $this->addError('email', 'email must be valid');
       }
     }
 
@@ -44,7 +44,7 @@ class Validate {
     $val = trim($this->data['password']);
 
     if(empty($val)){
-      $this->addError('password', 'password cannot be empty');
+      $this->addError('password', 'password is not correct');
     }
 
   }
