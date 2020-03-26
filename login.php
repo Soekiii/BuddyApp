@@ -41,22 +41,22 @@ include_once (__DIR__ . "/classes/Validate.php");
     <div class="col-md-6 col-md-3 no-gutters">
     <div class="container-right d-flex justify-content-center align-items-center">
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" class="justify-content-center">
-<div class="form-group row">
+<div class="form-group">
     <h2>Login Amigos</h2>	
 </div>
     <!-- error message weergeven -->
     <?php if(isset($error)): ?>
-        <div class="form-group row alert alert-danger" role="alert">
+        <div class="form-group alert alert-danger" role="alert">
             <?php echo $error?>
         </div>
     <?php endif; ?>
         <?php if(!isset($error)): ?>
-        <div class="form-group row">
+        <div class="form-group" style="width: 336px">
             <label for="email">Email</label>
             <input type="text" class="form-control" id="Email" name="email" placeholder="email">
         </div>
         <?php else: ?>
-        <div class="form-group row">
+        <div class="form-group">
             <label for="email">Email</label>
             <input type="text" class="form-control is-invalid" id="Email" name="email" placeholder="email">
             <div class="invalid-feedback">
@@ -66,12 +66,12 @@ include_once (__DIR__ . "/classes/Validate.php");
         <?php endif; ?>
             
         <?php if(!isset($error)): ?>
-        <div class="form-group row">
+        <div class="form-group">
             <label for="Password">Password</label>
             <input type="password" class="form-control" id="Password" name="password" placeholder="password">
         </div>
         <?php else: ?>
-            <div class="form-group row">
+            <div class="form-group">
             <label for="Password">Password</label>
             <input type="password" class="form-control is-invalid" id="Password" name="password" placeholder="password">
             <div class="invalid-feedback">
@@ -81,7 +81,7 @@ include_once (__DIR__ . "/classes/Validate.php");
         <?php endif; ?>
             
         <div class="d-flex justify-content-between">
-        <div class="form-group row">
+        <div class="form-group">
             <button type="submit" class="btn">Log in</button>
         </div>
 		<a href="register.php" class="link mt-2 mr-0">registreer hier!</a>
