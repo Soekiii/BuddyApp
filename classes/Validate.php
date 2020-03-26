@@ -30,10 +30,10 @@ class Validate {
     $val = trim($this->data['email']);
 
     if(empty($val)){
-      $this->addError('email', 'email cannot be empty');
+      $this->addError('email', 'email mag niet leeg zijn');
     } else {
         if(!preg_match('|@student.thomasmore.be$|', $val)){
-          $this->addError('email', 'email must end with @student.thomasmore.be');
+          $this->addError('email', 'email moet eindigen op @student.thomasmore.be');
         }
     }
 
@@ -44,7 +44,7 @@ class Validate {
     $val = trim($this->data['password']);
 
     if(empty($val)){
-      $this->addError('password', 'password is not correct');
+      $this->addError('password', 'passwoord mag niet leeg zijn');
     }
 
   }
