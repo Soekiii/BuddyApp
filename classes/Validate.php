@@ -57,6 +57,7 @@ class Validate {
 
  
 
+
  public function Emailvalidator(){
 
   $val = trim($this->data['email']);
@@ -83,12 +84,51 @@ class Validate {
   }
 
 
+  $val = trim($this->data['firstName']);
+  if(empty($val)){
+    $this->addError('firstName', 'hoe heet jij alweer?');
+  // voornaam:            ---> check of voornaam is ingevuld! + melding indien niet ingevuld
 
-    return $this->errors;
   }
 
-  
-  
+  $val = trim($this->data['lastName']);
+  if(empty($val)){
+    $this->addError('lastName', 'geef hier je achternaam?');
+  // achternaam:          ---> check of achternaam is ingevuld! + melding indien niet ingevuld
+  }
+  $val = trim($this->data['password']);
+  if(empty($val)){
+    $this->addError('password', 'geef hier je paswoord op, ik zal niet meekijken hoor :-)');
+  //paswoord:            ---> check of paswoord is ingevuld! + melding indien niet ingevuld
+  }
+  if(strlen($val< 6)){
+    $this->addError('password', 'je paswoord te gemakkelijk, kies een beter met min 6 karakters');
+    //paswoord:            ---> check of paswoord min 6 karakters heeft
+  }
+    return $this->errors; //alle gegevens terugsturen naar aanvrager
+  }
+
+
+
+ public function checkValidEmail($email)
+    {
+    $conn = Db::getConnection();
+
+    $statement = $conn->prepare('SELECT * from user WHERE email = :email');
+    $statement->bindParam(':email', $email);
+    $statement->execute();
+
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    if($result["email"] === $email){ //als email zelfde is als opgevraagd dan false
+
+        return false;
+    }
+
+    return true;  //als er geen mail te vinden is true
+
+    }
+    
+    
 
 
 

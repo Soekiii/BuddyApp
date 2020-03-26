@@ -19,17 +19,25 @@ include_once (__DIR__ . "/Db.php");
     }
     }
 
-    public function checkValidEmail($email)
-    {
-    $conn = Db::getConnection();
+    public function registerNewUser($firstName, $lastName, $email, $password){
+        $conn = Db::getConnection();    
+            
+            //Hash the password   
+        $passwordBcrypt = password_hash($password, PASSWORD_BCRYPT);
+            //Registratie in database
+        $statment= $conn->prepare("INSERT INTO user (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password)");
+        $statment->bindValue(":firstname",$firstName);
+        $statment->bindValue(":lastname",$lastName);
+        $statment->bindValue(":email",$email);
+        $statment->bindValue(":password",$password);
 
-    $statement = $conn->prepare('SELECT * from user WHERE email = :email');
-    $statement->bindParam(':email', $email);
-    $statement->execute();
+        $result=$statment->execute();
 
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
-   
-    return $result;
+        return $result;
+  
     }
+   
+    
 
+    
 }

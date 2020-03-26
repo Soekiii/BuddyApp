@@ -10,33 +10,32 @@ if(isset($_POST["register"])){
     
     $validation = new Validate(($_POST));  //nieuw object aanmaken & constructor opvullen
     $errorMessage =$validation->Emailvalidator(); //stuur errors door naar variabele
+//var_dump($errorMessage);
+
 
     if(empty($errorMessage)){ // als variabele leeg is 
 
         $email = htmlspecialchars($_POST['email']);
-        $user=new User();
-        $dumpen= $user->checkValidEmail($email);
-        //var_dump($dumpen);
-       echo $dumpen['email'];
+        $firstName = htmlspecialchars($_POST['firstName']);
+        $lastName = htmlspecialchars($_POST['lastName']);
+        $password = htmlspecialchars($_POST['password']);
+
+        $gelukt= $validation->checkValidEmail($email); //---> Toon een fout als het email adres reeds in gebruik is
+      if ($gelukt=false){$errorMessage ['email']="Howla, je mailadres is reeds bekend, ga naar inloggen aub";}
+        if ($gelukt=true){
+
+            // hier alle gegevens verzamelen voor inloggen en data bewaren op db
+           $user= new user; 
+           $statement= $user->registerNewUser($firstName, $lastName, $email, $password);
+           if ($statement===true){
+            header('Location: index.php');
+           }
+        }
+
+       
     } 
  
 }
-
-//---> Dit adres mag nog niet bestaan, dubbele accounts aanmaken mag dus niet mogelijk zijn,
-//                      ---> Toon een fout als het email adres reeds in gebruik is
-// voornaam:            ---> check of voornaam is ingevuld! + melding indien niet ingevuld
-// achternaam:          ---> check of achternaam is ingevuld! + melding indien niet ingevuld
-// Password: 
-//                      ---> password (veilig bewaard via bcrypt!)     
-//       check password ---> als het niet lang genoeg is
-
-// alles ok?   alles in de database bewaren en afsluiten en daarna ---> doorverwijzen naar home
-
-// zorg voor een foutmelding indien het aanmaken van een account niet lukt
-// valideer al wat kan mislopen in dit formulier via PHP en toon gebruiksvriendelijke foutmeldingen
-
-
-
 
 ?>
 
@@ -70,23 +69,24 @@ if(isset($_POST["register"])){
             <input type="text" id="firstName" name="firstName" type="text"  ><br>
             
             <div class="errorMessage">
-                <?php echo $errors['password'] ?? '' ?>
+                <?php echo $errorMessage['firstName'] ?? '' ?>
                 </div>
             </div>
 
             <div class="form__field">
             <label for="lastName">Naam</label>
             <input type="text" id="lastName" name="lastName" type="text"><br>
+
             <div class="errorMessage">
-                <?php echo $errors['password'] ?? '' ?>
+                <?php echo $errorMessage['lastName'] ?? '' ?>
                 </div>
             </div>
             
             <div class="form__field">
-            <label for="password">Paswoord</label>
+            <label for="password">Password</label>
             <input type="password" id="password" name="password" type="password"><br>
             <div class="errorMessage">
-                <?php echo $errors['password'] ?? '' ?>
+                <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
             </div>
             <div class="form__field">
