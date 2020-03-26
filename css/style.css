@@ -1,3 +1,7 @@
+html{
+    font-size: 14px;
+    font-family: "helvetica Neue";
+}
 .container-left{
     height: 30vh;
     background-color: #1a27c9;
@@ -11,7 +15,12 @@
 .container-right a{
     text-align: right;
 }
+.form-group label{
+    text-transform: uppercase;
+    font-weight: 600;
+}
 .btn {
+    text-transform: uppercase;
     background-color: #1a27c9;
     color: #fff;
 }
