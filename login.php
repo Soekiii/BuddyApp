@@ -59,7 +59,7 @@ if ($_POST){
        
         <div class="form-group mb-4" style="width: 336px">
             <label for="email">Emailadres</label>
-        <?php if(!isset($errors)): ?>
+        <?php if(!isset($error)): ?>
             <input type="text" class="form-control" id="Email" name="email" placeholder="email">
         <?php else: ?>
             <input type="text" class="form-control is-invalid" id="Email" name="email" placeholder="email">
@@ -70,7 +70,7 @@ if ($_POST){
         </div>
         <div class="form-group mb-4">
             <label for="Password">Passwoord</label>
-        <?php if(!isset($errors)): ?>
+        <?php if(!isset($error)): ?>
             <input type="password" class="form-control" id="Password" name="password" placeholder="passwoord">
         <?php else: ?>
             <input type="password" class="form-control is-invalid" id="Password" name="password" placeholder="password">
