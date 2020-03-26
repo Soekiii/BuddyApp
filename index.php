@@ -30,6 +30,7 @@ $searchResult = "";
 </head>
 <body>
     <a href="logout.php" class="link">logout <?php echo $_SESSION['email'] ?></a>
+    <div><a href="edit_profile.php" class="link">Edit profile</a></div>
     <!-- search form -->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <input type="text" name="search" placeholder="search">
