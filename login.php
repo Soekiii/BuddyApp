@@ -1,10 +1,12 @@
 <?php
 include_once (__DIR__ . "/classes/User.php");
-
+include_once (__DIR__ . "/classes/Validate.php");
     // Wanneer er op het formulier word gedrukt voort men deze if uit
 if ($_POST){
     if (!empty($_POST)) {
         try {
+            $validate = new Validate($_POST);
+            $errors = $validate->validateForm();
             $user = new User();
             $user->setEmail(htmlspecialchars($_POST['email']));
             $user->setPassword(htmlspecialchars($_POST['password']));
@@ -14,13 +16,9 @@ if ($_POST){
             $_SESSION['user_id'] = $user->getUserId();
             header('Location: index.php');
         } catch (\Throwable $t) {
-            $error1 = $t->getMessage();
+            $error = "Email en passwoord komen niet overeen.";    
            
-        } catch (\Throwable $e) {
-            $error2 = $th->getMessage();
-        }
-    } else {
-            $error = "Email en passwoord komen niet overeen.";       
+        }    
         }
     }
         
@@ -58,23 +56,23 @@ if ($_POST){
        
         <div class="form-group mb-4" style="width: 336px">
             <label for="email">Emailadres</label>
-        <?php if(!isset($error1)): ?>
+        <?php if(!isset($errors)): ?>
             <input type="text" class="form-control" id="Email" name="email" placeholder="email">
         <?php else: ?>
             <input type="text" class="form-control is-invalid" id="Email" name="email" placeholder="email">
             <div class="invalid-feedback">
-            <?php echo $error1 ?>
+            <?php echo $errors['email'] ?? '' ?>
             </div>
         <?php endif; ?>
         </div>
         <div class="form-group mb-4">
             <label for="Password">Passwoord</label>
-        <?php if(!isset($error2)): ?>
+        <?php if(!isset($errors)): ?>
             <input type="password" class="form-control" id="Password" name="password" placeholder="passwoord">
         <?php else: ?>
             <input type="password" class="form-control is-invalid" id="Password" name="password" placeholder="password">
             <div class="invalid-feedback">
-            <?php echo $error2 ?>
+            <?php echo $errors['password'] ?? '' ?>
             </div>
         <?php endif; ?>
         </div>
