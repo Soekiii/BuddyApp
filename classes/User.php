@@ -20,13 +20,6 @@ include_once (__DIR__ . "/Db.php");
      */ 
     public function setEmail($email)
     {
-        if(empty($email)){
-        throw new Exception('email mag niet leeg zijn');
-        } else {
-        if(!preg_match('|@student.thomasmore.be$|', $email)){
-          throw new Exception ('email moet eindigen op @student.thomasmore.be');
-        }
-    }
         $this->email = $email;
 
         return $this;
@@ -47,9 +40,6 @@ include_once (__DIR__ . "/Db.php");
      */ 
     public function setPassword($password)
     {
-        if(empty($password)){
-        throw new Exception ('password is niet juist');
-        }
         $this->password = $password;
 
         return $this;
