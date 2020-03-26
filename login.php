@@ -1,25 +1,30 @@
 <?php
 include_once (__DIR__ . "/classes/User.php");
-include_once (__DIR__ . "/classes/Validate.php");
 
     // Wanneer er op het formulier word gedrukt voort men deze if uit
+if ($_POST){
     if (!empty($_POST)) {
-        $user = new User();
-        $validation = new Validate(($_POST));
-        $errors = $validation->validateForm();
-        $email = htmlspecialchars($_POST['email']);
-        $password = htmlspecialchars($_POST['password']);
-        
-            if ($user->canILogin($email, $password)) {
-                session_start();
-                $_SESSION['email'] = $email;
-                $_SESSION['user_id'] = $user->getUserId($email);
-                
-                header('Location: index.php');
-            } else {
-                $error = "Email en passwoord komen niet overeen.";       
-            }
+        try {
+            $user = new User();
+            $user->setEmail(htmlspecialchars($_POST['email']));
+            $user->setPassword(htmlspecialchars($_POST['password']));
+            $user->canILogin();
+            session_start();
+            $_SESSION['email'] = $user->getEmail();
+            $_SESSION['user_id'] = $user->getUserId();
+            header('Location: index.php');
+        } catch (\Throwable $t) {
+            $error1 = $t->getMessage();
+           
+        } catch (\Throwable $e) {
+            $error2 = $th->getMessage();
+        }
+    } else {
+            $error = "Email en passwoord komen niet overeen.";       
+        }
     }
+        
+            
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,9 +46,8 @@ include_once (__DIR__ . "/classes/Validate.php");
     <div class="col-md-6 col-md-3 no-gutters">
     <div class="container-right d-flex justify-content-center align-items-center">
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" class="justify-content-center">
-<div class="form-group">
-    <h2>Login Amigos</h2>	
-
+<div class="form-group mb-4">
+    <h2>Log in op Amigos</h2>	
 </div>
     <!-- error message weergeven -->
     <?php if(isset($error)): ?>
@@ -51,43 +55,42 @@ include_once (__DIR__ . "/classes/Validate.php");
             <?php echo $error?>
         </div>
     <?php endif; ?>
-        <?php if(!isset($error)): ?>
-        <div class="form-group" style="width: 336px">
-            <label for="email">Email</label>
+       
+        <div class="form-group mb-4" style="width: 336px">
+            <label for="email">Emailadres</label>
+        <?php if(!isset($error1)): ?>
             <input type="text" class="form-control" id="Email" name="email" placeholder="email">
-        </div>
         <?php else: ?>
-        <div class="form-group">
-            <label for="email">Email</label>
             <input type="text" class="form-control is-invalid" id="Email" name="email" placeholder="email">
             <div class="invalid-feedback">
-            <?php echo $errors['email'] ?? '' ?>
+            <?php echo $error1 ?>
             </div>
-        </div>
         <?php endif; ?>
-            
-        <?php if(!isset($error)): ?>
-        <div class="form-group">
-            <label for="Password">Password</label>
-            <input type="password" class="form-control" id="Password" name="password" placeholder="password">
         </div>
+        <div class="form-group mb-4">
+            <label for="Password">Passwoord</label>
+        <?php if(!isset($error2)): ?>
+            <input type="password" class="form-control" id="Password" name="password" placeholder="passwoord">
         <?php else: ?>
-            <div class="form-group">
-            <label for="Password">Password</label>
             <input type="password" class="form-control is-invalid" id="Password" name="password" placeholder="password">
             <div class="invalid-feedback">
-            <?php echo $errors['password'] ?? '' ?>
+            <?php echo $error2 ?>
             </div>
-        </div>
         <?php endif; ?>
+        </div>
+           
+           
+            
+        
+        
             
         <div class="d-flex justify-content-between">
-        <div class="form-group">
-            <button type="submit" class="btn">Log in</button>
+        <div class="form-group mb-4">
+            <button type="submit" class="btn" style="width: 150px">Aanmelden</button>
         </div>
-		<a href="register.php" class="link mt-2 mr-0">registreer hier!</a>
+		<a href="#" class="link mt-2 mr-0">Passwoord vergeten?</a>
         </div>
-       
+        <p class="text-center mt-4">Nog geen account? <a href="register.php" class="link">Registreer hier!</a></p>
     </form>
     </div>
     </div>
