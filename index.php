@@ -11,6 +11,7 @@ $userID = implode(" ", $userArray);
 
 $hobby = new Hobby();
 $count = $hobby->countHobbies($userID);
+var_dump($count);
 if($count == false){
     echo "no";
     //header('Location: hobby.php');

@@ -80,23 +80,25 @@ class Hobby {
     public function countHobbies($userID){
         try{
             $conn = Db::getConnection();
-
             $statement = $conn->prepare("select * from hobby where userID = '".$userID."'");
+            $userID = $this->getUserID();
             $statement->execute();
-            $aantal = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $aantal = $statement->fetchAll(PDO::FETCH_ASSOC); //
             //$aantal = $statement->fetchColumn();
             //$aantal = $statement->num_rows;
-            //$aantal->execute();
-           // if(count($aantal) = 5){
-            //    return true;
-            //}
-           // else{
-            //    return false;
-            //}
+            $aantal->execute();
+            
+            
+ //           if(count($aantal) == 1){
+//                return true;
+//            }
+//            else{
+ //               return false;
+  //           }
         }
         catch(throwable $e){
-            $error = "Something went wrong";
-        }
+           $error = "Something went wrong";
+       }
     }
 
     //Locatie van eigenschappen weer te geven
@@ -105,14 +107,14 @@ class Hobby {
 
             //$statement = $conn->prepare("insert into hobby(locatie,hobby,game,film,muziek,userID) values(:locatie,:hobby,:game,:film,:muziek,'".$userID."')");
             $statement = $conn->prepare("insert into hobby(locatie,hobby,game,film,muziek,userID) values(:locatie,:hobby,:game,:film,:muziek,:userID)");
-            $statement->bindParam(':locatie', $locatie);
-            $statement->bindParam(':hobby', $hobby);
-            $statement->bindParam(':game', $game);
-            $statement->bindParam(':film', $film);
-            $statement->bindParam(':muziek', $muziek);
-            $statement->bindParam(':userID', $userID);
+            $statement->bindParam(':locatie', $this->getLocatie());
+            $statement->bindParam(':hobby', $this->getHobby());
+            $statement->bindParam(':game', $this->getGame());
+            $statement->bindParam(':film', $this->getFilm());
+            $statement->bindParam(':muziek', $this->getMuziek());
+            $statement->bindParam(':userID', $this->getUserID());
             $result = $statement->execute();
-            
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
             return $result;
 
     }
