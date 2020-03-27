@@ -51,47 +51,63 @@ if(isset($_POST["register"])){
     <title>Registreer | Amigos</title>
 </head>
 <body>
-<h1>Registreer je hier</h1>
+<div class="form-row no-gutters">
+    <div class="col-md-6 no-gutters">
+    <div class="container-left d-flex justify-content-center align-items-center">
+        <h2>Leer hier je nieuwe imd amigos kennen.</h2>
+    </div>
+    </div>
+    <div class="col-md-6 col-md-3 no-gutters">
+    <div class="container-right d-flex justify-content-center align-items-center">
         <form action="register.php" method="post">
-            
-            <div class="form__field">
-            <label for="email">Emailadres</label>
-            <input type="text"id="email" name="email" type="text"> <br>
-            
-            <div class="errorMessage">
-                <?php echo $errorMessage['email'] ?? '' ?>
-                </div>
-            
-            </div>
-
-            <div class="form__field" >
+    <div class="form-group mb-4">
+        <h2>Registreer je hier op Amigos</h2>
+    </div>
+        <div class="row">
+            <div class="col" >
             <label for="firstName">Voornaam</label>
-            <input type="text" id="firstName" name="firstName" type="text"  ><br>
-            
-            <div class="errorMessage">
-                <?php echo $errorMessage['firstName'] ?? '' ?>
-                </div>
+        <?php if(isset($gelukt)): ?>
+            <input type="text" id="firstName" name="firstName" type="text" class="form-control" placeholder="Voornaam">
+        <?php else: ?>  
+            <input type="text" id="firstName" name="firstName" type="text" class="form-control is-invalid" placeholder="Voornaam">
+            <div class="invalid-feedback">
+            <?php echo $errorMessage['firstName'] ?? '' ?>
+            </div>
+        <?php endif; ?>
             </div>
 
-            <div class="form__field">
-            <label for="lastName">Naam</label>
-            <input type="text" id="lastName" name="lastName" type="text"><br>
+            <div class="col">
+            <label for="lastName">Achteraam</label>
+            <input type="text" id="lastName" name="lastName" type="text" class="form-control" placeholder="Achternaam"><br>
 
             <div class="errorMessage">
                 <?php echo $errorMessage['lastName'] ?? '' ?>
                 </div>
             </div>
+        </div>
+            <div class="form-group mb-1 ">
+            <label for="email">Emailadres</label>
+            <input type="text"id="email" name="email" type="text" class="form-control" placeholder="Email"> <br>
             
-            <div class="form__field">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" type="password"><br>
+            <div class="errorMessage">
+                <?php echo $errorMessage['email'] ?? '' ?>
+                </div>
+            </div>
+
+            <div class="form-group">
+            <label for="password">Paswoord</label>
+            <input type="password" id="password" name="password" type="password" class="form-control" placeholder="Paswoord"><br>
             <div class="errorMessage">
                 <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
             </div>
-            <div class="form__field">
-            <input type="submit" id="register" name="register" value="register" >
+
+            <div class="d-flex justify-content-between">
+            <div class="form-group mb-4">
+            <button type="submit" class="btn" style="width: 150px" id="register" name="register">Registreren</button>
             </div>
+        </div>
+        <p class="text-center mt-4">Hebt u al een account? <a href="login.php" class="link">Log in hier!</a></p>
         </form>
 </body>
 </html>
