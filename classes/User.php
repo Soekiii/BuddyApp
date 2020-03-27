@@ -24,7 +24,6 @@ include_once (__DIR__ . "/Db.php");
 
         return $this;
     }
-<<<<<<< HEAD
 
     /**
      * Get the value of password
@@ -35,18 +34,6 @@ include_once (__DIR__ . "/Db.php");
     }
 
     /**
-=======
-
-    /**
-     * Get the value of password
-     */ 
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
->>>>>>> refs/remotes/origin/master
      * Set the value of password
      *
      * @return  self
@@ -97,8 +84,6 @@ include_once (__DIR__ . "/Db.php");
     return $result;
     }
 
-<<<<<<< HEAD
-=======
 
     public function registerNewUser($firstName, $lastName, $email, $password){
         $conn = Db::getConnection();    
@@ -118,7 +103,6 @@ include_once (__DIR__ . "/Db.php");
   
     }
    
->>>>>>> refs/remotes/origin/master
     
 
     

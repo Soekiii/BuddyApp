@@ -3,7 +3,6 @@ session_start();
 if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
 }
-<<<<<<< HEAD
 include_once(__DIR__."/classes/Hobby.php");
 include_once(__DIR__."/classes/User.php");
 
@@ -17,8 +16,6 @@ else{
     echo "yes";
 }
 
-=======
-include_once (__DIR__ . "/classes/User.php");
 $searchResult = "";
         if(isset($_POST['submit-search'])){
             $search = htmlspecialchars($_POST['search']);
@@ -36,7 +33,6 @@ $searchResult = "";
         }
 
     }
->>>>>>> refs/remotes/origin/master
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
