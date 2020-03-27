@@ -1,8 +1,21 @@
 <?php 
 session_start();
-if (empty($_SESSION['email'])) {
+if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
 }
+include_once(__DIR__."/classes/Hobby.php");
+include_once(__DIR__."/classes/User.php");
+
+$hobby = new Hobby();
+$count = $hobby->countHobbies($userID);
+if($count == false){
+    echo "no";
+    //header('Location: hobby.php');
+}
+else{
+    echo "yes";
+}
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
