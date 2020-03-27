@@ -3,7 +3,22 @@ session_start();
 if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
 }
-include_once (__DIR__ . "/classes/User.php");
+include_once(__DIR__."/classes/Hobby.php");
+include_once(__DIR__."/classes/User.php");
+
+$userArray = $_SESSION['user_id'];
+$userID = implode(" ", $userArray);
+
+$hobby = new Hobby();
+$count = $hobby->countHobbies($userID);
+if($count == false){
+    echo "no";
+    //header('Location: hobby.php');
+}
+else{
+    echo "yes";
+}
+
 $searchResult = "";
         if(isset($_POST['submit-search'])){
             $search = htmlspecialchars($_POST['search']);
