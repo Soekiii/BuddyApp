@@ -19,6 +19,10 @@ html{
     text-transform: uppercase;
     font-weight: 600;
 }
+.row col label{
+    text-transform: uppercase;
+    font-weight: 600;
+}
 .btn {
     text-transform: uppercase;
     background-color: #1a27c9;
