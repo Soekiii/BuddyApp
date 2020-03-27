@@ -4,40 +4,49 @@ include_once (__DIR__ . "/classes/Validate.php");
 include_once (__DIR__ . "/classes/Db.php");
 
 
-
-
 if(isset($_POST["register"])){
+
+       if (!empty($_POST)) {
+            try {
+                $user = new User();
+                $validate = new Validate($_POST);
+                //eerst checken of de email al bestaat voor je alle variabelen vult
+                $user->setEmail(htmlspecialchars($_POST['email']));
+             //   $password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT, ["cost" => 12]);
+                $user->setPassword(htmlspecialchars($_POST['password']));
+                $user->setFirstname(htmlspecialchars($_POST['firstName']));
+                $user->setLastname(htmlspecialchars($_POST['lastName']));
+                    // hier alle gegevens verzamelen voor inloggen en data bewaren op db
+                $validate->Emailvalidator();
+                $errorMessage=$validate->getErrors();
+                
+                if (empty($errorMessage)){ //als er geen errorkes zijn
+                    $mailok=$validate->checkValidEmail(); //kijk na of de email al bestaat
+                    $errorMessage=$validate->getErrors(); //kijk terug even na of er nog errors zijn?
+
+                    if($mailok==true){
+                       
+                        $statement= $user->registerNewUser();
+                        if ($statement===true){
+                            header('Location: index.php');
+                            }   
     
-    $validation = new Validate(($_POST));  //nieuw object aanmaken & constructor opvullen
-    $errorMessage =$validation->Emailvalidator(); //stuur errors door naar variabele
-//var_dump($errorMessage);
+                    }
 
-
-    if(empty($errorMessage)){ // als variabele leeg is 
-
-        $email = htmlspecialchars($_POST['email']);
-        $firstName = htmlspecialchars($_POST['firstName']);
-        $lastName = htmlspecialchars($_POST['lastName']);
-        $password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT, ["cost" => 12]);
-
-        $gelukt= $validation->checkValidEmail($email); //---> Toon een fout als het email adres reeds in gebruik is
-      if ($gelukt=false){$errorMessage ['email']="Howla, je mailadres is reeds bekend, ga naar inloggen aub";}
-        if ($gelukt=true){
-
-            // hier alle gegevens verzamelen voor inloggen en data bewaren op db
-           $user= new user; 
-           $statement= $user->registerNewUser($firstName, $lastName, $email, $password);
-           if ($statement===true){
-            header('Location: index.php');
-           }
+                }
+                
+                
+           
+            } catch (\Throwable $t) { 
+                  
+               
+            }  
         }
+    }   
+    ?> 
 
-       
-    } 
- 
-}
 
-?>
+
 
 
 <!DOCTYPE html>
@@ -51,7 +60,7 @@ if(isset($_POST["register"])){
     <title>Registreer | Amigos</title>
 </head>
 <body>
-<h1>Registreer je hier</h1>
+<h1>Go Go Amigos, Registreer je hier! </h1>
         <form action="register.php" method="post">
             
             <div class="form__field">
@@ -83,14 +92,14 @@ if(isset($_POST["register"])){
             </div>
             
             <div class="form__field">
-            <label for="password">Password</label>
+            <label for="password">Paswoord</label>
             <input type="password" id="password" name="password" type="password"><br>
             <div class="errorMessage">
                 <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
             </div>
             <div class="form__field">
-            <input type="submit" id="register" name="register" value="register" >
+            <input type="submit" id="register" name="register" value="Registreer" >
             </div>
         </form>
 </body>
