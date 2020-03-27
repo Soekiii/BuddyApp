@@ -66,10 +66,14 @@ if(isset($_POST["register"])){
         <div class="row">
             <div class="col" >
             <label for="firstName">Voornaam</label>
-            <input type="text" id="firstName" name="firstName" type="text" class="form-control" placeholder="Voornaam"><br>
-            <div class="errorMessage">
+        <?php if(isset($gelukt)): ?>
+            <input type="text" id="firstName" name="firstName" type="text" class="form-control" placeholder="Voornaam">
+        <?php else: ?>  
+            <input type="text" id="firstName" name="firstName" type="text" class="form-control is-invalid" placeholder="Voornaam">
+            <div class="invalid-feedback">
             <?php echo $errorMessage['firstName'] ?? '' ?>
             </div>
+        <?php endif; ?>
             </div>
 
             <div class="col">
@@ -81,7 +85,7 @@ if(isset($_POST["register"])){
                 </div>
             </div>
         </div>
-            <div class="form-group mb-1">
+            <div class="form-group mb-1 ">
             <label for="email">Emailadres</label>
             <input type="text"id="email" name="email" type="text" class="form-control" placeholder="Email"> <br>
             
