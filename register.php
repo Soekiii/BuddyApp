@@ -18,7 +18,7 @@ if(isset($_POST["register"])){
         $email = htmlspecialchars($_POST['email']);
         $firstName = htmlspecialchars($_POST['firstName']);
         $lastName = htmlspecialchars($_POST['lastName']);
-        $password = htmlspecialchars($_POST['password']);
+        $password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT, ["cost" => 12]);
 
         $gelukt= $validation->checkValidEmail($email); //---> Toon een fout als het email adres reeds in gebruik is
       if ($gelukt=false){$errorMessage ['email']="Howla, je mailadres is reeds bekend, ga naar inloggen aub";}
