@@ -10,6 +10,15 @@ class Validate {
     $this->data = $post_data;
   }
 
+    /**
+     * Get the value of data
+     */ 
+     public function getErrors()
+     {
+         return $this->errors;
+     }
+
+
   public function validateForm(){
 
     foreach(self::$fields as $field){
@@ -56,7 +65,7 @@ class Validate {
  
 
 
- public function Emailvalidator(){
+ public function Emailvalidator(){  //kijkt na of alle velden goed zijn ingevuld & geeft error weer
 
   $val = trim($this->data['email']);
 
@@ -81,7 +90,6 @@ class Validate {
 
   }
 
-
   $val = trim($this->data['firstName']);
   if(empty($val)){
     $this->addError('firstName', 'hoe heet jij alweer?');
@@ -99,26 +107,30 @@ class Validate {
     $this->addError('password', 'geef hier je paswoord op, ik zal niet meekijken hoor :-)');
   //paswoord:            ---> check of paswoord is ingevuld! + melding indien niet ingevuld
   }
-  if(strlen($val< 6)){
+  if(strlen($val< 6)){  // opgelet is al in omgezet en is zeer lang
     $this->addError('password', 'je paswoord te gemakkelijk, kies een beter met min 6 karakters');
     //paswoord:            ---> check of paswoord min 6 karakters heeft
   }
-    return $this->errors; //alle gegevens terugsturen naar aanvrager
+    
   }
 
 
 
- public function checkValidEmail($email)
+ public function checkValidEmail()
     {
     $conn = Db::getConnection();
 
+    $val = trim($this->data['email']);
+
     $statement = $conn->prepare('SELECT * from user WHERE email = :email');
-    $statement->bindParam(':email', $email);
+    $statement->bindParam(':email', $val);
     $statement->execute();
 
     $result = $statement->fetch(PDO::FETCH_ASSOC);
-    if($result["email"] === $email){ //als email zelfde is als opgevraagd dan false
 
+
+    if($result["email"] === $val){ //als email zelfde is als opgevraagd dan false
+        $this->addError('email', 'email reeds bekend, ga naar inloggen');
         return false;
     }
 

@@ -4,6 +4,9 @@ include_once (__DIR__ . "/Db.php");
     {
     private $email;
     private $password;
+    private $firstName;
+    private $lastName;
+
     
     /**
      * Get the value of email
@@ -41,9 +44,51 @@ include_once (__DIR__ . "/Db.php");
     public function setPassword($password)
     {
         $this->password = $password;
+        
+
+        //return $this;
+    }
+
+     /**
+     * Get the value of password
+     */ 
+     public function getFirstname()
+     {
+         return $this->firstName;
+     }
+ 
+
+    /**
+    *Set the value of firstname
+    *  @return  self
+     */ 
+    public function setFirstname($firstName)
+    {
+        $this->firstName = $firstName;
 
         return $this;
     }
+
+    /**
+     * Get the value of lastName
+     */ 
+     public function getLastName()
+     {
+         return $this->$LastName;
+     }
+ 
+
+    /**
+    *Set the value of lastName
+    *  @return  self
+     */ 
+    public function setLastname($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+    
     public function canILogin()
     {
     $conn = Db::getConnection();
@@ -85,17 +130,19 @@ include_once (__DIR__ . "/Db.php");
     }
 
 
-    public function registerNewUser($firstName, $lastName, $email, $password){
+    public function registerNewUser(){
         $conn = Db::getConnection();    
             
-            //Hash the password   
-        $passwordBcrypt = password_hash($password, PASSWORD_BCRYPT);
+            //Hash the password  
+        
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
+        
             //Registratie in database
         $statment= $conn->prepare("INSERT INTO user (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password)");
-        $statment->bindValue(":firstname",$firstName);
-        $statment->bindValue(":lastname",$lastName);
-        $statment->bindValue(":email",$email);
-        $statment->bindValue(":password",$password);
+        $statment->bindValue(":firstname",$this->firstName);
+        $statment->bindValue(":lastname",$this->lastName);
+        $statment->bindValue(":email",$this->email);
+        $statment->bindValue(":password",$this->password);
 
         $result=$statment->execute();
 
