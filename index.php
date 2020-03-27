@@ -6,6 +6,9 @@ if (empty($_SESSION['user_id'])) {
 include_once(__DIR__."/classes/Hobby.php");
 include_once(__DIR__."/classes/User.php");
 
+$userArray = $_SESSION['user_id'];
+$userID = implode(" ", $userArray);
+
 $hobby = new Hobby();
 $count = $hobby->countHobbies($userID);
 if($count == false){
