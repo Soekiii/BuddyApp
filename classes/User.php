@@ -24,6 +24,7 @@ include_once (__DIR__ . "/Db.php");
 
         return $this;
     }
+<<<<<<< HEAD
 
     /**
      * Get the value of password
@@ -34,6 +35,18 @@ include_once (__DIR__ . "/Db.php");
     }
 
     /**
+=======
+
+    /**
+     * Get the value of password
+     */ 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+>>>>>>> refs/remotes/origin/master
      * Set the value of password
      *
      * @return  self
@@ -84,6 +97,28 @@ include_once (__DIR__ . "/Db.php");
     return $result;
     }
 
+<<<<<<< HEAD
+=======
+
+    public function registerNewUser($firstName, $lastName, $email, $password){
+        $conn = Db::getConnection();    
+            
+            //Hash the password   
+        $passwordBcrypt = password_hash($password, PASSWORD_BCRYPT);
+            //Registratie in database
+        $statment= $conn->prepare("INSERT INTO user (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password)");
+        $statment->bindValue(":firstname",$firstName);
+        $statment->bindValue(":lastname",$lastName);
+        $statment->bindValue(":email",$email);
+        $statment->bindValue(":password",$password);
+
+        $result=$statment->execute();
+
+        return $result;
+  
+    }
+   
+>>>>>>> refs/remotes/origin/master
     
 
     
