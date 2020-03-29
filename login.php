@@ -4,26 +4,28 @@ include_once (__DIR__ . "/classes/Validate.php");
     // Wanneer er op het formulier word gedrukt voort men deze if uit
 if ($_POST){
     if (!empty($_POST)) {
-        try {
+        
             $user = new User();
             $validate = new Validate($_POST);
             $errors = $validate->validateForm();
             $user->setEmail(htmlspecialchars($_POST['email']));
             $user->setPassword(htmlspecialchars($_POST['password']));
-            if($user->canILogin() == true){
+            if(empty($errors)){
+                if($user->canILogin() == true){
                 session_start();
                 $_SESSION['email'] = $user->getEmail();
                 $_SESSION['user_id'] = $user->getUserId();
                 header('Location: index.php');
+                } else {
+                $error = "Email en passwoord komen niet overeen."; 
+                }
             } else {
                 $error = "Email en passwoord komen niet overeen.";  
             }
-        } catch (\Throwable $t) {
-              
-           
-        }  
+        } 
+        
     }  
-    }
+    
         
             
 ?><!DOCTYPE html>
