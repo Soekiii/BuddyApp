@@ -60,7 +60,6 @@ if(isset($_POST["register"])){
     <title>Registreer | Amigos</title>
 </head>
 <body>
-<<<<<<< HEAD
 <div class="form-row no-gutters">
     <div class="col-md-6 no-gutters">
     <div class="container-left d-flex justify-content-center align-items-center">
@@ -69,9 +68,6 @@ if(isset($_POST["register"])){
     </div>
     <div class="col-md-6 col-md-3 no-gutters">
     <div class="container-right d-flex justify-content-center align-items-center">
-=======
-<h1>Go Go Amigos, Registreer je hier! </h1>
->>>>>>> feature1
         <form action="register.php" method="post">
     <div class="form-group mb-4">
         <h2>Registreer je hier op Amigos</h2>
@@ -90,7 +86,7 @@ if(isset($_POST["register"])){
             </div>
 
             <div class="col">
-            <label for="lastName">Achteraam</label>
+            <label for="lastName">Achternaam</label>
             <input type="text" id="lastName" name="lastName" type="text" class="form-control" placeholder="Achternaam"><br>
 
             <div class="errorMessage">
@@ -102,7 +98,6 @@ if(isset($_POST["register"])){
             <label for="email">Emailadres</label>
             <input type="text"id="email" name="email" type="text" class="form-control" placeholder="Email"> <br>
             
-<<<<<<< HEAD
             <div class="errorMessage">
                 <?php echo $errorMessage['email'] ?? '' ?>
                 </div>
@@ -111,24 +106,14 @@ if(isset($_POST["register"])){
             <div class="form-group">
             <label for="password">Paswoord</label>
             <input type="password" id="password" name="password" type="password" class="form-control" placeholder="Paswoord"><br>
-=======
-            <div class="form__field">
-            <label for="password">Paswoord</label>
-            <input type="password" id="password" name="password" type="password"><br>
->>>>>>> feature1
             <div class="errorMessage">
                 <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
             </div>
-<<<<<<< HEAD
 
             <div class="d-flex justify-content-between">
             <div class="form-group mb-4">
             <button type="submit" class="btn" style="width: 150px" id="register" name="register">Registreren</button>
-=======
-            <div class="form__field">
-            <input type="submit" id="register" name="register" value="Registreer" >
->>>>>>> feature1
             </div>
         </div>
         <p class="text-center mt-4">Hebt u al een account? <a href="login.php" class="link">Log in hier!</a></p>

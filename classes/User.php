@@ -74,7 +74,7 @@ include_once (__DIR__ . "/Db.php");
      */ 
      public function getLastName()
      {
-         return $this->$LastName;
+         return $this->lastName;
      }
  
 
