@@ -10,15 +10,12 @@ $userArray = $_SESSION['user_id'];
 $userID = implode(" ", $userArray);
 
 $hobby = new Hobby();
+$hobby->setUserID($userID);
 $count = $hobby->countHobbies($userID);
-var_dump($count);
-if($count == false){
-    echo "no";
-    //header('Location: hobby.php');
+if($count != $userID){
+    header('Location: hobby.php');
 }
-else{
-    echo "yes";
-}
+
 
 $searchResult = "";
         if(isset($_POST['submit-search'])){

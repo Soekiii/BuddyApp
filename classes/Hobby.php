@@ -56,7 +56,7 @@ class Hobby {
 
     //getter setter muziek
     public function getMuziek(){
-        return $this->locatie;
+        return $this->muziek;
     }
 
     public function setMuziek($muziek){
@@ -79,14 +79,18 @@ class Hobby {
     // tellen of er 5 eigenschappen in zitten
     public function countHobbies($userID){
         try{
-            $conn = Db::getConnection();
-            $statement = $conn->prepare("select * from hobby where userID = '".$userID."'");
             $userID = $this->getUserID();
+            $conn = Db::getConnection();
+            //$statement = $conn->prepare("select * from hobby where userID = '".$userID."'");
+            $statement = $conn->prepare("select * from hobby where userID = :ID ");
+            $statement->bindParam(':ID', $userID);
             $statement->execute();
             $aantal = $statement->fetchAll(PDO::FETCH_ASSOC); //
             //$aantal = $statement->fetchColumn();
             //$aantal = $statement->num_rows;
-            $aantal->execute();
+            //return $aantal;
+            return $userID;
+            
             
             
  //           if(count($aantal) == 1){
