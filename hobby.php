@@ -10,7 +10,7 @@ include_once(__DIR__."/classes/Hobby.php");
 $userArray = $_SESSION['user_id'];
 $userID = implode(" ", $userArray);
 
-if(isset($_POST['submit'])){
+if(isset($_POST["locatie"])){
     try{
         $hobby = new Hobby();
         $hobby->setLocatie(htmlspecialchars($_POST['locatie']));
@@ -26,11 +26,10 @@ if(isset($_POST['submit'])){
     catch(throwable $e){
         $error = "Iets is mis gegaan.";
     }
-}
-else{
+}else{
     $error = "Vul alle velden in";
-}
 
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
