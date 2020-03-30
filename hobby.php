@@ -19,8 +19,7 @@ if(!empty($_POST)){
         $hobby->setGame(htmlspecialchars($_POST['game']));
         $hobby->setMuziek(htmlspecialchars($_POST['muziek']));
         $hobby->setUserID(htmlspecialchars($userID));
-        $statement=$hobby->hobbyInvullen($locatie,$hobby,$film,$game,$muziek,$userID);
-        //$hobby->hobbyInvullen();
+        $hobby->hobbyInvullen();
         //$hobby->hobbyInvullen($_POST);
         header('Location: index.php');
     }
