@@ -89,16 +89,17 @@ class Hobby {
             //$aantal = $statement->fetchColumn();
             //$aantal = $statement->num_rows;
             //return $aantal;
-            return $userID;
+            //return $userID;
+            //return $aantal;
             
             
             
- //           if(count($aantal) == 1){
-//                return true;
-//            }
-//            else{
- //               return false;
-  //           }
+           if(count($aantal) == 1){
+               return true;
+           }
+           else{
+              return false;
+           }
         }
         catch(throwable $e){
            $error = "Something went wrong";

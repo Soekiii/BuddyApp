@@ -12,7 +12,7 @@ $userID = implode(" ", $userArray);
 $hobby = new Hobby();
 $hobby->setUserID($userID);
 $count = $hobby->countHobbies($userID);
-if($count != $userID){
+if($count == false){
     header('Location: hobby.php');
 }
 
