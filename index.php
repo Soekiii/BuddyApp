@@ -13,7 +13,7 @@ $hobby = new Hobby();
 $hobby->setUserID($userID);
 $count = $hobby->countHobbies($userID);
 if($count == false){
-    header('Location: hobby.php');
+    //header('Location: hobby.php');
 }
 
 
