@@ -82,7 +82,7 @@ class Hobby {
             $userID = $this->getUserID();
             $conn = Db::getConnection();
             //$statement = $conn->prepare("select * from hobby where userID = '".$userID."'");
-            $statement = $conn->prepare("select * from hobby where userID = :ID ");
+            $statement = $conn->prepare("select hobby,film,muziek,locatie,game from hobby where userID = :ID ");
             $statement->bindParam(':ID', $userID);
             $statement->execute();
             $aantal = $statement->fetchAll(PDO::FETCH_ASSOC); //

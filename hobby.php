@@ -9,8 +9,10 @@ include_once(__DIR__."/classes/Hobby.php");
 
 $userArray = $_SESSION['user_id'];
 $userID = implode(" ", $userArray);
-if ($_POST['filter'] == 1){
-if(isset($_POST["locatie"])){
+
+
+if(isset($_POST["muziek"])){
+    if(!empty($_POST["muziek"] && $_POST['game'] && $_POST['film'] && $_POST['hobby'] && $_POST['locatie'])){
     try{
         $hobby = new Hobby();
         $hobby->setLocatie(htmlspecialchars($_POST['locatie']));
@@ -26,10 +28,12 @@ if(isset($_POST["locatie"])){
     catch(throwable $e){
         $error = "Iets is mis gegaan.";
     }
-}else{
+}else {
     $error = "Vul alle velden in";
 }
 }
+
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,19 +52,21 @@ if(isset($_POST["locatie"])){
         
     </style>
 <body> 
-<div class="container-fluid">
-<div class="d-flex justify-content-center align-items-center text-center">
+<div class="container-fluid" style="width: 336px">
+<div class="d-flex justify-content-center align-items-center text-center" >
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"> 
     <h1>Hey! Vul deze velden in om nog makkelijker een match te vinden!</h1>
-    <!-- als er een error bestaat -->
+    <!-- error message weergeven -->
     <?php if(isset($error)): ?>
-        <div class="error"><p><?php echo $error?></p></div>
+        <div class="form alert alert-danger"role="alert">
+            <?php echo $error?>
+        </div>
     <?php endif; ?>
-    <div class="dropdown btn-lg text-center">
+    <div class="dropdown btn-lg text-center" >
     <div class="form ">
         <!--<input type="text" id="locatie" name="locatie">-->
-        <select id="locatie" name="locatie" style="width: 336px" class="form-control mb-4">
-            <option selected disabled>Vanwaar ben je? (Provincie)</option>
+        <select id="locatie" name="locatie" class="form-control mb-4">
+            <option value="" class="dropdown-item disabled">Vanwaar ben je? (Provincie)</option>
             <option value="West-vlaanderen">West-Vlaanderen</option>
             <option value="Oost-Vlaandere">Oost-Vlaanderen</option>
             <option value="Vlaams-Brabant">Vlaams-Brabant</option>
@@ -76,8 +82,8 @@ if(isset($_POST["locatie"])){
     </div>
     <div class="form">
         <!--<input type="text" id="hobby" name="hobby">-->
-        <select id="hobby" name="hobby" style="width: 336px"class="form-control mb-4" >
-            <option selected disabled>Wat is je hobby?</option>
+        <select id="hobby" name="hobby" class="form-control mb-4" >
+            <option value="" class="dropdown-item disabled">Wat is je hobby?</option>
             <option value="Fotografie">Fotografie</option>
             <option value="Dansen">Dansen</option>
             <option value="Koken">Koken</option>
@@ -90,8 +96,8 @@ if(isset($_POST["locatie"])){
     </div>
     <div class="form">
         <!--<input type="text" id="game" name="game">-->
-        <select id="game" name="game" style="width: 336px" class="form-control mb-4">
-            <option selected disabled>Welk spel speel je graag?</option>
+        <select id="game" name="game" class="form-control mb-4">
+            <option value="" class="dropdown-item disabled">Welk spel speel je graag?</option>
             <option value="World of Warcraft">World of Warcraft</option>
             <option value="Call of Duty">Call of Duty</option>
             <option value="Mario Kart">Mario Kart</option>
@@ -104,8 +110,8 @@ if(isset($_POST["locatie"])){
     </div>
     <div class="form">
         <!--<input type="text" id="film" name="film">-->
-        <select id="film" name="film" style="width: 336px" class="form-control mb-4">
-            <option selected disabled>Naar wat voor gerne filmen kijk je graag?</option>
+        <select id="film" name="film" class="form-control mb-4">
+            <option value="" class="dropdown-item disabled">Naar wat voor gerne filmen kijk je graag?</option>
             <option value="Star Wars">Star Wars</option>
             <option value="Pulp Fiction">Pulp Fiction</option>
             <option value="Lord of the Rings">Lord of the Rings</option>
@@ -118,8 +124,8 @@ if(isset($_POST["locatie"])){
     </div>
     <div class="form">
         <!--<input type="text" id="muziek" name="muziek">-->
-        <select id="muziek" name="muziek" style="width: 336px" class="form-control">
-            <option selected disabled>Naar wat voor gerne muziek luister je graag?</option>
+        <select id="muziek" name="muziek"  class="form-control">
+            <option value="" class="dropdown-item disabled">Naar wat voor gerne muziek luister je graag?</option>
             <option value="Metal">Metal</option>
             <option value="Pop">Pop</option>
             <option value="RnB">RnB</option>
@@ -132,7 +138,6 @@ if(isset($_POST["locatie"])){
     </div>
       
     <div class="form-group mt-4">
-    <div><input type="submit" value="Add!" class="btn"></div>
         <button type="submit" class="btn" style="width: 336px">Voeg eigenschappen toe!</button>
     </div>
     </div>
