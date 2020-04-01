@@ -3,6 +3,7 @@ session_start();
 if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
 }
+include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Hobby.php");
 include_once(__DIR__."/classes/User.php");
 
@@ -13,7 +14,7 @@ $hobby = new Hobby();
 $hobby->setUserID($userID);
 $count = $hobby->countHobbies($userID);
 if($count == false){
-    //header('Location: hobby.php');
+    header('Location: hobby.php');
 }
 
 
@@ -42,7 +43,6 @@ $searchResult = "";
     <title>Home | Amigos</title>
 </head>
 <body>
-    <a href="logout.php" class="link">logout <?php echo $_SESSION['email'] ?></a>
     <div><a href="edit_profile.php" class="link">Edit profile</a></div>
     <!-- search form -->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">

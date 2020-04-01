@@ -10,7 +10,9 @@ include_once(__DIR__."/classes/Hobby.php");
 $userArray = $_SESSION['user_id'];
 $userID = implode(" ", $userArray);
 
-if(isset($_POST['submit'])){
+
+if(isset($_POST["muziek"])){
+    if(!empty($_POST["muziek"] && $_POST['game'] && $_POST['film'] && $_POST['hobby'] && $_POST['locatie'])){
     try{
         $hobby = new Hobby();
         $hobby->setLocatie(htmlspecialchars($_POST['locatie']));
@@ -26,10 +28,11 @@ if(isset($_POST['submit'])){
     catch(throwable $e){
         $error = "Iets is mis gegaan.";
     }
-}
-else{
+}else {
     $error = "Vul alle velden in";
 }
+}
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -37,6 +40,9 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>profiel</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <style>
 
@@ -46,17 +52,21 @@ else{
         
     </style>
 <body> 
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" > 
+<div class="container-fluid" style="width: 336px">
+<div class="d-flex justify-content-center align-items-center text-center" >
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"> 
     <h1>Hey! Vul deze velden in om nog makkelijker een match te vinden!</h1>
-    <!-- als er een error bestaat -->
+    <!-- error message weergeven -->
     <?php if(isset($error)): ?>
-        <div class="error"><p><?php echo $error?></p></div>
+        <div class="form alert alert-danger"role="alert">
+            <?php echo $error?>
+        </div>
     <?php endif; ?>
-
-    <div class="">
-        <label for="locatie">Vanwaar ben je?</label>
+    <div class="dropdown btn-lg text-center" >
+    <div class="form ">
         <!--<input type="text" id="locatie" name="locatie">-->
-        <select id="locatie" name="locatie">
+        <select id="locatie" name="locatie" class="form-control mb-4">
+            <option value="" class="dropdown-item disabled">Vanwaar ben je? (Provincie)</option>
             <option value="West-vlaanderen">West-Vlaanderen</option>
             <option value="Oost-Vlaandere">Oost-Vlaanderen</option>
             <option value="Vlaams-Brabant">Vlaams-Brabant</option>
@@ -70,10 +80,10 @@ else{
             <option value="Ander land">Ander land</option>
             </select>
     </div>
-    <div class="">
-        <label for="hobby">Wat is je hobby?</label>
+    <div class="form">
         <!--<input type="text" id="hobby" name="hobby">-->
-        <select id="hobby" name="hobby">
+        <select id="hobby" name="hobby" class="form-control mb-4" >
+            <option value="" class="dropdown-item disabled">Wat is je hobby?</option>
             <option value="Fotografie">Fotografie</option>
             <option value="Dansen">Dansen</option>
             <option value="Koken">Koken</option>
@@ -84,10 +94,10 @@ else{
             <option value="Auto's">Auto's</option>
         </select>
     </div>
-    <div class="">
-        <label for="game">Welk spel speel je graag?</label>
+    <div class="form">
         <!--<input type="text" id="game" name="game">-->
-        <select id="game" name="game">
+        <select id="game" name="game" class="form-control mb-4">
+            <option value="" class="dropdown-item disabled">Welk spel speel je graag?</option>
             <option value="World of Warcraft">World of Warcraft</option>
             <option value="Call of Duty">Call of Duty</option>
             <option value="Mario Kart">Mario Kart</option>
@@ -98,10 +108,10 @@ else{
             <option value="Animal Crossing">Animal Crossing</option>
         </select>
     </div>
-    <div class="">
-        <label for="film">Naar wat voor gerne filmen kijk je graag?</label>
+    <div class="form">
         <!--<input type="text" id="film" name="film">-->
-        <select id="film" name="film">
+        <select id="film" name="film" class="form-control mb-4">
+            <option value="" class="dropdown-item disabled">Naar wat voor gerne filmen kijk je graag?</option>
             <option value="Star Wars">Star Wars</option>
             <option value="Pulp Fiction">Pulp Fiction</option>
             <option value="Lord of the Rings">Lord of the Rings</option>
@@ -112,10 +122,10 @@ else{
             <option value="Frozen">Frozen</option>
         </select>
     </div>
-    <div class="">
-        <label for="muziek">Naar wat voor gerne muziek luister je graag?</label>
+    <div class="form">
         <!--<input type="text" id="muziek" name="muziek">-->
-        <select id="muziek" name="muziek">
+        <select id="muziek" name="muziek"  class="form-control">
+            <option value="" class="dropdown-item disabled">Naar wat voor gerne muziek luister je graag?</option>
             <option value="Metal">Metal</option>
             <option value="Pop">Pop</option>
             <option value="RnB">RnB</option>
@@ -126,8 +136,13 @@ else{
             <option value="Dance">Dance</option>
         </select>
     </div>
-        
-    <div><input type="submit" value="Add!" class="btn"></div>
+      
+    <div class="form-group mt-4">
+        <button type="submit" class="btn" style="width: 336px">Voeg eigenschappen toe!</button>
+    </div>
+    </div>
     </form>
+</div>
+    </div>
 </body>
 </html>
