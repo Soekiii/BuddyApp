@@ -68,14 +68,14 @@ if(isset($_POST["register"])){
     </div>
     <div class="col-md-6 col-md-3 no-gutters">
     <div class="container-right d-flex justify-content-center align-items-center">
-        <form action="register.php" method="post">
-    <div class="form-group mb-4">
+        <form action="register.php" method="post" style="width: 366px">
+    <div class="form-group my-4">
         <h2>Registreer je hier op Amigos</h2>
     </div>
-        <div class="row">
-            <div class="col" >
+        <div class="row mb-3">
+            <div class="col">
             <label for="firstName">Voornaam</label>
-        <?php if(isset($gelukt)): ?>
+        <?php if(empty($errorMessage['firstName'])): ?>
             <input type="text" id="firstName" name="firstName" type="text" class="form-control" placeholder="Voornaam">
         <?php else: ?>  
             <input type="text" id="firstName" name="firstName" type="text" class="form-control is-invalid" placeholder="Voornaam">
@@ -87,28 +87,38 @@ if(isset($_POST["register"])){
 
             <div class="col">
             <label for="lastName">Achternaam</label>
-            <input type="text" id="lastName" name="lastName" type="text" class="form-control" placeholder="Achternaam"><br>
-
-            <div class="errorMessage">
-                <?php echo $errorMessage['lastName'] ?? '' ?>
-                </div>
+        <?php if(empty($errorMessage['lastName'])): ?>
+            <input type="text" id="lastName" name="lastName" type="text" class="form-control" placeholder="Achternaam">
+        <?php else: ?>     
+            <input type="text" id="lastName" name="lastName" type="text" class="form-control is-invalid" placeholder="Achternaam">
+            <div class="invalid-feedback">
+            <?php echo $errorMessage['lastName'] ?? '' ?>
+            </div>
+        <?php endif; ?>
             </div>
         </div>
-            <div class="form-group mb-1 ">
+            <div class="form-group mb-3">
             <label for="email">Emailadres</label>
-            <input type="text"id="email" name="email" type="text" class="form-control" placeholder="Email"> <br>
-            
-            <div class="errorMessage">
-                <?php echo $errorMessage['email'] ?? '' ?>
-                </div>
+        <?php if(empty($errorMessage['email'])): ?>
+            <input type="text"id="email" name="email" type="text" class="form-control" placeholder="Email"> 
+        <?php else: ?>  
+            <input type="text"id="email" name="email" type="text" class="form-control is-invalid" placeholder="Email">
+            <div class="invalid-feedback">
+            <?php echo $errorMessage['email'] ?? '' ?>
+            </div>
+        <?php endif; ?>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-4">
             <label for="password">Paswoord</label>
-            <input type="password" id="password" name="password" type="password" class="form-control" placeholder="Paswoord"><br>
-            <div class="errorMessage">
+        <?php if(empty($errorMessage['password'])): ?>
+            <input type="password" id="password" name="password" type="password" class="form-control" placeholder="Paswoord">
+        <?php else: ?>  
+            <input type="password" id="password" name="password" type="password" class="form-control is-invalid" placeholder="Paswoord"> 
+            <div class="invalid-feedback">
                 <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
+        <?php endif; ?>
             </div>
 
             <div class="d-flex justify-content-between">
