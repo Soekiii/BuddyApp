@@ -20,10 +20,12 @@ if(isset($_POST["muziek"])){
         $hobby->setFilm(htmlspecialchars($_POST['film']));
         $hobby->setGame(htmlspecialchars($_POST['game']));
         $hobby->setMuziek(htmlspecialchars($_POST['muziek']));
+        $hobby->setBuddy($_POST['buddy']);
         $hobby->setUserID(htmlspecialchars($userID));
         $hobby->hobbyInvullen();
         //$hobby->hobbyInvullen($_POST);
         header('Location: index.php');
+        echo $hobby->getBuddy();
     }
     catch(throwable $e){
         $error = "Iets is mis gegaan.";
@@ -125,7 +127,7 @@ if(isset($_POST["muziek"])){
     <div class="form">
         <!--<input type="text" id="muziek" name="muziek">-->
         <select id="muziek" name="muziek"  class="form-control">
-            <option value="" class="dropdown-item disabled">Naar wat voor gerne muziek luister je graag?</option>
+            <option value="" class="dropdown-item disabled">Naar wat voor genre muziek luister je graag?</option>
             <option value="Metal">Metal</option>
             <option value="Pop">Pop</option>
             <option value="RnB">RnB</option>
@@ -140,9 +142,22 @@ if(isset($_POST["muziek"])){
     <div class="form-group mt-4">
         <button type="submit" class="btn" style="width: 336px">Voeg eigenschappen toe!</button>
     </div>
+
+    <div class="checkbox">
+        <label> Ik geef me op als buddy ☺ 
+        <input type="checkbox" id="buddy" name="buddy">
+        </label>
     </div>
     </form>
 </div>
     </div>
+
+    <!-- 
+==> als je buddy bent klik hier
+==> query invoegen
+==> deze info in de db opnemen met true or false -->
+
+
+
 </body>
 </html>
