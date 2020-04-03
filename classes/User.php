@@ -138,11 +138,12 @@ include_once (__DIR__ . "/Db.php");
         $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
         
             //Registratie in database
-        $statment= $conn->prepare("INSERT INTO user (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password)");
+        $statment= $conn->prepare("INSERT INTO user (firstname, lastname, email, password, avatar) values (:firstname, :lastname, :email, :password, :avatar)");
         $statment->bindValue(":firstname",$this->firstName);
         $statment->bindValue(":lastname",$this->lastName);
         $statment->bindValue(":email",$this->email);
         $statment->bindValue(":password",$this->password);
+        $statment->bindValue(":avatar", "default.png");
 
         $result=$statment->execute();
 
