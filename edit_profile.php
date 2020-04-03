@@ -1,3 +1,26 @@
+<?php
+    session_start();    
+    if(empty($_SESSION['user_id'])){
+        header('Location: login.php');
+    }
+
+    include_once (__DIR__ . "/classes/User.php");
+
+    $userArray = $_SESSION['user_id'];
+    $userID = implode(" ", $userArray);
+
+    //het deel hieronder werkt helaas nog niet --> work in progress...
+    if (isset($_POST['submit'])){ 
+                    $conn = Db::getConnection();
+                    $statement = $conn->prepare("UPDATE user SET buddy = '$buddy' WHERE userID = '$userID'");
+                    $statement->execute();
+                  
+                } 
+        
+    
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,17 +38,22 @@
     <div class="email"><a href="edit_profile\email.php">Change email</a></div>
     <div class="password"><a href="edit_profile\password.php">Change password</a></div>
 
-<!-- 
-==> als je buddy bent klik hier
-==> als je geen buddy bent klik hier
-==> deze info in de db opnemen met true or false -->
 
+    <form action="edit_profile.php" method="post" style="width: 366px">
+    <div class="radio">
+        <input type="radio" id="seekBuddy" name="buddy" checked value="0">
+        <label> Ik zoek een buddy </label>
+    </div>
 
+    <div class="radio">
+        <input type="radio" id="iAmBuddy" name="buddy" value="1">
+        <label> Ik ben een buddy </label>
+    </div>
 
-<p>Ik geef me op als buddy ☺ </p>
-<label class="switch">
-  <input type="checkbox">
-  <span class="slider round"></span>
-</label>
+    <button type="submit" class="btn" style="width: 150px" id="aanpassen" name="aanpassen">aanpassen</button>
+    </form>
+
+</body>
+</html>
 
  

@@ -1,11 +1,13 @@
 <?php
 include_once (__DIR__ . "/Db.php");
+include_once (__DIR__ . "/Hobby.php");
     class User 
     {
     private $email;
     private $password;
     private $firstName;
     private $lastName;
+    private $buddy;
 
     
     /**
@@ -88,6 +90,18 @@ include_once (__DIR__ . "/Db.php");
 
         return $this;
     }
+
+     //get en set buddyCheckbox
+     public function getBuddy(){
+        return $this->buddy;
+    }
+
+    public function setBuddy($userID){
+        $this->buddy = $userID;
+
+        
+    }
+
     
     public function canILogin()
     {
@@ -138,17 +152,19 @@ include_once (__DIR__ . "/Db.php");
         $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
         
             //Registratie in database
-        $statment= $conn->prepare("INSERT INTO user (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password)");
-        $statment->bindValue(":firstname",$this->firstName);
-        $statment->bindValue(":lastname",$this->lastName);
-        $statment->bindValue(":email",$this->email);
-        $statment->bindValue(":password",$this->password);
+        $statement= $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy) values (:firstname, :lastname, :email, :password, :buddy)");
+        $statement->bindValue(":firstname",$this->firstName);
+        $statement->bindValue(":lastname",$this->lastName);
+        $statement->bindValue(":email",$this->email);
+        $statement->bindValue(":password",$this->password);
+        $statement->bindValue(":buddy", $this->buddy);
 
-        $result=$statment->execute();
+        $result=$statement->execute();
 
         return $result;
   
     }
+   
    
     
 

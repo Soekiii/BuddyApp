@@ -9,7 +9,7 @@ class Hobby {
     private $game;
     private $muziek;
     private $userID;
-    private $buddy;
+    
     
     //getter setter Hobby
     public function getHobby(){
@@ -77,17 +77,7 @@ class Hobby {
         return $this;
     }
 
-    //get en set buddyCheckbox
-    public function getBuddy(){
-        return $this->buddy;
-    }
-
-    public function setBuddy($userID){
-        $this->buddy = $userID;
-
-        
-    }
-
+   
 
 
     // tellen of er 5 eigenschappen in zitten
@@ -137,6 +127,9 @@ class Hobby {
             return $result;
 
     }
+
+
+    
 
     
 }

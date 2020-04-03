@@ -12,6 +12,7 @@ $userID = implode(" ", $userArray);
 
 
 if(isset($_POST["muziek"])){
+    
     if(!empty($_POST["muziek"] && $_POST['game'] && $_POST['film'] && $_POST['hobby'] && $_POST['locatie'])){
     try{
         $hobby = new Hobby();
@@ -20,12 +21,16 @@ if(isset($_POST["muziek"])){
         $hobby->setFilm(htmlspecialchars($_POST['film']));
         $hobby->setGame(htmlspecialchars($_POST['game']));
         $hobby->setMuziek(htmlspecialchars($_POST['muziek']));
-        $hobby->setBuddy($_POST['buddy']);
         $hobby->setUserID(htmlspecialchars($userID));
         $hobby->hobbyInvullen();
         //$hobby->hobbyInvullen($_POST);
-        header('Location: index.php');
-        echo $hobby->getBuddy();
+
+        
+       header('Location: index.php');
+
+
+
+
     }
     catch(throwable $e){
         $error = "Iets is mis gegaan.";
@@ -58,6 +63,7 @@ if(isset($_POST["muziek"])){
 <div class="d-flex justify-content-center align-items-center text-center" >
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post"> 
     <h1>Hey! Vul deze velden in om nog makkelijker een match te vinden!</h1>
+    
     <!-- error message weergeven -->
     <?php if(isset($error)): ?>
         <div class="form alert alert-danger"role="alert">
@@ -143,19 +149,12 @@ if(isset($_POST["muziek"])){
         <button type="submit" class="btn" style="width: 336px">Voeg eigenschappen toe!</button>
     </div>
 
-    <div class="checkbox">
-        <label> Ik geef me op als buddy ☺ 
-        <input type="checkbox" id="buddy" name="buddy">
-        </label>
-    </div>
+ 
     </form>
 </div>
     </div>
 
-    <!-- 
-==> als je buddy bent klik hier
-==> query invoegen
-==> deze info in de db opnemen met true or false -->
+
 
 
 
