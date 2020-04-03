@@ -43,6 +43,11 @@ $searchResult = "";
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <input type="text" name="search" placeholder="search">
     <button type="submit" name="submit-search">Search</button>
+    <!-- search error -->
+    <?php if(isset($error)): ?>
+        <div class="error" style="color: red"><?php echo $error; ?></div>
+    <?php endif; ?>
+    </form>
     <!-- dropdown form -->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     
@@ -57,12 +62,6 @@ $searchResult = "";
         </select>
         <button type="submit" name="filter-search">Search</button>
    
-    </form>
-
-    <!-- search error -->
-    <?php if(isset($error)): ?>
-        <div class="error" style="color: red"><?php echo $error; ?></div>
-    <?php endif; ?>
     </form>
     <!-- zoekresultaat hits -->
     <?php if(isset($result)): ?>
