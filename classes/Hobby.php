@@ -124,6 +124,17 @@ class Hobby {
 
     }
 
+    // geeft eigenschappen van gebruiker
+    public static function getEigenschappen($userID){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select * from hobby 
+        INNER JOIN user ON hobby.userID = user.userID and user.userID = :userID");
+        $statement->bindParam(':userID', $userID);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
     
 }
 ?>
