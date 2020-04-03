@@ -10,6 +10,10 @@ include_once(__DIR__."/classes/User.php");
 $userArray = $_SESSION['user_id'];
 $userID = implode(" ", $userArray);
 
+
+// eigenschappen ophalen van de user
+$eigenschappen = Hobby::getEigenschappen($userID);
+
 $searchResult = "";
         if(isset($_POST['submit-search'])){
             $search = htmlspecialchars($_POST['search']);
@@ -39,6 +43,22 @@ $searchResult = "";
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <input type="text" name="search" placeholder="search">
     <button type="submit" name="submit-search">Search</button>
+    <!-- dropdown form -->
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+    
+        <select name="filter" id="input-order" class="form-control">
+        <!-- eigenschappen uitlezen van de user in een dropdown -->
+        <option value="">Filter op eigen intresse</option>
+        <option value="<?php echo $eigenschappen['hobby']; ?>"><?php echo $eigenschappen['hobby']; ?></option>
+        <option value="<?php echo $eigenschappen['film']; ?>"><?php echo $eigenschappen['film']; ?></option>
+        <option value="<?php echo $eigenschappen['game']; ?>"><?php echo $eigenschappen['game']; ?></option>
+        <option value="<?php echo $eigenschappen['muziek']; ?>"><?php echo $eigenschappen['muziek']; ?></option>
+        <option value="<?php echo $eigenschappen['locatie']; ?>"><?php echo $eigenschappen['locatie']; ?></option>
+        </select>
+        <button type="submit" name="filter-search">Search</button>
+   
+    </form>
+
     <!-- search error -->
     <?php if(isset($error)): ?>
         <div class="error" style="color: red"><?php echo $error; ?></div>
