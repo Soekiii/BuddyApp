@@ -17,7 +17,7 @@ $eigenschappen = Hobby::getEigenschappen($userID);
 $searchResult = "";
         if(isset($_POST['submit-search'])){
             $search = htmlspecialchars($_POST['search']);
-            $searchResult = User::userSearch($search);
+            $searchResult = User::userSearch($search,$email);
             // als de array gelijk is aan NULL of O dan geeft die error weer
             if($searchResult == NULL || $searchResult == 0){
                 $error = "geen zoekresultaten gevonden.";

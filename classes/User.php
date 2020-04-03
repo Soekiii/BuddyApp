@@ -118,11 +118,12 @@ include_once (__DIR__ . "/Db.php");
         return $result;
     }
 
-    public static function userSearch($search)
+     public static function userSearch($search, $email)
     {
     $conn = Db::getConnection();
 
-    $statement = $conn->prepare("select * from user where firstname like :search or lastname like :search");
+    $statement = $conn->prepare("select * from user where firstname like :search or lastname like :search and email != :email");
+    $statement->bindValue(':email', $email);
     $statement->bindValue(':search', '%' . $search . '%');
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
