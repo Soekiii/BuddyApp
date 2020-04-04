@@ -8,13 +8,15 @@
 
     $userArray = $_SESSION['user_id'];
     $userID = implode(" ", $userArray);
+    
 
-    //het deel hieronder werkt helaas nog niet --> work in progress...
-    if (isset($_POST['submit'])){ 
-                    $conn = Db::getConnection();
-                    $statement = $conn->prepare("UPDATE user SET buddy = '$buddy' WHERE userID = '$userID'");
-                    $statement->execute();
-                  
+   //update user met ben ik buddy of zoek ik buddy
+    if (!empty($_POST)){ 
+        echo "hier ben ik";
+                    $user = new User();
+                    $user->setBuddy($_POST['buddy']); 
+                    $user->setUserBuddy($userID); 
+                    $user->updateUserBuddy();
                 } 
         
     

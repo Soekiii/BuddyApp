@@ -8,6 +8,7 @@ include_once (__DIR__ . "/Hobby.php");
     private $firstName;
     private $lastName;
     private $buddy;
+    private $userBuddy;
 
     
     /**
@@ -96,11 +97,23 @@ include_once (__DIR__ . "/Hobby.php");
         return $this->buddy;
     }
 
-    public function setBuddy($userID){
-        $this->buddy = $userID;
+    public function setBuddy($buddy){
+        $this->buddy = $buddy;
 
         
     }
+
+    public function getUserBuddy(){
+        return $this->userBuddy;
+    }
+
+    public function setUserBuddy($userBuddy){
+        $this->userBuddy = $userBuddy;
+
+        
+    }
+    
+
 
     
     public function canILogin()
@@ -165,7 +178,14 @@ include_once (__DIR__ . "/Hobby.php");
   
     }
    
-   
+    //database statement om aan te passen of je buddy bent of een buddy zoekt
+   public function updateUserBuddy(){
+
+    $conn = Db::getConnection();
+    $statement = $conn->prepare("UPDATE user SET buddy='$this->buddy' WHERE userID = '$this->userBuddy'");
+    $result=$statement->execute();
+    return $result;
+   }
     
 
     

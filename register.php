@@ -15,7 +15,7 @@ if(isset($_POST["register"])){
                 $user->setPassword(htmlspecialchars($_POST['password']));
                 $user->setFirstname(htmlspecialchars($_POST['firstName']));
                 $user->setLastname(htmlspecialchars($_POST['lastName']));
-                $user->setBuddy(htmlspecialchars($_POST['buddy']));
+                $user->setBuddy(htmlspecialchars($_POST['buddy'])); // ben ik buddy of zoek ik buddy?
                     // hier alle gegevens verzamelen voor inloggen en data bewaren op db
                 $validate->Emailvalidator();
                 $errorMessage=$validate->getErrors();
@@ -28,7 +28,7 @@ if(isset($_POST["register"])){
                        
                         $statement= $user->registerNewUser();
                         if ($statement===true){
-                            //header('Location: index.php');
+                            header('Location: index.php');
                             }   
     
                     }
