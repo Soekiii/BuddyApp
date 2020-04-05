@@ -102,6 +102,7 @@ $searchResult = "";
     <div class="result-container">
     <?php if (is_array($searchResult) || is_object($searchResult)) {
         foreach($searchResult as $r): ?>
+        <img src="avatars/<?php echo $r['avatar']; ?>" alt="" style="height:100px">
         <h3><?php echo($r['firstname'] . " " . $r['lastname']); ?></h3>
         <?php endforeach; }?>
     </div>
