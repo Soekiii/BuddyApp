@@ -12,7 +12,6 @@
 
    //update user met ben ik buddy of zoek ik buddy
     if (!empty($_POST)){ 
-        echo "hier ben ik";
                     $user = new User();
                     $user->setBuddy($_POST['buddy']); 
                     $user->setUserBuddy($userID); 

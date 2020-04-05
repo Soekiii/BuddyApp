@@ -1,3 +1,31 @@
+<?php 
+//queryprobeersels
+include_once (__DIR__ . "/classes/User.php");
+include_once (__DIR__ . "/classes/Validate.php");
+include_once (__DIR__ . "/classes/Db.php");
+
+$conn = Db::getConnection();
+
+$statement = $conn->prepare("
+SELECT 
+u1.firstname as firstnameBuddy1, 
+u1.lastname as lastnameBuddy1,
+u1.avatar as avatar1,
+u2.firstname as firstnameBuddy2, 
+u2.lastname as lastnameBuddy2, 
+u2.avatar as avatar2
+FROM 
+buddies as b, user u1, user u2
+WHERE
+u1.userID = b.buddy1ID AND
+u2.userID = b.buddy2ID
+");
+$statement->execute();
+$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,20 +38,13 @@
 </head>
 <body>
 <h2>Wij zijn buddies!</h2>
-<div class="row">
-  <div class="col-md-6"><img src="avatars/default.png" alt="default_avatar"></div>
-  <div class="col-md-6"><img src="avatars/default.png" alt="default_avatar"></div>
-</div>
-<div class="row">
-<div class="col-md-6"><img src="avatars/default.png" alt="default_avatar"></div>
-<div class="col-md-6"><img src="avatars/default.png" alt="default_avatar"></div>
-  
-</div>
-<div class="row">
-<div class="col-md-6"><img src="avatars/default.png" alt="default_avatar"></div>
-<div class="col-md-6"><img src="avatars/default.png" alt="default_avatar"></div>
-  
-</div>
+
+<ul id="buddies" class="list-group">
+<?php foreach($result as $afdruk): ?>
+  <li class="list-group-item"><img src="<?php echo $afdruk["avatar1"]?>"><?php echo $afdruk["firstnameBuddy1"]." ".$afdruk["lastnameBuddy1"]." buddy met ".$afdruk["firstnameBuddy2"]." ".$afdruk["lastnameBuddy2"]?><img src="<?php echo $afdruk["avatar2"]?>"></li>
+  <?php endforeach ?>
+</ul>
+
     
 </body>
 </html>
