@@ -38,7 +38,7 @@ if(!empty($_POST['filter'])){
 $searchResult = "";
         if(isset($_POST['submit-search'])){
             $search = htmlspecialchars($_POST['search']);
-            $searchResult = User::userSearch($search,$email);
+            $searchResult = User::userSearch($search,$_SESSION['email']);
             // als de array gelijk is aan NULL of O dan geeft die error weer
             if($searchResult == NULL || $searchResult == 0){
                 $error = "geen zoekresultaten gevonden.";
