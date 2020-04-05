@@ -145,11 +145,12 @@ include_once (__DIR__ . "/Hobby.php");
         return $result;
     }
 
-    public static function userSearch($search)
+     public static function userSearch($search, $email)
     {
     $conn = Db::getConnection();
 
-    $statement = $conn->prepare("select * from user where firstname like :search or lastname like :search");
+    $statement = $conn->prepare("select * from user where firstname or lastname like :search and email != :email");
+    $statement->bindValue(':email', $email);
     $statement->bindValue(':search', '%' . $search . '%');
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -165,12 +166,13 @@ include_once (__DIR__ . "/Hobby.php");
         $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
         
             //Registratie in database
-        $statement= $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy) values (:firstname, :lastname, :email, :password, :buddy)");
+        $statement= $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar) values (:firstname, :lastname, :email, :password, :buddy, :avatar)");
         $statement->bindValue(":firstname",$this->firstName);
         $statement->bindValue(":lastname",$this->lastName);
         $statement->bindValue(":email",$this->email);
         $statement->bindValue(":password",$this->password);
         $statement->bindValue(":buddy", $this->buddy);
+        $statement->bindValue(":avatar", "default.png");
 
         $result=$statement->execute();
 
