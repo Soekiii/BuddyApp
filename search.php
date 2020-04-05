@@ -10,9 +10,20 @@ include_once(__DIR__."/classes/User.php");
 $userArray = $_SESSION['user_id'];
 $userID = implode(" ", $userArray);
 
-
+$hobby = "";
 // eigenschappen ophalen van de user
 $eigenschappen = Hobby::getEigenschappen($userID);
+if(!empty($_POST['filter'])){
+    if(isset($_POST['filter'])){
+    
+        $filter = $_POST['filter'];
+        $hobby = Hobby::filterHobby($filter, $_SESSION['email']);
+
+       
+        
+}
+}
+    
 
 $searchResult = "";
         if(isset($_POST['submit-search'])){
@@ -78,5 +89,16 @@ $searchResult = "";
         <h3><?php echo($r['firstname'] . " " . $r['lastname']); ?></h3>
         <?php endforeach; }?>
     </div>
+
+     <!-- filter hobby uitlezen als er iets inzit-->
+     <div class="filter-container">
+    <?php if (is_array($hobby) || is_object($hobby)) { 
+        foreach($hobby as $h): ?>
+        <img src="avatars/<?php echo $h['avatar']; ?>" alt="" style="height:100px">
+        <h3><?php echo($h['firstname'] . " " . $h['lastname'] . " " . $h['hobby']); ?></h3>
+        <?php endforeach; } ?>
+       
+    </div>
+
 </body>
 </html>
