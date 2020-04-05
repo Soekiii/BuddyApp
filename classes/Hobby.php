@@ -146,12 +146,48 @@ class Hobby {
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-    
-    public function __toString()
-    {
-        $filter = $this->getHobby();
-        return $filter;
+    public static function filterFilm($film, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname, film,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and film like :film");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':film', '%' . $film . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
+    public static function filterGame($game, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname, game,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and game like :game");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':game', '%' . $game . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public static function filterMuziek($muziek, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname, muziek,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and muziek like :muziek");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':muziek', '%' . $muziek . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public static function filterLocatie($locatie, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname, locatie,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and locatie like :locatie");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':locatie', '%' . $locatie . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    
 
 
 }

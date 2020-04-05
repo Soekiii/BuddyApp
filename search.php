@@ -13,6 +13,10 @@ $user = new User();
 $email = $user->getEmail();
 
 $hobby = "";
+$film = "";
+$game = "";
+$muziek = "";
+$locatie = "";
 // eigenschappen ophalen van de user
 $eigenschappen = Hobby::getEigenschappen($userID);
 if(!empty($_POST['filter'])){
@@ -20,6 +24,10 @@ if(!empty($_POST['filter'])){
     
         $filter = $_POST['filter'];
         $hobby = Hobby::filterHobby($filter, $_SESSION['email']);
+        $film = Hobby::filterFilm($filter, $_SESSION['email']);
+        $game = Hobby::filterGame($filter, $_SESSION['email']);
+        $muziek = Hobby::filterMuziek($filter, $_SESSION['email']);
+        $locatie = Hobby::filterLocatie($filter, $_SESSION['email']);
 
        
         
@@ -105,8 +113,40 @@ $searchResult = "";
         <img src="avatars/<?php echo $h['avatar']; ?>" alt="" style="height:100px">
         <h3><?php echo($h['firstname'] . " " . $h['lastname'] . " " . $h['hobby']); ?></h3>
         <?php endforeach; } ?>
-       
     </div>
+    <!-- filter film uitlezen als er iets inzit-->
+    <div class="filter-container">
+    <?php if (is_array($film) || is_object($film)) { 
+        foreach($film as $f): ?>
+        <img src="avatars/<?php echo $f['avatar']; ?>" alt="" style="height:100px">
+        <h3><?php echo($f['firstname'] . " " . $f['lastname'] . " " . $f['film']); ?></h3>
+        <?php endforeach; }?>
+    </div>
+     <!-- filter game uitlezen als er iets inzit-->
+     <div class="filter-container">
+     <?php if (is_array($game) || is_object($game)) { 
+        foreach($game as $g): ?>
+        <img src="avatars/<?php echo $g['avatar']; ?>" alt="" style="height:100px">
+        <h3><?php echo($g['firstname'] . " " . $g['lastname'] . " " . $g['game']); ?></h3>
+        <?php endforeach; }?>
+    </div>
+     <!-- filter muziek uitlezen als er iets inzit-->
+     <div class="filter-container">
+     <?php if (is_array($muziek) || is_object($muziek)) { 
+        foreach($muziek as $m): ?>
+        <img src="avatars/<?php echo $m['avatar']; ?>" alt="" style="height:100px">
+        <h3><?php echo($m['firstname'] . " " . $m['lastname'] . " " . $m['muziek']); ?></h3>
+        <?php endforeach; }?>
+    </div>
+     <!-- filter film locatie als er iets inzit-->
+     <div class="filter-container">
+     <?php if (is_array($locatie) || is_object($locatie)) { 
+        foreach($locatie as $l): ?>
+        <img src="avatars/<?php echo $l['avatar']; ?>" alt="" style="height:100px">
+        <h3><?php echo($l['firstname'] . " " . $l['lastname'] . " " . $l['locatie']); ?></h3>
+        <?php endforeach; }?>
+    </div>
+
     </div>
     </div>
     </div>
