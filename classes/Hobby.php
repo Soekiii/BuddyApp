@@ -136,5 +136,23 @@ class Hobby {
         return $result;
     }
     
+    public static function filterHobby($hobby, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname,hobby,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and hobby like :hobby");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':hobby', '%' . $hobby . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
+    public function __toString()
+    {
+        $filter = $this->getHobby();
+        return $filter;
+    }
+
+
 }
 ?>
