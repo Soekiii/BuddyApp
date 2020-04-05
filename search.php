@@ -9,6 +9,8 @@ include_once(__DIR__."/classes/User.php");
 
 $userArray = $_SESSION['user_id'];
 $userID = implode(" ", $userArray);
+$user = new User();
+$email = $user->getEmail();
 
 $hobby = "";
 // eigenschappen ophalen van de user
@@ -50,6 +52,9 @@ $searchResult = "";
     <title>Zoeken | Amigos</title>
 </head>
 <body>
+    <div class="container-fluid" style="width: 336px">
+    <div class="d-flex justify-content-center align-items-center text-center" >
+    <div class="dropdown btn-lg text-center" >
     <!-- search form -->
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <input type="text" name="search" placeholder="search">
@@ -60,9 +65,11 @@ $searchResult = "";
     <?php endif; ?>
     </form>
     <!-- dropdown form -->
+    
+    <div class="form">
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     
-        <select name="filter" id="input-order" class="form-control">
+        <select name="filter" id="input-order" class="form-control mb-4">
         <!-- eigenschappen uitlezen van de user in een dropdown -->
         <option value="">Filter op eigen intresse</option>
         <option value="<?php echo $eigenschappen['hobby']; ?>"><?php echo $eigenschappen['hobby']; ?></option>
@@ -74,6 +81,7 @@ $searchResult = "";
         <button type="submit" name="filter-search">Search</button>
    
     </form>
+    </div>
     <!-- zoekresultaat hits -->
     <?php if(isset($result)): ?>
         <div class="result"><h2><?php echo $result; ?></h2></div>
@@ -99,6 +107,8 @@ $searchResult = "";
         <?php endforeach; } ?>
        
     </div>
-
+    </div>
+    </div>
+    </div>
 </body>
 </html>
