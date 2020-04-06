@@ -1,11 +1,15 @@
 <?php 
-session_start();
-if (empty($_SESSION['user_id'])) {
-    header('Location: login.php');
-}
 include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Hobby.php");
 include_once(__DIR__."/classes/User.php");
+
+session_start();
+if (empty($_SESSION['user_id'])) {
+    header('Location: login.php');
+} else {
+    $calcMatch = new User();
+    $match= $calcMatch->calcMatch();
+}
 
 $userArray = $_SESSION['user_id'];
 $userID = implode(" ", $userArray);
