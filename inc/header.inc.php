@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php
+//include_once(__DIR__."/classes/Message.php");
+//include_once(__DIR__."/classes/User.php");
+
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,6 +33,9 @@
           </li> 
           <li class="nav-item">
             <a class="nav-link"  style="color: #fff;" href="edit_profile.php">Profiel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  style="color: #fff;" href="buddyList.php">Buddy's</a>
           </li>
           <li class="nav-item">
             <a class="nav-link"  style="color: #fff;" href="search.php">Zoeken</a>

@@ -150,6 +150,17 @@ include_once (__DIR__ . "/Db.php");
   
     }
    
+    //om al de buddies uit de database te halen
+    static function getAllBuddies($currentUser){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("SELECT * FROM buddies where buddy1ID = :currentUser OR buddy2ID = :currentUser");
+        $statement->bindValue(":currentUser",$currentUser);
+        if($statement->execute()){
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+    }
     
 
     
