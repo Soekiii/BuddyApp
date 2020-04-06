@@ -189,6 +189,30 @@ include_once (__DIR__ . "/Hobby.php");
     return $result;
    }
     
+    public function calcMatch(){
+    $userArray = $_SESSION['user_id'];
+    $userID = implode(" ", $userArray);
 
+    $conn = Db::getConnection();
+    $statementUser = $conn->prepare('SELECT * FROM hobby WHERE userID = :userID');
+    $statementUser->bindValue(':userID', $userID);
+    $statementUser->execute();
+    $hobbyUser = $statementUser->fetch(PDO::FETCH_ASSOC);
+
+    $statementOthers = $conn->prepare('SELECT film, hobby, game, muziek, locatie, userID FROM hobby WHERE userID != :userID');
+    $statementOthers->bindValue(':userID', $userID);
+    $statementOthers->execute();
+    $hobbyOthers = $statementOthers->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($hobbyOthers as $hobbyOther){
+        print_r($hobbyOther['game']);
+        echo "_________";
+    }
+
+    print_r($hobbyUser['game']);
+
+    return $hobbyOthers;
+    return $hobbyUser;
+    }
     
 }

@@ -17,6 +17,11 @@ if($count == false){
     header('Location: hobby.php');
 }
 
+$match = new User();
+$myName= $match->calcMatch();
+
+
+
 
 ?><!DOCTYPE html>
 <html lang="en">
