@@ -12,10 +12,10 @@ if(isset($_POST["register"])){
                 $validate = new Validate($_POST);
                 //eerst checken of de email al bestaat voor je alle variabelen vult
                 $user->setEmail(htmlspecialchars($_POST['email']));
-             //   $password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT, ["cost" => 12]);
                 $user->setPassword(htmlspecialchars($_POST['password']));
                 $user->setFirstname(htmlspecialchars($_POST['firstName']));
                 $user->setLastname(htmlspecialchars($_POST['lastName']));
+                $user->setBuddy(htmlspecialchars($_POST['buddy'])); // ben ik buddy of zoek ik buddy?
                     // hier alle gegevens verzamelen voor inloggen en data bewaren op db
                 $validate->Emailvalidator();
                 $errorMessage=$validate->getErrors();
@@ -71,6 +71,16 @@ if(isset($_POST["register"])){
         <form action="register.php" method="post" style="width: 366px">
     <div class="form-group my-4">
         <h2>Registreer je hier op Amigos</h2>
+
+    <div class="radio">
+        <input type="radio" id="seekBuddy" name="buddy" checked value="0">
+        <label> Ik zoek een buddy </label>
+    </div>
+
+    <div class="radio">
+        <input type="radio" id="iAmBuddy" name="buddy" value="1">
+        <label> Ik ben een buddy </label>
+    </div>
     </div>
         <div class="row mb-3">
             <div class="col">

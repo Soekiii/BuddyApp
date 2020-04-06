@@ -10,6 +10,7 @@ class Hobby {
     private $muziek;
     private $userID;
     
+    
     //getter setter Hobby
     public function getHobby(){
         return $this->hobby;
@@ -76,6 +77,9 @@ class Hobby {
         return $this;
     }
 
+   
+
+
     // tellen of er 5 eigenschappen in zitten
     public function countHobbies($userID){
         try{
@@ -124,6 +128,71 @@ class Hobby {
 
     }
 
+    // geeft eigenschappen van gebruiker
+    public static function getEigenschappen($userID){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select * from hobby 
+        INNER JOIN user ON hobby.userID = user.userID and user.userID = :userID");
+        $statement->bindParam(':userID', $userID);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
     
+    public static function filterHobby($hobby, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname,hobby,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and hobby like :hobby");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':hobby', '%' . $hobby . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public static function filterFilm($film, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname, film,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and film like :film");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':film', '%' . $film . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public static function filterGame($game, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname, game,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and game like :game");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':game', '%' . $game . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public static function filterMuziek($muziek, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname, muziek,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and muziek like :muziek");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':muziek', '%' . $muziek . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public static function filterLocatie($locatie, $email){
+        $conn = Db::getConnection();
+        $statement =$conn->prepare("select firstname,lastname, locatie,avatar from hobby, user where hobby.userID = user.userID 
+        and user.email != :email and locatie like :locatie");
+        $statement->bindValue(':email', $email);
+        $statement->bindValue(':locatie', '%' . $locatie . '%');
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    
+
+
 }
 ?>

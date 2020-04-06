@@ -1,11 +1,14 @@
 <?php
 include_once (__DIR__ . "/Db.php");
+include_once (__DIR__ . "/Hobby.php");
     class User 
     {
     private $email;
     private $password;
     private $firstName;
     private $lastName;
+    private $buddy;
+    private $userBuddy;
 
     
     /**
@@ -88,6 +91,30 @@ include_once (__DIR__ . "/Db.php");
 
         return $this;
     }
+
+     //get en set buddyCheckbox
+     public function getBuddy(){
+        return $this->buddy;
+    }
+
+    public function setBuddy($buddy){
+        $this->buddy = $buddy;
+
+        
+    }
+
+    public function getUserBuddy(){
+        return $this->userBuddy;
+    }
+
+    public function setUserBuddy($userBuddy){
+        $this->userBuddy = $userBuddy;
+
+        
+    }
+    
+
+
     
     public function canILogin()
     {
@@ -118,11 +145,12 @@ include_once (__DIR__ . "/Db.php");
         return $result;
     }
 
-    public static function userSearch($search)
+     public static function userSearch($search, $email)
     {
     $conn = Db::getConnection();
 
-    $statement = $conn->prepare("select * from user where firstname like :search or lastname like :search");
+    $statement = $conn->prepare("select * from user where firstname or lastname like :search and email != :email");
+    $statement->bindValue(':email', $email);
     $statement->bindValue(':search', '%' . $search . '%');
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -138,13 +166,15 @@ include_once (__DIR__ . "/Db.php");
         $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
         
             //Registratie in database
-        $statment= $conn->prepare("INSERT INTO user (firstname, lastname, email, password) values (:firstname, :lastname, :email, :password)");
-        $statment->bindValue(":firstname",$this->firstName);
-        $statment->bindValue(":lastname",$this->lastName);
-        $statment->bindValue(":email",$this->email);
-        $statment->bindValue(":password",$this->password);
+        $statement= $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar) values (:firstname, :lastname, :email, :password, :buddy, :avatar)");
+        $statement->bindValue(":firstname",$this->firstName);
+        $statement->bindValue(":lastname",$this->lastName);
+        $statement->bindValue(":email",$this->email);
+        $statement->bindValue(":password",$this->password);
+        $statement->bindValue(":buddy", $this->buddy);
+        $statement->bindValue(":avatar", "default.png");
 
-        $result=$statment->execute();
+        $result=$statement->execute();
 
         return $result;
   
@@ -161,6 +191,14 @@ include_once (__DIR__ . "/Db.php");
         }
 
     }
+    //database statement om aan te passen of je buddy bent of een buddy zoekt
+   public function updateUserBuddy(){
+
+    $conn = Db::getConnection();
+    $statement = $conn->prepare("UPDATE user SET buddy='$this->buddy' WHERE userID = '$this->userBuddy'");
+    $result=$statement->execute();
+    return $result;
+   }
     
 
     
