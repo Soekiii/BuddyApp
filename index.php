@@ -3,7 +3,6 @@ session_start();
 if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
 }
-include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Hobby.php");
 include_once(__DIR__."/classes/User.php");
 
@@ -17,7 +16,7 @@ if($count == false){
     header('Location: hobby.php');
 }
 
-
+include_once(__DIR__."/inc/header.inc.php");
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
