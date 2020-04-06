@@ -119,15 +119,15 @@ if(isset($_POST["muziek"])){
     <div class="form">
         <!--<input type="text" id="film" name="film">-->
         <select id="film" name="film" class="form-control mb-4">
-            <option value="" class="dropdown-item disabled">Naar wat voor gerne filmen kijk je graag?</option>
-            <option value="Star Wars">Star Wars</option>
-            <option value="Pulp Fiction">Pulp Fiction</option>
-            <option value="Lord of the Rings">Lord of the Rings</option>
-            <option value="50 Shades of Grey">50 Shades of Grey</option>
-            <option value="X-men">X-men</option>
-            <option value="The Dark Knight">The Dark Knight</option>
-            <option value="The Joker">The Joker</option>
-            <option value="Frozen">Frozen</option>
+            <option value="" class="dropdown-item disabled">Naar wat voor genne filmen kijk je graag?</option>
+            <option value="Horror">Horror</option>
+            <option value="Drama">Drama</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Sciencefiction">Sciencefiction</option>
+            <option value="Actie">Actie</option>
+            <option value="Animatie">Animatie</option>
+            <option value="Romantisch">Romantisch</option>
+            <option value="Thriller">Thriller</option>
         </select>
     </div>
     <div class="form">
