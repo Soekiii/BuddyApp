@@ -239,8 +239,7 @@ class User
 
             $scores[$hobbyOtherString] = $score;
 
-            echo "USERID " . $hobbyOther['userID'] . " HAS A MATCH SCORE OF ". $score . "    ||||    ";
+            echo "USERID " . $hobbyOther['userID'] . " HAS A MATCH SCORE OF " . $score . "    ||||    ";
         }
-
     }
 }
