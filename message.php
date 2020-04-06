@@ -25,7 +25,7 @@ var_dump($recipientID);
 
 
 //msg wordt in databank gestopt
-if(!empty($_POST)){
+if(!empty($_POST['message'])){
     $msg = new Message();
     $msg->getMessage($_POST['message']);
     $msg->messageSchrijven();
@@ -50,7 +50,7 @@ if(!empty($_POST)){
             <input type="hidden" name="recipientID" id="" value="<?php echo $recipientID?>">
             <input type="hidden" name="senderID" id="" value="<?php echo $currentUser?>">
             <div class="">
-                <button type="submit" class="btn" style="width: 90px" name="message">Verstuur</button>
+                <button type="submit" class="btn" style="width: 90px">Verstuur</button>
             </div>
         </form>
     </div>
