@@ -206,7 +206,7 @@ class User
         $statementOthers->execute();
         $hobbyOthers = $statementOthers->fetchAll(PDO::FETCH_ASSOC);
 
-        $statementName = $conn->prepare('SELECT * FROM user WHERE userID != :userID');
+        $statementName = $conn->prepare('SELECT firstname FROM user WHERE userID != :userID');
         $statementName->bindValue(':userID', $userID);
         $statementName->execute();
         $hobbyName = $statementName->fetchAll(PDO::FETCH_ASSOC);
@@ -242,8 +242,5 @@ class User
             echo "USERID " . $hobbyOther['userID'] . " HAS A MATCH SCORE OF ". $score . "    ||||    ";
         }
 
-        return $scores;
-        return $hobbyOthers;
-        return $hobbyUser;
     }
 }
