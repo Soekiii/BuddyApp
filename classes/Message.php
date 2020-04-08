@@ -45,24 +45,26 @@ class Message{
     }
 
 // om je berichtje in de DB te steken
-    public function messageSchrijven(){ 
+    public function writeMessage(){ 
             $conn = Db::getConnection();
 
-            $statement = $conn->prepare("insert into msg(senderID,recipientID,content) values(:senderID,:recipientID,:content)");
+            $statement = $conn->prepare("INSERT INTO msg(senderID,recipientID,content) values(:senderID,:recipientID,:content)");
             $statement->bindValue(":senderID", $this->getUserID()); // huidige user
             $statement->bindValue(":recipientID", $this->getRecipientID()); // de user naarwaar het verstuurd wordt
             $statement->bindValue(":content", $this->getMessage()); // het bericht
             $result = $statement->execute();
-            //$result = $statement->fetch(PDO::FETCH_ASSOC);
             return $result;
     }
 
 // berichtje afprinten
-    public function messagePrint(){ //$senderID,$recipientID
+    static function messagePrint($currentUser,$recipientID){ //$senderID,$recipientID
         $conn = Db::getConnection();
-        $statement = $conn->prepare("SELECT * from msg where senderID = :senderID AND recipientID = :recipientID"); //where senderID = :senderID AND recipientID = :recipientID
-        $statement->bindValue(":senderID", $this->getUserID());
-        $statement->bindValue(":recipientID", $this->getRecipientID());
+        $statement = $conn->prepare("SELECT * from (SELECT * FROM msg where (senderID = :senderID AND recipientID = :recipientID) 
+        OR (senderID = :recipientID AND recipientID = :senderID) ORDER BY msgID DESC LIMIT 10)var1 ORDER BY msgID ASC"); //where senderID = :senderID AND recipientID = :recipientID
+        $statement->bindValue(":senderID", $currentUser);
+        $statement->bindValue(":recipientID", $recipientID);
+        //$statement->bindValue(":senderID2", $recipientID);
+        //$statement->bindValue(":recipientID2", $currentUser);
         $result = $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;

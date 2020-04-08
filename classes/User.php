@@ -185,6 +185,8 @@ include_once (__DIR__ . "/Hobby.php");
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("SELECT * FROM buddies where buddy1ID = :currentUser OR buddy2ID = :currentUser");
+        //$statement = $conn->prepare("SELECT u.firstname, u.lastname* FROM buddies as b, user u 
+        //WHERE (u.userID = b.buddy1ID OR u.userID = b.buddy2ID) AND (buddy1ID = :currentUser OR buddy2ID = :currentUser)");
         $statement->bindValue(":currentUser",$currentUser);
         if($statement->execute()){
             return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -200,6 +202,59 @@ include_once (__DIR__ . "/Hobby.php");
     return $result;
    }
     
+
+    public function calcMatch()
+    {
+        $userArray = $_SESSION['user_id'];
+        $userID = implode(" ", $userArray);
+
+        $conn = Db::getConnection();
+        $statementUser = $conn->prepare('SELECT * FROM hobby WHERE userID = :userID');
+        $statementUser->bindValue(':userID', $userID);
+        $statementUser->execute();
+        $hobbyUser = $statementUser->fetch(PDO::FETCH_ASSOC);
+
+        $statementOthers = $conn->prepare('SELECT * FROM hobby WHERE userID != :userID');
+        $statementOthers->bindValue(':userID', $userID);
+        $statementOthers->execute();
+        $hobbyOthers = $statementOthers->fetchAll(PDO::FETCH_ASSOC);
+
+        $statementName = $conn->prepare('SELECT firstname FROM user WHERE userID != :userID');
+        $statementName->bindValue(':userID', $userID);
+        $statementName->execute();
+        $hobbyName = $statementName->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($hobbyOthers as $hobbyOther) {
+            $scores = [];
+            $score = 0;
+
+            if ($hobbyUser['game'] == $hobbyOther['game']) {
+                $score += 10;
+            }
+
+            if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
+                $score += 10;
+            }
+
+            if ($hobbyUser['film'] == $hobbyOther['film']) {
+                $score += 10;
+            }
+
+            if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
+                $score += 10;
+            }
+
+            if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
+                $score += 10;
+            }
+
+            $hobbyOtherString = implode(" ", $hobbyOther);
+
+            $scores[$hobbyOtherString] = $score;
+
+            echo "USERID " . $hobbyOther['userID'] . " HAS A MATCH SCORE OF " . $score . "    ||||    ";
+        }
+    }
 
     
 }

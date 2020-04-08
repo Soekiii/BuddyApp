@@ -1,8 +1,13 @@
 <?php 
 //queryprobeersels
-include_once (__DIR__ . "/classes/User.php");
-include_once (__DIR__ . "/classes/Validate.php");
-include_once (__DIR__ . "/classes/Db.php");
+session_start();
+if (empty($_SESSION['user_id'])) {
+    header('Location: login.php');
+}
+include_once(__DIR__."/inc/header.inc.php");
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/Validate.php");
+include_once(__DIR__ . "/classes/Db.php");
 
 $conn = Db::getConnection();
 
@@ -44,7 +49,6 @@ $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   <li class="list-group-item"><img src="<?php echo $afdruk["avatar1"]?>"><?php echo $afdruk["firstnameBuddy1"]." ".$afdruk["lastnameBuddy1"]." buddy met ".$afdruk["firstnameBuddy2"]." ".$afdruk["lastnameBuddy2"]?><img src="<?php echo $afdruk["avatar2"]?>"></li>
   <?php endforeach ?>
 </ul>
-
     
 </body>
 </html>
