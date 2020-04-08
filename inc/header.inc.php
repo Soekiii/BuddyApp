@@ -1,8 +1,4 @@
-<?php
-//include_once(__DIR__."/classes/Message.php");
-//include_once(__DIR__."/classes/User.php");
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,8 +12,6 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
-
 <nav class="navbar navbar-expand-sm" style="background-color: #1a27c9;">
   <div class="container-fluid">
       <a href="index.php" class="navbar-brand"  style="color: #fff;">Amigos</a>
