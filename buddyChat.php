@@ -40,6 +40,7 @@ $messages = Message::messagePrint($currentUser,$recipientID);
     <title>Document</title>
 </head>
 <body>
+<h1>Je chat nu met <?php echo $recipientID ?></h1>
     <?php foreach($messages as $message): ?>
         <div>          
             <p><?php echo $message["senderID"].": " . $message["content"]; ?></p>
@@ -47,7 +48,6 @@ $messages = Message::messagePrint($currentUser,$recipientID);
     <?php endforeach;?>
     <div>
         <form action="" method="post">
-        <h1>Je chat nu met <?php echo $recipientID ?></h1>
             <input type="text" name="message">
             <input type="hidden" name="senderID" id="" value="<?php echo $currentUser?>">
             <input type="hidden" name="recipientID" id="" value="<?php echo $recipientID?>">
