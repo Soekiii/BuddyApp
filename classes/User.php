@@ -185,6 +185,8 @@ class User
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("SELECT * FROM buddies where buddy1ID = :currentUser OR buddy2ID = :currentUser");
+        //$statement = $conn->prepare("SELECT u.firstname, u.lastname* FROM buddies as b, user u 
+        //WHERE (u.userID = b.buddy1ID OR u.userID = b.buddy2ID) AND (buddy1ID = :currentUser OR buddy2ID = :currentUser)");
         $statement->bindValue(":currentUser",$currentUser);
         if($statement->execute()){
             return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -254,4 +256,5 @@ class User
             echo "USERID " . $hobbyOther['userID'] . " HAS A MATCH SCORE OF " . $score . "    ||||    ";
         }
     }
+
 }

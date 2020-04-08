@@ -16,23 +16,20 @@ $currentUser = $userID;
 
 //var_dump($_POST);
 
-$recipientID = implode(" ",$_POST);
-echo "currentUser: ";
-var_dump($currentUser);
-echo ".  recipientID: ";
-var_dump($recipientID);
-
-
+//$recipientID = implode(" ",$_POST);//om het getal terug te krijgen van de recipientID
+$recipientID = $_POST['recipientID'];
 
 //msg wordt in databank gestopt
 if(!empty($_POST['message'])){
     $msg = new Message();
-    $msg->getMessage($_POST['message']);
-    $msg->messageSchrijven();
+    $msg->setUserID($currentUser);
+    $msg->setRecipientID($recipientID);
+    $msg->setMessage(htmlspecialchars($_POST['message']));
+    $msg->writeMessage();
 }
 
 //msg wordt afgedrukt/gereturned
-//$messages = $msg->messagePrint();
+$messages = Message::messagePrint($currentUser,$recipientID);
 
 
 ?><!DOCTYPE html>
@@ -43,23 +40,22 @@ if(!empty($_POST['message'])){
     <title>Document</title>
 </head>
 <body>
+    <?php foreach($messages as $message): ?>
+        <div>          
+            <p><?php echo $message["senderID"].": " . $message["content"]; ?></p>
+        </div>
+    <?php endforeach;?>
     <div>
-        <form action="" methd="post">
+        <form action="" method="post">
         <h1>Je chat nu met <?php echo $recipientID ?></h1>
             <input type="text" name="message">
-            <input type="hidden" name="recipientID" id="" value="<?php echo $recipientID?>">
             <input type="hidden" name="senderID" id="" value="<?php echo $currentUser?>">
+            <input type="hidden" name="recipientID" id="" value="<?php echo $recipientID?>">
             <div class="">
-                <button type="submit" class="btn" style="width: 90px">Verstuur</button>
+                <button type="submit" class="btn" style="width: 90px">Send</button>
             </div>
         </form>
     </div>
-
-    <?php foreach($messages as $message): ?>
-        <div>                
-        <p><?php echo $message["senderID"].": " . $message["content"]; ?></p>
-        </div>
-    <?php endforeach;?>
 
     
 </body>
