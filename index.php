@@ -109,7 +109,6 @@ include_once(__DIR__ . "/inc/header.inc.php");
                         }
                     ?>
                 </div>
-                <button
             <?php } ?>
             <?php endforeach; ?>
 </head>
