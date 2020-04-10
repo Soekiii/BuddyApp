@@ -7,7 +7,7 @@ include_once(__DIR__ . "/inc/header.inc.php");
     session_start();
     if (empty($_SESSION['user_id'])) {
         header('Location: login.php');
-    } else {
+    } else { 
         $userArray = $_SESSION['user_id'];
         $userID = implode(' ', $userArray);
     }
@@ -20,13 +20,13 @@ include_once(__DIR__ . "/inc/header.inc.php");
         header('Location: hobby.php');
     }
 
-    // calculate user match
-    $calcMatch = new Match;
-    $userHobby = new Match;
-    $othersHobby = new Match;
-    $hobbyUser = $userHobby->getUserHobby();
-    $hobbyOthers = $othersHobby->getOtherHobby();
-    $matchScores = $calcMatch->calcMatch($hobbyUser, $hobbyOthers);
+    // get current user's hobby's
+    $user = new Match();
+    $hobbyUser = $user->setHobbyUser();
+
+    // get other users' hobby's
+    $others = new Match();
+    $hobbyOthers = $others->setHobbyOthers();
 ?>
 
 <!DOCTYPE html>
@@ -38,9 +38,80 @@ include_once(__DIR__ . "/inc/header.inc.php");
     <title>Home | Amigos</title>
 
     <h5>Potentiële Amigos</h5>
+    <?php foreach($hobbyOthers as $hobbyOther): ?>
+        <?php
+            $scores = [];
+            $score = 0;
 
-        <div class="matchName"><?php print_r($hobbyOthers) ?></div>
-        <div class="matchDe">DESCRIPTION GOES HERE</div>
+            // if they share an interests, add 10 points to score
+            if ($hobbyUser['game'] == $hobbyOther['game']) {
+                $score += 10;
+                $equal = 1;
+            }
+
+            if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
+                $score += 10;
+            }
+
+            if ($hobbyUser['film'] == $hobbyOther['film']) {
+                $score += 10;
+            }
+
+            if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
+                $score += 10;
+            }
+
+            if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
+                $score += 10;
+            }
+
+            // convert hobbyOther from array to string
+            $otherID = $hobbyOther['userID'];
+
+            // place score in scores array of matching user
+            $scores[$otherID] = $score;
+
+            // als score niet 0 is, print de naam en leg uit waarom users matchen
+            if($score >= 10){ ?>
+                <div class="matchName"><?php echo $hobbyOther['firstname'] . " " . $hobbyOther['lastname']; ?></div>
+                <div class="matchDesc">
+                    <?php
+                        if($hobbyUser['hobby'] == $hobbyOther['hobby']){
+                            echo "jullie zijn allebei dol op " . lcfirst($hobbyOther['hobby']);
+                        }
+                    
+                        if($hobbyUser['hobby'] == $hobbyOther['hobby'] && $hobbyUser['game'] == $hobbyOther['game']){
+                            echo " en " . $hobbyOther['game'];
+                        } else if($hobbyUser['game'] == $hobbyOther['game']){
+                            echo "jullie zijn allebei dol op " . $hobbyOther['game'];
+                        } else{
+                        }
+
+                        if(($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game']) || $hobbyUser['film'] == $hobbyOther['film']){
+                            echo " en " . $hobbyOther['film'];
+                        } else if($hobbyUser['film'] == $hobbyOther['film']){
+                            echo "jullie zijn allebei dol op " . $hobbyOther['film'];
+                        } else{
+                        }
+
+                        if(($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film']) && $hobbyUser['muziek'] == $hobbyOther['muziek']){
+                            echo " en " . $hobbyOther['muziek'];
+                        } else if($hobbyUser['muziek'] == $hobbyOther['muziek']){
+                            echo "jullie zijn allebei dol op " . $hobbyOther['muziek'];
+                        } else{
+                        }
+
+                        if(($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film'] || $hobbyUser['muziek'] == $hobbyOther['muziek']) && $hobbyUser['locatie'] == $hobbyOther['locatie']){
+                            echo " en wonen in " . $hobbyOther['locatie'];
+                        } else if($hobbyUser['locatie'] == $hobbyOther['locatie']){
+                            echo "jullie wonen allebei in " . $hobbyOther['locatie'];
+                        } else{
+                        }
+                    ?>
+                </div>
+                <button
+            <?php } ?>
+            <?php endforeach; ?>
 </head>
 
 <body>
