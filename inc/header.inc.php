@@ -26,7 +26,7 @@
             <a class="nav-link"  style="color: #fff;" href="index.php">Home</a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link"  style="color: #fff;" href="edit_profile.php">Profiel</a>
+            <a class="nav-link"  style="color: #fff;" href="profile.php">Profiel</a>
           </li>
           <li class="nav-item">
             <a class="nav-link"  style="color: #fff;" href="buddyList.php">Buddy's</a>

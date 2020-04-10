@@ -1,4 +1,6 @@
 <?php
+include_once(__DIR__ . "/inc/header.inc.php");
+
     session_start();    
     if(empty($_SESSION['user_id'])){
         header('Location: login.php');

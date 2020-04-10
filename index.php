@@ -1,7 +1,7 @@
 <?php
 include_once(__DIR__ . "/classes/Hobby.php");
 include_once(__DIR__ . "/classes/User.php");
-include_once(__DIR__ . "/classes/Match.php");
+include_once(__DIR__ . "/classes/Buddy.php");
 include_once(__DIR__ . "/inc/header.inc.php");
 
     session_start();
@@ -21,11 +21,11 @@ include_once(__DIR__ . "/inc/header.inc.php");
     }
 
     // get current user's hobby's
-    $user = new Match();
+    $user = new Buddy();
     $hobbyUser = $user->setHobbyUser();
 
     // get other users' hobby's
-    $others = new Match();
+    $others = new Buddy();
     $hobbyOthers = $others->setHobbyOthers();
 ?>
 
@@ -39,6 +39,7 @@ include_once(__DIR__ . "/inc/header.inc.php");
 
     <h5>Potentiële Amigos</h5>
     <?php foreach($hobbyOthers as $hobbyOther): ?>
+    <div class="match">
         <?php
             $scores = [];
             $score = 0;
@@ -110,7 +111,8 @@ include_once(__DIR__ . "/inc/header.inc.php");
                     ?>
                 </div>
             <?php } ?>
-            <?php endforeach; ?>
+    </div>
+    <?php endforeach; ?>
 </head>
 
 <body>
