@@ -18,9 +18,7 @@ include_once(__DIR__ . "/inc/header.inc.php");
                     $user->setBuddy($_POST['buddy']); 
                     $user->setUserBuddy($userID); 
                     $user->updateUserBuddy();
-                } 
-        
-    
+                }
 ?>
 
 

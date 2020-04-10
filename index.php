@@ -109,6 +109,7 @@ include_once(__DIR__ . "/inc/header.inc.php");
                         } else{
                         }
                     ?>
+                    <button class="matchBtn" name="request">stuur verzoek</button>
                 </div>
             <?php } ?>
     </div>

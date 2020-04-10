@@ -13,6 +13,16 @@ include_once(__DIR__ . "/inc/header.inc.php");
     <title>Document</title>
 </head>
 <body>
+    <div class="link">
+        <a href="/editProfile.php">Instellingen</a>
+    </div>
     
+    <div class="notifs">
+        User heeft je een buddy request gestuurd.
+        --> link: wat houdt dit in?
+
+        <br>
+        ACCEPTEER || WEIGER
+    </div>
 </body>
 </html>
