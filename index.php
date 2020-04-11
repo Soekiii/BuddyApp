@@ -20,13 +20,32 @@ include_once(__DIR__ . "/inc/header.inc.php");
         header('Location: hobby.php');
     }
 
+    // ====== MATCHING USERS WITH BUDDY'S ======
     // get current user's hobby's
     $user = new Buddy();
     $hobbyUser = $user->setHobbyUser();
-
     // get other users' hobby's
     $others = new Buddy();
     $hobbyOthers = $others->setHobbyOthers();
+
+    // ====== SENDING BUDDY REQUESTS ======
+    // when button "send buddy request" is clicked
+    if(!empty($_POST['request'])){
+        $request = new Buddy();
+        // 1. retrieve buddyID value from $_POST
+        $buddyID = $_POST['buddyID'];
+        // 2. insert userID, buddyID and status=0 in db (buddy table)
+        $request->setUserID($userID);
+        $request->setBuddyID($buddyID);
+        $sendRequest = $request->buddyRequest($userID, $buddyID);
+        echo "okay!";
+
+        echo $buddyID;
+    } else {
+        echo "nope";
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -109,8 +128,12 @@ include_once(__DIR__ . "/inc/header.inc.php");
                         } else{
                         }
                     ?>
-                    <button class="matchBtn" name="request">stuur verzoek</button>
-                </div>
+                    <form action="" method="post">
+                        <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                        <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                        <input type="submit" value="stuur verzoek" name="request">
+                    </form>
+            </div>
             <?php } ?>
     </div>
     <?php endforeach; ?>
