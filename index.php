@@ -23,10 +23,10 @@ include_once(__DIR__ . "/inc/header.inc.php");
     // ====== MATCHING USERS WITH BUDDY'S ======
     // get current user's hobby's
     $user = new Buddy();
-    $hobbyUser = $user->setHobbyUser();
+    $hobbyUser = $user->setHobbyUser($userID);
     // get other users' hobby's
     $others = new Buddy();
-    $hobbyOthers = $others->setHobbyOthers();
+    $hobbyOthers = $others->setHobbyOthers($userID);
 
     // ====== SENDING BUDDY REQUESTS ======
     // when button "send buddy request" is clicked
@@ -38,14 +38,10 @@ include_once(__DIR__ . "/inc/header.inc.php");
         $request->setUserID($userID);
         $request->setBuddyID($buddyID);
         $sendRequest = $request->buddyRequest($userID, $buddyID);
-        echo "okay!";
+        echo "Request sent to userID ";
 
         echo $buddyID;
-    } else {
-        echo "nope";
     }
-
-
 ?>
 
 <!DOCTYPE html>

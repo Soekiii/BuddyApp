@@ -7,6 +7,7 @@ class Buddy
     private $hobbyOthers;
     private $buddyID;
     private $userID;
+    private $status;
 
     public function getUserID()
     {
@@ -30,10 +31,19 @@ class Buddy
         return $this;
     }
 
-    public function fetchbuddyID(){
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function fetchbuddyID($userID){
         $buddyID = $this->buddyID;
-        $userArray = $_SESSION['user_id'];
-        $userID = implode(" ", $userArray);
         $conn = Db::getConnection();
         $stmtbuddyID = $conn->prepare('SELECT userID FROM user WHERE userID != :userID');
         $stmtbuddyID->bindParam(':userID', $userID);
@@ -44,11 +54,9 @@ class Buddy
     }
     
     // FETCH USER'S HOBBY TABLE AND JOIN IT WITH THEIR USER TABLE
-    public function setHobbyUser()
+    public function setHobbyUser($userID)
     {
         $hobbyUser = $this->hobbyUser;
-        $userArray = $_SESSION['user_id'];
-        $userID = implode(" ", $userArray);
         $conn = Db::getConnection();
         $statementUser = $conn->prepare('SELECT * FROM hobby INNER JOIN user ON hobby.userID = user.userID and user.userID = :userID');
         $statementUser->bindValue(':userID', $userID);
@@ -59,11 +67,9 @@ class Buddy
     }
 
     // FETCH OTHER USERS' HOBBY TABLE AND JOIN IT WITH THEIR USER TABLE
-    public function setHobbyOthers()
+    public function setHobbyOthers($userID)
     {
         $hobbyOthers = $this->hobbyOthers;
-        $userArray = $_SESSION['user_id'];
-        $userID = implode(" ", $userArray);
         $conn = Db::getConnection();
         $statementOthers = $conn->prepare('SELECT * FROM hobby INNER JOIN user ON hobby.userID = user.userID and user.userID != :userID');
         $statementOthers->bindValue(':userID', $userID);
@@ -74,14 +80,24 @@ class Buddy
     }
 
     public function buddyRequest($userID, $buddyID){
-        $userArray = $_SESSION['user_id'];
-        $userID = implode(" ", $userArray);
         $conn = Db::getConnection();
         $stmtRequest = $conn->prepare('INSERT INTO buddies(buddy1ID, buddy2ID, status) VALUES (:userID, :buddyID, 0)');
         $stmtRequest->bindParam(':userID', $userID);
         $stmtRequest->bindValue(':buddyID', $buddyID);
         $request = $stmtRequest->execute();
 
+        return $request;
+    }
+
+    // RETRIEVE BUDDY TABLE WHERE BUDDY2ID = userID (this means current user has received a buddy request)
+    public function checkRequest($userID)
+    {
+        $conn = Db::getConnection();
+        // AND JOIN BUDDY2ID WITH USER TABLE TO RETRIEVE NAME OF REQUEST SENDERS
+        $stmtRequest = $conn->prepare('SELECT * FROM buddies INNER JOIN user ON buddies.buddy1ID = user.userID WHERE buddies.buddy2ID = :userID');
+        $stmtRequest->bindParam(':userID', $userID);
+        $stmtRequest->execute();
+        $request = $stmtRequest->fetchAll(PDO::FETCH_ASSOC);
         return $request;
     }
 }
