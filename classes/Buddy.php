@@ -8,6 +8,7 @@ class Buddy
     private $buddyID;
     private $userID;
     private $status;
+    private $rejectMsg;
 
     public function getUserID()
     {
@@ -27,6 +28,29 @@ class Buddy
     public function setBuddyID($buddyID)
     {
         $this->buddyID = $buddyID;
+
+        return $this;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    
+    public function getRejectMsg()
+    {
+        return $this->rejectMsg;
+    }
+    public function setRejectMsg($rejectMsg)
+    {
+        $this->rejectMsg = $rejectMsg;
 
         return $this;
     }
@@ -99,5 +123,28 @@ class Buddy
         $stmtAccept->execute();
         $accept = $stmtAccept->fetch(PDO::FETCH_ASSOC);
         return $accept;
+    }
+
+    // check if user already has a buddy
+    public function buddyAvailable($userID){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT MAX(status) FROM buddies WHERE buddy2ID = :userID');
+        $stmt->bindPAram(':userID', $userID);
+        $stmt->execute();
+        $buddyAvailable = $stmt->fetch(PDO::FETCH_ASSOC);
+        $available = implode(" ", $buddyAvailable);
+
+        return $available;
+    }
+
+    public function rejectRequest($userID, $buddyID, $rejectMsg){
+        $conn = Db::getConnection();
+        $stmtReject = $conn->prepare('INSERT INTO buddies(rejectMsg) VALUES (:rejectMsg) WHERE buddy1ID = :buddyID AND buddy2ID = :userID');
+        $stmtReject->bindParam(':userID', $userID);
+        $stmtReject->bindValue(':buddyID', $buddyID);
+        $stmtReject->bindValue(':rejectMsg', $rejectMsg);
+        $stmtReject->execute();
+        $reject = $stmtReject->fetch(PDO::FETCH_ASSOC);
+        return $reject;
     }
 }

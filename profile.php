@@ -10,16 +10,32 @@ if (empty($_SESSION['user_id'])) {
     $userID = implode(' ', $userArray);
 }
 
-$status = new Buddy();
-$statusRequests = $status->checkRequest($userID);
+$checkRequest = new Buddy();
+$buddyRequests = $checkRequest->checkRequest($userID);
 
+$buddyAvailable = new Buddy();
+$available = $buddyAvailable->buddyAvailable($userID);
+
+// USER ACCEPTED BUDDY REQUEST
 if(!empty($_POST['accept'])){
     $accept = new Buddy();
     $accept->setUserID($userID);
     $buddyID = $_POST['buddyID'];
     $accept->setBuddyID($buddyID);
     $acceptRequest = $accept->acceptRequest($userID, $buddyID);
-    echo "You are now buddies with userID " . $buddyID;
+    //refresh the page to empty the friend request list (user already has a buddy and cannot accept more)
+    header('Location: profile.php');
+}
+
+// USER REJECTED BUDDY REQUEST
+if(!empty($_POST['reject'])){
+    $reject = new Buddy();
+    $reject->setUserID($userID);
+    $buddyID = $_POST['buddyID'];
+    $reject->setBuddyID($buddyID);
+    $rejectRequest = $reject->rejectRequest($userID, $buddyID, $rejectMsg);
+    //refresh the page to remove request from list (request does not exist in db)
+    header('Location:profile.php');
 }
 ?>
 
@@ -37,23 +53,33 @@ if(!empty($_POST['accept'])){
         <a href="/editProfile.php">Instellingen</a>
     </div>
 
-    <?php foreach ($statusRequests as $statusRequest) : ?>
+    <?php
+    // if user has no buddy yet --> user is still available
+    if($available == "0"){
+    foreach ($buddyRequests as $buddyRequest) : ?>
         <?php
-        if ($statusRequest['status'] == 0) { ?>
+        if ($buddyRequest['status'] == 0) { ?>
             <div class="notifs">
-                <?php echo $statusRequest['firstname'] . " " . $statusRequest['lastname']; ?> heeft je een buddy request gestuurd.
+                <?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname']; ?> heeft je een buddy request gestuurd.
                 <form action="" method="post">
-                    <input type="hidden" name="buddyID" id="" value="<?php echo $statusRequest['userID'] ?>">
+                    <input type="hidden" name="buddyID" id="" value="<?php echo $buddyRequest['userID'] ?>">
                     <input type="submit" name="accept" id="" value="Accepteer">
                     <input type="submit" name="reject" id="" value="Weiger">
                 </form>
             </div>
         <?php
-        } else {
-            echo "You already have a buddy";
         }
         ?>
-    <?php endforeach; ?>
+    <?php endforeach;
+    } else {
+    foreach($buddyRequests as $buddyRequest) : ?>
+        <?php
+        if($buddyRequest['status'] == 1){ ?>
+            <div class="buddy">
+                <?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname'] . "'s buddy"; ?>
+            </div>
+        <?php } ?>
+    <?php endforeach; } ?>
 </body>
 
 </html>
