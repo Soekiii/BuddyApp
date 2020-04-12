@@ -31,17 +31,6 @@ class Buddy
         return $this;
     }
 
-    public function getStatus()
-    {
-        return $this->status;
-    }
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function fetchbuddyID($userID){
         $buddyID = $this->buddyID;
         $conn = Db::getConnection();
@@ -99,5 +88,16 @@ class Buddy
         $stmtRequest->execute();
         $request = $stmtRequest->fetchAll(PDO::FETCH_ASSOC);
         return $request;
+    }
+
+    // WHEN REQUEST IS ACCEPTED --> change status to 1
+    public function acceptRequest($userID, $buddyID){
+        $conn = Db::getConnection();
+        $stmtAccept = $conn->prepare('UPDATE buddies SET status="1" WHERE buddy2ID = :userID AND buddy1ID = :buddyID');
+        $stmtAccept->bindParam(':userID', $userID);
+        $stmtAccept->bindValue(':buddyID', $buddyID);
+        $stmtAccept->execute();
+        $accept = $stmtAccept->fetch(PDO::FETCH_ASSOC);
+        return $accept;
     }
 }

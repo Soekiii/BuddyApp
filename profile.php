@@ -12,6 +12,15 @@ if (empty($_SESSION['user_id'])) {
 
 $status = new Buddy();
 $statusRequests = $status->checkRequest($userID);
+
+if(!empty($_POST['accept'])){
+    $accept = new Buddy();
+    $accept->setUserID($userID);
+    $buddyID = $_POST['buddyID'];
+    $accept->setBuddyID($buddyID);
+    $acceptRequest = $accept->acceptRequest($userID, $buddyID);
+    echo "You are now buddies with userID " . $buddyID;
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,11 +43,16 @@ $statusRequests = $status->checkRequest($userID);
             <div class="notifs">
                 <?php echo $statusRequest['firstname'] . " " . $statusRequest['lastname']; ?> heeft je een buddy request gestuurd.
                 <form action="" method="post">
+                    <input type="hidden" name="buddyID" id="" value="<?php echo $statusRequest['userID'] ?>">
                     <input type="submit" name="accept" id="" value="Accepteer">
                     <input type="submit" name="reject" id="" value="Weiger">
                 </form>
             </div>
-        <?php } ?>
+        <?php
+        } else {
+            echo "You already have a buddy";
+        }
+        ?>
     <?php endforeach; ?>
 </body>
 
