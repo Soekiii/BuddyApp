@@ -15,6 +15,9 @@ if(isset($_GET['id'])){
     $buddyID = $_GET['id'];
     $buddy->setBuddyID($buddyID);
     $buddyOthers = $buddy->showBuddyOthers($buddyID);
+
+    $buddyData = new Buddy();
+    $data = $buddyData->buddyData($buddyID);
 }
 ?>
 
@@ -26,6 +29,8 @@ if(isset($_GET['id'])){
     <title>Document</title>
 </head>
 <body>
+    <h3><?php echo $data['firstname'] . " " . $data['lastname']; ?></h3>
+
     <?php foreach($buddyOthers as $buddy) : ?>
     <?php if($buddy['status'] == 1){ ?>
         <div class="buddy">

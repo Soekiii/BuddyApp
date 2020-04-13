@@ -158,4 +158,13 @@ class Buddy
         $otherBuddy = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $otherBuddy;
         }
+
+        public function buddyData($buddyID){
+            $conn = Db::getConnection();
+            $stmt = $conn->prepare('SELECT * from buddies INNER JOIN user ON (CASE WHEN buddy1ID = :buddyID THEN buddy1ID = user.userID WHEN buddy2ID = :buddyID THEN buddy2ID = user.userID END)');
+            $stmt->bindParam(':buddyID', $buddyID);
+            $stmt->execute();
+            $buddy = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $buddy;
+        }
 }
