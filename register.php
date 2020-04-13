@@ -19,6 +19,11 @@ if(isset($_POST["register"])){
                     // hier alle gegevens verzamelen voor inloggen en data bewaren op db
                 $validate->Emailvalidator();
                 $errorMessage=$validate->getErrors();
+
+                // generate vkey
+                $user->setVkey(md5(time() . $user->getEmail()));
+
+                echo $user->getVkey();
                 
                 if (empty($errorMessage)){ //als er geen errorkes zijn
                     $mailok=$validate->checkValidEmail(); //kijk na of de email al bestaat
