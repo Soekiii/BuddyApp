@@ -9,6 +9,7 @@ class User
     private $lastName;
     private $buddy;
     private $userBuddy;
+    private $vkey;
 
 
     /**
@@ -167,12 +168,13 @@ class User
         $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
 
         //Registratie in database
-        $statement = $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar) values (:firstname, :lastname, :email, :password, :buddy, :avatar)");
+        $statement = $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar, vkey) values (:firstname, :lastname, :email, :password, :buddy, :avatar, :vkey)");
         $statement->bindValue(":firstname", $this->firstName);
         $statement->bindValue(":lastname", $this->lastName);
         $statement->bindValue(":email", $this->email);
         $statement->bindValue(":password", $this->password);
         $statement->bindValue(":buddy", $this->buddy);
+        $statement->bindValue(":vkey", $this->vkey);
         $statement->bindValue(":avatar", "default.png");
 
         $result = $statement->execute();
@@ -201,5 +203,25 @@ class User
         $statement = $conn->prepare("UPDATE user SET buddy='$this->buddy' WHERE userID = '$this->userBuddy'");
         $result = $statement->execute();
         return $result;
+    }
+
+    /**
+     * Get the value of vkey
+     */ 
+    public function getVkey()
+    {
+        return $this->vkey;
+    }
+
+    /**
+     * Set the value of vkey
+     *
+     * @return  self
+     */ 
+    public function setVkey($vkey)
+    {
+        $this->vkey = $vkey;
+
+        return $this;
     }
 }
