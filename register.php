@@ -28,7 +28,7 @@ if(isset($_POST["register"])){
                         
                         $statement= $user->registerNewUser();
                         if ($statement===true){
-                           
+                            
                             //header('Location: index.php');
                             }   
     
@@ -72,7 +72,13 @@ if(isset($_POST["register"])){
         <form action="register.php" method="post" style="width: 366px">
     <div class="form-group my-4">
         <h2>Registreer je hier op Amigos</h2>
-
+    <!-- succes message -->
+    <?php if(isset($_SESSION['succes'])){
+        echo '<div class="alert alert-success" role="alert">';
+        echo $_SESSION['succes'];
+        echo '</div>';
+        unset($_SESSION['succes']);
+    } ?>
     <div class="radio">
         <input type="radio" id="seekBuddy" name="buddy" checked value="0">
         <label> Ik zoek een buddy </label>
