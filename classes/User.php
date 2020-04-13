@@ -9,7 +9,8 @@ class User
     private $lastName;
     private $buddy;
     private $userBuddy;
-    private $vkey;
+    private $token;
+    private $active;
 
 
     /**
@@ -166,31 +167,64 @@ class User
         //Hash the password  
 
         $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
-
+        $this->token = md5(time() . $this->email);
         //Registratie in database
-        $statement = $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar, vkey) values (:firstname, :lastname, :email, :password, :buddy, :avatar, :vkey)");
+        $statement = $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar, token, active) values (:firstname, :lastname, :email, :password, :buddy, :avatar, :token, :active)");
         $statement->bindValue(":firstname", $this->firstName);
         $statement->bindValue(":lastname", $this->lastName);
         $statement->bindValue(":email", $this->email);
         $statement->bindValue(":password", $this->password);
         $statement->bindValue(":buddy", $this->buddy);
-        $statement->bindValue(":vkey", $this->vkey);
+        $statement->bindValue(":token", $this->token);
+        $statement->bindValue(":active", "0");
         $statement->bindValue(":avatar", "default.png");
 
         $result = $statement->execute();
+        if($result){
+            $user = $this->getUser();
+            $_SESSION['userID'] = $user['userID'];
+            $this->sendMail($user['email'],$user['userID'], $user['token'] );
+            $_SESSION['succes'] = "Bevestig je registratie via email";
+        }
 
         return $result;
     }
-    // email vertificatie
-    public function sendMail(){
-        $to = $this->email;
-        $subject = "Amigos registratie vertificatie";
-        $message = "<a href='http://localhost:8888/BuddyApp/register/verify.php?vkey=$this->getVkey'>Registreer Account</a>";
-        $headers = "From: Info@amigos.be \r\n";
-        $headers .= "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    
+    public function getUser(){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('select * from user where email = :email');
+        $statement->bindParam(':email', $this->email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        mail($to,$subject,$message,$headers);
+        return $result;
+    }
+
+    public function sendMail($email,$id,$token){
+        $subject = "Account Activatie";
+        $email = "frederichermans@hotmail.com";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <info@amigos.be>' . "\r\n";
+        $message = "<html><body>";
+        $message .= '<h3>' . $_SERVER['SERVER_NAME'] .'/activatie.php?active='. $token . '&id=' . $id . '</h3>';
+        $message .= "</body></html>";
+
+        mail($email,$subject,$message,$headers);
+    }
+    public function activate($id, $token){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('update user set active=1 where userID = :userID and token = :token');
+        $statement->bindParam(':userID', $id);
+        $statement->bindParam(':token', $token);
+        $result = $statement->execute();
+        if($result){
+            $user = $this->getUserId();
+            $_SESSION['user'] = $user;
+            header("Location: index.php");
+        }
+
+        return $result;
     }
 
     //om al de buddies uit de database te halen
@@ -216,22 +250,44 @@ class User
         return $result;
     }
 
+    
+
     /**
-     * Get the value of vkey
+     * Get the value of token
      */ 
-    public function getVkey()
+    public function getToken()
     {
-        return $this->vkey;
+        return $this->token;
     }
 
     /**
-     * Set the value of vkey
+     * Set the value of token
      *
      * @return  self
      */ 
-    public function setVkey($vkey)
+    public function setToken($token)
     {
-        $this->vkey = $vkey;
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of active
+     */ 
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set the value of active
+     *
+     * @return  self
+     */ 
+    public function setActive($active)
+    {
+        $this->active = $active;
 
         return $this;
     }
