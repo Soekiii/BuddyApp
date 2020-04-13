@@ -19,12 +19,6 @@ if(isset($_POST["register"])){
                     // hier alle gegevens verzamelen voor inloggen en data bewaren op db
                 $validate->Emailvalidator();
                 $errorMessage=$validate->getErrors();
-
-                // generate vkey
-                $user->setVkey(md5(time() . $user->getEmail()));
-                $vkey = $user->getVkey();
-
-                //echo $user->getVkey();
                 
                 if (empty($errorMessage)){ //als er geen errorkes zijn
                     $mailok=$validate->checkValidEmail(); //kijk na of de email al bestaat
@@ -34,17 +28,7 @@ if(isset($_POST["register"])){
                         
                         $statement= $user->registerNewUser();
                         if ($statement===true){
-                            //Stuur email
-                            $to = $user->getEmail();
-                            $subject = "Amigos registratie vertificatie";
-                            $message = "<a href='http://localhost:8888/BuddyApp/register/verify.php?vkey=$vkey'>Registreer Account</a>";
-                            $headers = "From: Info@amigos.be \r\n";
-                            $headers .= "MIME-Version: 1.0" . "\r\n";
-                            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                            echo $to;
-                            mail($to,$subject,$message,$headers);
-                            //$user->sendMail();
-
+                           
                             //header('Location: index.php');
                             }   
     
