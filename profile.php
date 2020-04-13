@@ -49,10 +49,6 @@ if(!empty($_POST['reject'])){
 </head>
 
 <body>
-    <div class="link">
-        <a href="/editProfile.php">Instellingen</a>
-    </div>
-
     <?php
     // if user has no buddy yet --> user is still available
     if($available == "0"){
@@ -76,7 +72,7 @@ if(!empty($_POST['reject'])){
         <?php
         if($buddyRequest['status'] == 1){ ?>
             <div class="buddy">
-                <?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname'] . "'s buddy"; ?>
+                <a href="users.php?id=<?php echo $buddyRequest['userID']?>"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname'] ?></a> <?php echo "'s buddy"; ?>
             </div>
         <?php } ?>
     <?php endforeach; } ?>
