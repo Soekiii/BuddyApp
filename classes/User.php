@@ -181,6 +181,17 @@ class User
 
         return $result;
     }
+    // email vertificatie
+    public function sendMail(){
+        $to = $this->email;
+        $subject = "Amigos registratie vertificatie";
+        $message = "<a href='http://localhost:8888/BuddyApp/register/verify.php?vkey=$this->getVkey'>Registreer Account</a>";
+        $headers = "From: Info@amigos.be \r\n";
+        $headers .= "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+        mail($to,$subject,$message,$headers);
+    }
 
     //om al de buddies uit de database te halen
     static function getAllBuddies($currentUser)
