@@ -102,7 +102,7 @@ class Buddy
         return $request;
     }
 
-    // RETRIEVE BUDDY TABLE WHERE BUDDY2ID = userID (this means current user has received a buddy request)
+    // RETRIEVE ALL BUDDY ROWS WHERE BUDDY2ID = userID (this means current user has received a buddy request)
     public function checkRequest($userID)
     {
         $conn = Db::getConnection();
@@ -147,4 +147,15 @@ class Buddy
         $reject = $stmtReject->fetch(PDO::FETCH_ASSOC);
         return $reject;
     }
+
+        // GET OTHER USERS' BUDDY INFORMATION
+        public function showBuddyOthers($buddyID){
+        $conn = Db::getConnection();
+        // switch case: als buddy1ID = buddyID, dan wil je de informatie (naam) van buddy2ID en omgekeerd
+        $stmt = $conn->prepare('SELECT * FROM buddies INNER JOIN user ON (CASE WHEN buddy1ID = :buddyID THEN buddy2ID = user.userID WHEN buddy2ID = :buddyID THEN buddy1ID = user.userID END)');
+        $stmt->bindParam(':buddyID', $buddyID);
+        $stmt->execute();
+        $otherBuddy = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $otherBuddy;
+        }
 }

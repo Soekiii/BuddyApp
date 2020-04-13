@@ -72,7 +72,7 @@ if(!empty($_POST['reject'])){
         <?php
         if($buddyRequest['status'] == 1){ ?>
             <div class="buddy">
-                <a href="users.php?id=<?php echo $buddyRequest['userID']?>"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname'] ?></a> <?php echo "'s buddy"; ?>
+                <a href="users.php?id=<?php echo $buddyRequest['userID'] ?>"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname'] ?></a> <?php echo "'s buddy"; ?>
             </div>
         <?php } ?>
     <?php endforeach; } ?>
