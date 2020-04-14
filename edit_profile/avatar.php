@@ -47,7 +47,7 @@
     <title>Change avatar</title>
 </head>
 <body>
-    <a href="../edit_profile.php">Go back</a>
+    <a href="../editProfile.php">Go back</a>
 
     <h3>Change avatar</h3>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">

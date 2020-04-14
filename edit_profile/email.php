@@ -56,7 +56,7 @@
     <title>Change email</title>
 </head>
 <body>
-    <a href="../edit_profile.php">Go back</a>
+    <a href="../editProfile.php">Go back</a>
 
     <h3>Change email</h3>
 

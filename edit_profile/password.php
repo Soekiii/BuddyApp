@@ -58,7 +58,7 @@
     <title>Change password</title>
 </head>
 <body>
-    <a href="../edit_profile.php">Go back</a>
+    <a href="../editProfile.php">Go back</a>
     <h3>Change password</h3>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
