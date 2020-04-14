@@ -79,15 +79,6 @@ if(isset($_POST["register"])){
         echo '</div>';
         unset($_SESSION['succes']);
     } ?>
-    <div class="radio">
-        <input type="radio" id="seekBuddy" name="buddy" checked value="0">
-        <label> Ik zoek een buddy </label>
-    </div>
-
-    <div class="radio">
-        <input type="radio" id="iAmBuddy" name="buddy" value="1">
-        <label> Ik ben een buddy </label>
-    </div>
     </div>
         <div class="row mb-3">
             <div class="col">
@@ -137,7 +128,12 @@ if(isset($_POST["register"])){
                 </div>
         <?php endif; ?>
             </div>
-
+            <div class="radio">
+            <input type="radio" id="seekBuddy" name="buddy" checked value="0">
+            <label> Ik zoek een buddy </label>
+            <input type="radio" id="iAmBuddy" name="buddy" value="1">
+            <label> Ik ben een buddy </label>
+            </div>
             <div class="d-flex justify-content-between">
             <div class="form-group mb-4">
             <button type="submit" class="btn" style="width: 150px" id="register" name="register">Registreren</button>
