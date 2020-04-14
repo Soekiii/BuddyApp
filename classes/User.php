@@ -1,6 +1,7 @@
 <?php
 include_once(__DIR__ . "/Db.php");
 include_once(__DIR__ . "/Hobby.php");
+require './vendor/autoload.php';
 class User
 {
     private $email;
@@ -183,7 +184,7 @@ class User
         if($result){
             $user = $this->getUser();
             $_SESSION['userID'] = $user['userID'];
-            $this->sendMail($user['email'],$user['userID'], $user['token'] );
+            $this->sendMail($user['email'],$user['userID'], $user['token']);
             $_SESSION['succes'] = "Bevestig je registratie via email";
         }
 
@@ -199,30 +200,45 @@ class User
 
         return $result;
     }
-
+    //email sturen
     public function sendMail($email,$id,$token){
-        $subject = "Account Activatie";
-        $email = "frederichermans@hotmail.com";
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= 'From: <info@amigos.be>' . "\r\n";
-        $message = "<html><body>";
-        $message .= '<h3>' . $_SERVER['SERVER_NAME'] .'/activatie.php?active='. $token . '&id=' . $id . '</h3>';
-        $message .= "</body></html>";
-
-        mail($email,$subject,$message,$headers);
+        $key = "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";
+        $mail = new \SendGrid\Mail\Mail(); 
+        $mail->setFrom("frederichermans@hotmail.com", "Amigos User");
+        $mail->setSubject("Account Activatie");
+        $mail->addTo($email);
+        $mail->addContent("text/html", "<a href='http://localhost:8888/BuddyApp//activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>');
+        $sendgrid = new \SendGrid($key);
+        try {
+            $response = $sendgrid->send($mail);
+            return $response;
+        } catch (Exception $e) {
+            echo 'Caught exception: '. $e->getMessage() ."\n";
+        }
     }
-    public function activate($id, $token){
+    //activeer status update naar 1
+    public function activate($token, $id){
         $conn = Db::getConnection();
         $statement = $conn->prepare('update user set active=1 where userID = :userID and token = :token');
         $statement->bindParam(':userID', $id);
         $statement->bindParam(':token', $token);
         $result = $statement->execute();
         if($result){
-            $user = $this->getUserId();
+            $user = $this->getUserById($id);
             $_SESSION['user'] = $user;
             header("Location: index.php");
         }
+
+        return $result;
+    }
+    
+    public function getUserById($id)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('select * from user where userID = :userID');
+        $statement->bindParam(':userID', $id);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
 
         return $result;
     }
