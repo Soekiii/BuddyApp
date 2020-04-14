@@ -128,7 +128,7 @@ class Buddy
     // check if user already has a buddy
     public function buddyAvailable($userID){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT MAX(status) FROM buddies WHERE buddy2ID = :userID');
+        $stmt = $conn->prepare('SELECT status FROM buddies WHERE buddy2ID = :userID');
         $stmt->bindPAram(':userID', $userID);
         $stmt->execute();
         $buddyAvailable = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -139,7 +139,7 @@ class Buddy
 
     public function rejectRequest($userID, $buddyID, $rejectMsg){
         $conn = Db::getConnection();
-        $stmtReject = $conn->prepare('INSERT INTO buddies(rejectMsg) VALUES (:rejectMsg) WHERE buddy1ID = :buddyID AND buddy2ID = :userID');
+        $stmtReject = $conn->prepare('UPDATE buddies SET status="3", rejectMsg= :rejectMsg WHERE buddy1ID = :buddyID AND buddy2ID = :userID');
         $stmtReject->bindParam(':userID', $userID);
         $stmtReject->bindValue(':buddyID', $buddyID);
         $stmtReject->bindValue(':rejectMsg', $rejectMsg);
