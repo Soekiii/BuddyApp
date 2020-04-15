@@ -9,7 +9,7 @@ include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Validate.php");
 include_once(__DIR__ . "/classes/Db.php");
 
-$conn = Db::getConnection();
+/* $conn = Db::getConnection();
 
 $statement = $conn->prepare("
 SELECT 
@@ -26,7 +26,12 @@ u1.userID = b.buddy1ID AND
 u2.userID = b.buddy2ID
 ");
 $statement->execute();
-$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+$result = $statement->fetchAll(PDO::FETCH_ASSOC); */
+
+// aanmaken van nieuw object in klasse user
+$buddyMatch = new User();
+$result = $buddyMatch->whoAreBuddies();
+
 
 
 ?>

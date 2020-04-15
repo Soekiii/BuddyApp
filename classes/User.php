@@ -9,6 +9,9 @@ class User
     private $lastName;
     private $buddy;
     private $userBuddy;
+    private $userCount;
+    private $buddieCount;
+    
 
 
     /**
@@ -113,6 +116,16 @@ class User
         $this->userBuddy = $userBuddy;
     }
 
+    public function getUserCount()
+    {
+        return $this->userCount;
+    }
+
+    public function getBuddyCount()
+    {
+        return $this->buddyCount;
+    }
+
 
 
 
@@ -201,5 +214,48 @@ class User
         $statement = $conn->prepare("UPDATE user SET buddy='$this->buddy' WHERE userID = '$this->userBuddy'");
         $result = $statement->execute();
         return $result;
+    }
+
+    // functie maken om alle gematchte buddies te displayen
+
+    public function whoAreBuddies(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("
+        SELECT 
+        u1.firstname as firstnameBuddy1, 
+        u1.lastname as lastnameBuddy1,
+        u1.avatar as avatar1,
+        u2.firstname as firstnameBuddy2, 
+        u2.lastname as lastnameBuddy2, 
+        u2.avatar as avatar2
+        FROM 
+        buddies as b, user u1, user u2
+        WHERE
+        u1.userID = b.buddy1ID AND
+        u2.userID = b.buddy2ID
+        ");
+        if ($statement->execute()) {
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+
+    public function AllUsers(){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('SELECT COUNT(*) AS numbersOfUsers FROM user');
+        $statement->execute();
+        $boo = $statement->fetch();
+        return $boo;
+       
+    }
+
+    public function AllMatchedBuddies(){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('SELECT COUNT(*) AS numbersOfMatchedBuddies FROM buddies');
+        $statement->execute();
+        $booBoo = $statement->fetch();
+        return $booBoo;
+       
+        
     }
 }
