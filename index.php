@@ -27,6 +27,18 @@ include_once(__DIR__ . "/inc/header.inc.php");
     // get other users' hobby's
     $others = new Match();
     $hobbyOthers = $others->setHobbyOthers();
+    
+    // functie om users te displayen
+    $displayGetal= new User();
+    $userNumbers= $displayGetal->AllUsers();
+    
+    
+    // functie om gematchte buddies te displayen
+    $matchedBuddiesNumber= $displayGetal->AllMatchedBuddies();
+    
+
+    
+
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +48,13 @@ include_once(__DIR__ . "/inc/header.inc.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Amigos</title>
+
+    <!--hier probeersel om code terug te krijgen van User.php - zelfde ook doen op andere pagina whoAreBuddies.php  -->
+    
+    <div>
+        <p>Geregistreerde gebruikers: <span class="badge"><?php echo $userNumbers['numbersOfUsers'];?></span></p><br>
+        <p>Gematchte buddies: <span class="badge"><?php echo $matchedBuddiesNumber['numbersOfMatchedBuddies'];?></span></p> 
+    </div>
 
     <h5>Potentiële Amigos</h5>
     <?php foreach($hobbyOthers as $hobbyOther): ?>
