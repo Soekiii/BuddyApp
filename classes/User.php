@@ -184,7 +184,8 @@ class User
         if($result){
             $user = $this->getUser();
             $_SESSION['userID'] = $user['userID'];
-            $this->sendMail($user['email'],$user['userID'], $user['token']);
+            $content = $this->activatieLink($user['userID'], $user['token']);
+            $this->sendMail($user['email'],$content);
             $_SESSION['succes'] = "Bevestig je registratie via email";
         }
 
@@ -200,14 +201,18 @@ class User
 
         return $result;
     }
+    public function activatieLink($id,$token){
+        $link = "<a href='http://localhost:8888/BuddyApp//activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
+        return $link;
+    }
     //email sturen
-    public function sendMail($email,$id,$token){
+    public function sendMail($email,$content){
         $key = "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";
         $mail = new \SendGrid\Mail\Mail(); 
         $mail->setFrom("frederichermans@hotmail.com", "Amigos User");
         $mail->setSubject("Account Activatie");
         $mail->addTo($email);
-        $mail->addContent("text/html", "<a href='http://localhost:8888/BuddyApp//activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>');
+        $mail->addContent("text/html", $content);
         $sendgrid = new \SendGrid($key);
         try {
             $response = $sendgrid->send($mail);
