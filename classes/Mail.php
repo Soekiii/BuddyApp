@@ -6,7 +6,7 @@ class Mail
     public static function sendMail($subject, $email,$content){
         $key = "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";
         $mail = new \SendGrid\Mail\Mail(); 
-        $mail->setFrom("frederichermans@hotmail.com", "Amigos User");
+        $mail->setFrom("frederichermans@hotmail.com", "Amigos");
         $mail->setSubject($subject);
         $mail->addTo($email);
         $mail->addContent("text/html", $content);
