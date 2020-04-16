@@ -1,7 +1,10 @@
 <?php
 include_once(__DIR__ . "/Db.php");
+include_once(__DIR__ . "/User.php");
+include_once(__DIR__ . "/Mail.php");
 
-class Buddy
+
+class Buddy extends User
 {
     private $hobbyUser;
     private $hobbyOthers;
@@ -98,6 +101,13 @@ class Buddy
         $stmtRequest->bindParam(':userID', $userID);
         $stmtRequest->bindValue(':buddyID', $buddyID);
         $request = $stmtRequest->execute();
+        if($request){
+            $user = $this->getUserById($buddyID);
+            var_dump($user['email']);
+            $_SESSION['user_id'] = $user['userID'];
+            $content = "Iemand wilt je buddy worden.";
+            Mail::sendMail("Buddy request", $user['email'],$content);
+        }
 
         return $request;
     }

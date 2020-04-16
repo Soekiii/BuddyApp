@@ -1,10 +1,10 @@
 <?php
 include_once(__DIR__ . "/Db.php");
+include_once(__DIR__ . "/Mail.php");
 include_once(__DIR__ . "/Hobby.php");
-require './vendor/autoload.php';
 class User
 {
-    private $email;
+    protected $email;
     private $password;
     private $firstName;
     private $lastName;
@@ -13,8 +13,8 @@ class User
     private $userCount;
     private $buddieCount;
     
-    private $token;
-    private $active;
+    protected $token;
+    protected $active;
 
 
     /**
@@ -196,9 +196,9 @@ class User
         $result = $statement->execute();
         if($result){
             $user = $this->getUser();
-            $_SESSION['userID'] = $user['userID'];
+            $_SESSION['user_id'] = $this->getUserId();
             $content = $this->activatieLink($user['userID'], $user['token']);
-            $this->sendMail($user['email'],$content);
+            Mail::sendMail("Account Activatie", $user['email'],$content);
             $_SESSION['succes'] = "Bevestig je registratie via email";
         }
 
@@ -218,22 +218,7 @@ class User
         $link = "<a href='http://localhost:8888/BuddyApp//activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
         return $link;
     }
-    //email sturen
-    public function sendMail($email,$content){
-        $key = "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";
-        $mail = new \SendGrid\Mail\Mail(); 
-        $mail->setFrom("frederichermans@hotmail.com", "Amigos User");
-        $mail->setSubject("Account Activatie");
-        $mail->addTo($email);
-        $mail->addContent("text/html", $content);
-        $sendgrid = new \SendGrid($key);
-        try {
-            $response = $sendgrid->send($mail);
-            return $response;
-        } catch (Exception $e) {
-            echo 'Caught exception: '. $e->getMessage() ."\n";
-        }
-    }
+    
     //activeer status update naar 1
     public function activate($token, $id){
         $conn = Db::getConnection();
@@ -244,7 +229,8 @@ class User
         if($result){
             $user = $this->getUserById($id);
             $_SESSION['user'] = $user;
-            header("Location: index.php");
+            $_SESSION['user_id'] = $id;
+            header("Location: hobby.php");
         }
 
         return $result;
@@ -327,7 +313,7 @@ class User
        
         
     
-
+    }
     /**
      * Get the value of token
      */ 
