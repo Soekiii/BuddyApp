@@ -98,14 +98,10 @@ class Hobby {
             
             
             
-           if(count($aantal) == 1){
-               return true;
+           if(count($aantal) == 5){
+                header('Location: hobby.php');
            }
-           else{
-              return false;
-           }
-        }
-        catch(throwable $e){
+        }catch(throwable $e){
            $error = "Something went wrong";
        }
     }
