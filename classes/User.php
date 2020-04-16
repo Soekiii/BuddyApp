@@ -233,7 +233,8 @@ class User
         buddies as b, user u1, user u2
         WHERE
         u1.userID = b.buddy1ID AND
-        u2.userID = b.buddy2ID
+        u2.userID = b.buddy2ID AND
+        b.status = true
         ");
         if ($statement->execute()) {
             return $statement->fetchAll(PDO::FETCH_ASSOC);
