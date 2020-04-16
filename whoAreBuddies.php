@@ -9,25 +9,6 @@ include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Validate.php");
 include_once(__DIR__ . "/classes/Db.php");
 
-/* $conn = Db::getConnection();
-
-$statement = $conn->prepare("
-SELECT 
-u1.firstname as firstnameBuddy1, 
-u1.lastname as lastnameBuddy1,
-u1.avatar as avatar1,
-u2.firstname as firstnameBuddy2, 
-u2.lastname as lastnameBuddy2, 
-u2.avatar as avatar2
-FROM 
-buddies as b, user u1, user u2
-WHERE
-u1.userID = b.buddy1ID AND
-u2.userID = b.buddy2ID
-");
-$statement->execute();
-$result = $statement->fetchAll(PDO::FETCH_ASSOC); */
-
 // aanmaken van nieuw object in klasse user
 $buddyMatch = new User();
 $result = $buddyMatch->whoAreBuddies();
