@@ -1,6 +1,7 @@
 <?php
 include_once(__DIR__ . "/Db.php");
 include_once(__DIR__ . "/Hobby.php");
+require './vendor/autoload.php';
 class User
 {
     private $email;
@@ -12,6 +13,8 @@ class User
     private $userCount;
     private $buddieCount;
     
+    private $token;
+    private $active;
 
 
     /**
@@ -178,17 +181,82 @@ class User
         //Hash the password  
 
         $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
-
+        $this->token = md5(time() . $this->email);
         //Registratie in database
-        $statement = $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar) values (:firstname, :lastname, :email, :password, :buddy, :avatar)");
+        $statement = $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar, token, active) values (:firstname, :lastname, :email, :password, :buddy, :avatar, :token, :active)");
         $statement->bindValue(":firstname", $this->firstName);
         $statement->bindValue(":lastname", $this->lastName);
         $statement->bindValue(":email", $this->email);
         $statement->bindValue(":password", $this->password);
         $statement->bindValue(":buddy", $this->buddy);
+        $statement->bindValue(":token", $this->token);
+        $statement->bindValue(":active", "0");
         $statement->bindValue(":avatar", "default.png");
 
         $result = $statement->execute();
+        if($result){
+            $user = $this->getUser();
+            $_SESSION['userID'] = $user['userID'];
+            $content = $this->activatieLink($user['userID'], $user['token']);
+            $this->sendMail($user['email'],$content);
+            $_SESSION['succes'] = "Bevestig je registratie via email";
+        }
+
+        return $result;
+    }
+    
+    public function getUser(){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('select * from user where email = :email');
+        $statement->bindParam(':email', $this->email);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+    public function activatieLink($id,$token){
+        $link = "<a href='http://localhost:8888/BuddyApp//activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
+        return $link;
+    }
+    //email sturen
+    public function sendMail($email,$content){
+        $key = "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";
+        $mail = new \SendGrid\Mail\Mail(); 
+        $mail->setFrom("frederichermans@hotmail.com", "Amigos User");
+        $mail->setSubject("Account Activatie");
+        $mail->addTo($email);
+        $mail->addContent("text/html", $content);
+        $sendgrid = new \SendGrid($key);
+        try {
+            $response = $sendgrid->send($mail);
+            return $response;
+        } catch (Exception $e) {
+            echo 'Caught exception: '. $e->getMessage() ."\n";
+        }
+    }
+    //activeer status update naar 1
+    public function activate($token, $id){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('update user set active=1 where userID = :userID and token = :token');
+        $statement->bindParam(':userID', $id);
+        $statement->bindParam(':token', $token);
+        $result = $statement->execute();
+        if($result){
+            $user = $this->getUserById($id);
+            $_SESSION['user'] = $user;
+            header("Location: index.php");
+        }
+
+        return $result;
+    }
+    
+    public function getUserById($id)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('select * from user where userID = :userID');
+        $statement->bindParam(':userID', $id);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
 
         return $result;
     }
@@ -258,5 +326,45 @@ class User
         return $booBoo;
        
         
+    
+
+    /**
+     * Get the value of token
+     */ 
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set the value of token
+     *
+     * @return  self
+     */ 
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of active
+     */ 
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set the value of active
+     *
+     * @return  self
+     */ 
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
     }
 }

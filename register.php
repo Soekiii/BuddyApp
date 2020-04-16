@@ -26,10 +26,11 @@ if(isset($_POST["register"])){
                     $errorMessage=$validate->getErrors(); //kijk terug even na of er nog errors zijn?
 
                     if($mailok==true){
-                       
+                        
                         $statement= $user->registerNewUser();
                         if ($statement===true){
-                            header('Location: index.php');
+                            
+                            //header('Location: index.php');
                             }   
     
                     }
@@ -72,16 +73,13 @@ if(isset($_POST["register"])){
         <form action="register.php" method="post" style="width: 366px">
     <div class="form-group my-4">
         <h2>Registreer je hier op Amigos</h2>
-
-    <div class="radio">
-        <input type="radio" id="seekBuddy" name="buddy" checked value="0">
-        <label> Ik zoek een buddy </label>
-    </div>
-
-    <div class="radio">
-        <input type="radio" id="iAmBuddy" name="buddy" value="1">
-        <label> Ik ben een buddy </label>
-    </div>
+    <!-- succes message -->
+    <?php if(isset($_SESSION['succes'])){
+        echo '<div class="alert alert-success" role="alert">';
+        echo $_SESSION['succes'];
+        echo '</div>';
+        unset($_SESSION['succes']);
+    } ?>
     </div>
         <div class="row mb-3">
             <div class="col">
@@ -131,7 +129,12 @@ if(isset($_POST["register"])){
                 </div>
         <?php endif; ?>
             </div>
-
+            <div class="radio">
+            <input type="radio" id="seekBuddy" name="buddy" checked value="0">
+            <label> Ik zoek een buddy </label>
+            <input type="radio" id="iAmBuddy" name="buddy" value="1">
+            <label> Ik ben een buddy </label>
+            </div>
             <div class="d-flex justify-content-between">
             <div class="form-group mb-4">
             <button type="submit" class="btn" style="width: 150px" id="register" name="register">Registreren</button>
