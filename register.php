@@ -62,15 +62,20 @@ if(isset($_POST["register"])){
     <title>Registreer | Amigos</title>
 </head>
 <body>
-<div class="form-row no-gutters">
-    <div class="col-md-6 no-gutters">
-    <div class="container-left d-flex justify-content-center align-items-center">
+<div class="d-md-flex h-md-100 align-items-center">
+<!-- First Half -->
+
+<div class="col-md-6 p-0 bg-indigo h-md-100">
+    <div class="text-white d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
+        <div class="logoarea pt-5 pb-5">
         <h2>Leer hier je nieuwe imd amigos kennen.</h2>
+        </div>
     </div>
-    </div>
-    <div class="col-md-6 col-md-3 no-gutters">
-    <div class="container-right d-flex justify-content-center align-items-center">
-        <form action="register.php" method="post" style="width: 366px">
+</div>
+
+<div class="col-md-6 p-0 bg-white h-md-100 loginarea">
+		<div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center">
+        <form action="register.php" method="post" class="border rounded p-5">
     <div class="form-group my-4">
         <h2>Registreer je hier op Amigos</h2>
     <!-- succes message -->
@@ -129,18 +134,23 @@ if(isset($_POST["register"])){
                 </div>
         <?php endif; ?>
             </div>
-            <div class="radio">
-            <input type="radio" id="seekBuddy" name="buddy" checked value="0">
-            <label> Ik zoek een buddy </label>
+            <div class="form-group mb-4 d-flex justify-content-between">
+                <div class="radio">
+            <input type="radio" id="seekBuddy" name="buddy" checked value="0"> <label> Ik zoek een buddy </label>
+                </div>
+                <div class="radio">
             <input type="radio" id="iAmBuddy" name="buddy" value="1">
             <label> Ik ben een buddy </label>
+                </div>
             </div>
-            <div class="d-flex justify-content-between">
+            
             <div class="form-group mb-4">
             <button type="submit" class="btn" style="width: 150px" id="register" name="register">Registreren</button>
             </div>
-        </div>
+    
         <p class="text-center mt-4">Hebt u al een account? <a href="login.php" class="link">Log in hier!</a></p>
         </form>
+        </div>
+</div>
 </body>
 </html>

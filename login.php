@@ -24,9 +24,7 @@ if ($_POST){
             }
         } 
         
-    }  
-    
-        
+    }    
             
 ?><!DOCTYPE html>
 <html lang="en">
@@ -39,16 +37,20 @@ if ($_POST){
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div class="d-md-flex h-md-100 align-items-center">
+<!-- First Half -->
 
-<div class="form-row no-gutters">
-    <div class="col-md-6 no-gutters">
-    <div class="container-left d-flex justify-content-center align-items-center">
+<div class="col-md-6 p-0 bg-indigo h-md-100">
+    <div class="text-white d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
+        <div class="logoarea pt-5 pb-5">
         <h2>Leer hier je nieuwe imd amigos kennen.</h2>
+        </div>
     </div>
-    </div>
-    <div class="col-md-6 col-md-3 no-gutters">
-    <div class="container-right d-flex justify-content-center align-items-center">
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" class="justify-content-center">
+</div>
+<!-- Second Half -->
+<div class="col-md-6 p-0 bg-white h-md-100 loginarea">
+		<div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" class="border rounded p-5">
 <div class="form-group mb-4">
     <h2>Log in op Amigos</h2>	
 </div>
@@ -59,7 +61,7 @@ if ($_POST){
         </div>
     <?php endif; ?>
        
-        <div class="form-group mb-4" style="width: 336px">
+        <div class="form-group mb-4">
             <label for="email">Emailadres</label>
         <?php if(!isset($error)): ?>
             <input type="text" class="form-control" id="Email" name="email" placeholder="email">
@@ -81,23 +83,19 @@ if ($_POST){
             </div>
         <?php endif; ?>
         </div>
-           
-           
-            
-        
         
             
-        <div class="d-flex justify-content-between">
-        <div class="form-group mb-4">
-            <button type="submit" class="btn" style="width: 150px">Aanmelden</button>
+        
+        <div class="form-group mb-4 d-flex justify-content-between">
+            <button type="submit" class="btn left">Aanmelden</button>
+            <p class="text-center mt-4"><a href="paswoord-vergeten.php" class="link mt-2 mr-0">Passwoord vergeten?</a></p>
         </div>
-		<a href="#" class="link mt-2 mr-0">Passwoord vergeten?</a>
-        </div>
+        
         <p class="text-center mt-4">Nog geen account? <a href="register.php" class="link">Registreer hier!</a></p>
+        
     </form>
     </div>
-    </div>
-    </div>
     
+</div>
 </body>
 </html>
