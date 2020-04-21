@@ -3,8 +3,8 @@
     const SETTINGS = [
         "db" => [
             "user"      => "root",
-            "password"  => "",
+            "password"  => "root",
             "host"      => "localhost",
-            "db"        => "buddyphptest"
+            "db"        => "buddyphp"
         ]
     ];
