@@ -2,17 +2,17 @@
 include_once(__DIR__ . "/Db.php");
 
 class Forum {
-    private $userID;
-    private $buddyID;
+    private $opID;
+    private $commenterID;
     private $postID;
     private $commentID;
 
     /**
      * Get the value of userID
      */ 
-    public function getUserID()
+    public function getOpID()
     {
-        return $this->userID;
+        return $this->opID;
     }
 
     /**
@@ -20,9 +20,9 @@ class Forum {
      *
      * @return  self
      */ 
-    public function setUserID($userID)
+    public function setOpID($opID)
     {
-        $this->userID = $userID;
+        $this->opID = $opID;
 
         return $this;
     }
@@ -30,9 +30,9 @@ class Forum {
     /**
      * Get the value of buddyID
      */ 
-    public function getBuddyID()
+    public function getCommenterID()
     {
-        return $this->buddyID;
+        return $this->commenterID;
     }
 
     /**
@@ -40,9 +40,9 @@ class Forum {
      *
      * @return  self
      */ 
-    public function setBuddyID($buddyID)
+    public function setCommenterID($commenterID)
     {
-        $this->buddyID = $buddyID;
+        $this->commenterID = $commenterID;
 
         return $this;
     }
@@ -87,9 +87,10 @@ class Forum {
         return $this;
     }
 
+    // fetch alle forum posts en de bijhorende user
     public function retrievePosts(){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT * FROM post INNER JOIN comments ON post.postID = comments.postID ORDER BY post.postID DESC');
+        $stmt = $conn->prepare('SELECT * FROM post INNER JOIN user ON post.userID = user.userID ORDER BY post.postID DESC');
         $stmt->execute();
         $content = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
