@@ -56,11 +56,9 @@ if (empty($_SESSION['user_id'])) {
     // functie om gematchte buddies te displayen
     $matchedBuddiesNumber= $displayGetal->AllMatchedBuddies();
     
+    // haal bestaande forum posts & de bijhorende comments op
     $retrievePosts = new Forum();
     $posts = $retrievePosts->retrievePosts();    
-
-    $retrieveComments = new Forum();
-    $comments = $retrieveComments->retrieveComments();
 
 ?>
 
@@ -167,15 +165,9 @@ if (empty($_SESSION['user_id'])) {
 
             <?php foreach($posts as $post): ?>
                 <div class="">
-                    <?php echo $post['content']; ?>
+                    <?php echo $post['postTxt']; ?>
+                    <?php endforeach ?>
                 </div>
-            <?php endforeach ?>
-
-            <?php foreach($comments as $comment): ?>
-                <div class="">
-                    <?php echo $comment['content']; ?>
-                </div>
-            <?php endforeach ?>
         </div>
 </head>
 

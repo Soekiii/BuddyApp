@@ -89,16 +89,7 @@ class Forum {
 
     public function retrievePosts(){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT * FROM post ORDER BY postID DESC');
-        $stmt->execute();
-        $content = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return $content;
-    }
-
-    public function retrieveComments(){
-        $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT * FROM comments ORDER BY commentID DESC');
+        $stmt = $conn->prepare('SELECT * FROM post INNER JOIN comments ON post.postID = comments.postID ORDER BY post.postID DESC');
         $stmt->execute();
         $content = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
