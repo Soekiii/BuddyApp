@@ -4,6 +4,7 @@ include_once(__DIR__ . "/Mail.php");
 include_once(__DIR__ . "/Hobby.php");
 class User
 {
+    private $userID;
     protected $email;
     private $password;
     private $firstName;
@@ -310,10 +311,18 @@ class User
         $statement->execute();
         $booBoo = $statement->fetch();
         return $booBoo;
-       
-        
-    
     }
+
+    public function getUserData($userID){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('select * from user where userID = :userID');
+        $statement->bindParam(':userID', $userID);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
     /**
      * Get the value of token
      */ 

@@ -11,6 +11,9 @@ if (empty($_SESSION['user_id'])) {
     $userID = implode(" ", array($userArray));
 }
 
+$getUserById = new User();
+$userData = $getUserById->getUserData($userID);
+
 $checkRequest = new Buddy();
 $buddyRequests = $checkRequest->checkRequest($userID);
 
@@ -50,6 +53,8 @@ if (isset($_POST['reject'])) {
 </head>
 
 <body>
+    <h3><?php echo $userData['firstname'] . " " . $userData['lastname']; ?></h3>
+
     <?php
     // if user has no buddy yet --> user can still accept requests
     if ($available == "0" || $available == "3") {
