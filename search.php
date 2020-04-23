@@ -1,14 +1,18 @@
 <?php 
 session_start();
-if (empty($_SESSION['user_id'])) {
-    header('Location: login.php');
-}
 include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Hobby.php");
 include_once(__DIR__."/classes/User.php");
 
-$userArray = $_SESSION['user_id'];
-$userID = implode(" ", $userArray);
+$userID = "";
+if (empty($_SESSION['user_id'])) {
+    header('Location: login.php');
+} else {
+    $userArray = $_SESSION['user_id'];
+    $userID = implode(" ", array($userArray));
+    $currentUser = $userID;
+}
+
 $user = new User();
 $email = $user->getEmail();
 
