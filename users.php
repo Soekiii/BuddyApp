@@ -1,13 +1,14 @@
 <?php
+session_start();
 include_once(__DIR__ . "/classes/Buddy.php");
 include_once(__DIR__ . "/inc/header.inc.php");
 
-session_start();
+$userID = "";
 if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
 } else {
     $userArray = $_SESSION['user_id'];
-    $userID = implode(' ', $userArray);
+    $userID = implode(" ", array($userArray));
 }
 
 if(isset($_GET['id'])){

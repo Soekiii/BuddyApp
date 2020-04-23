@@ -5,13 +5,14 @@ include_once(__DIR__ . "/classes/Hobby.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Buddy.php");
 include_once(__DIR__ . "/inc/header.inc.php");
+
 $userID = "";
-    if (empty($_SESSION['user_id'])) {
-        header('Location: login.php');
-    } else { 
-        $userArray = $_SESSION['user_id'];
-        $userID = implode(' ', $userArray);
-    }
+if (empty($_SESSION['user_id'])) {
+    header('Location: login.php');
+} else {
+    $userArray = $_SESSION['user_id'];
+    $userID = implode(" ", array($userArray));
+}
 
     // if user's hobby = empty --> redirect to hobby.php
     $hobby = new Hobby();

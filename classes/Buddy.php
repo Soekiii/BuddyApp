@@ -141,10 +141,9 @@ class Buddy extends User
         $stmt = $conn->prepare('SELECT status FROM buddies WHERE buddy2ID = :userID');
         $stmt->bindPAram(':userID', $userID);
         $stmt->execute();
-        $buddyAvailable = $stmt->fetch(PDO::FETCH_ASSOC);
-        $available = implode(" ", $buddyAvailable);
+        $buddyAvailable = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return $available;
+        return $buddyAvailable;
     }
 
     public function rejectRequest($userID, $buddyID, $rejectMsg){
