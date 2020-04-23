@@ -5,6 +5,8 @@ include_once(__DIR__ . "/classes/Hobby.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Buddy.php");
 include_once(__DIR__ . "/inc/header.inc.php");
+include_once(__DIR__ . "/classes/Forum.php");
+
 
 $userID = "";
 if (empty($_SESSION['user_id'])) {
@@ -54,8 +56,11 @@ if (empty($_SESSION['user_id'])) {
     // functie om gematchte buddies te displayen
     $matchedBuddiesNumber= $displayGetal->AllMatchedBuddies();
     
+    $retrievePosts = new Forum();
+    $posts = $retrievePosts->retrievePosts();    
 
-    
+    $retrieveComments = new Forum();
+    $comments = $retrieveComments->retrieveComments();
 
 ?>
 
@@ -156,6 +161,22 @@ if (empty($_SESSION['user_id'])) {
                 <?php } ?>
         </div>
         <?php endforeach; } ?>
+
+        <div>
+            <h5>Forum</h5>
+
+            <?php foreach($posts as $post): ?>
+                <div class="">
+                    <?php echo $post['content']; ?>
+                </div>
+            <?php endforeach ?>
+
+            <?php foreach($comments as $comment): ?>
+                <div class="">
+                    <?php echo $comment['content']; ?>
+                </div>
+            <?php endforeach ?>
+        </div>
 </head>
 
 <body>
