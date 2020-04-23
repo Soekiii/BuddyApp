@@ -164,10 +164,10 @@ if (empty($_SESSION['user_id'])) {
             <h5>Forum</h5>
 
             <?php foreach($posts as $post): ?>
-                <div class="">
+                <div class="tests">
                     <?php echo $post['postTxt']; ?>
-                    <?php endforeach ?>
                 </div>
+            <?php endforeach ?>
         </div>
 </head>
 
