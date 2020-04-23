@@ -10,9 +10,14 @@ include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Message.php");
 include_once(__DIR__."/classes/User.php");
 
-$userArray = $_SESSION['user_id'];
-$userID = implode(" ", $userArray);
-$currentUser = $userID;
+$userID = "";
+if (empty($_SESSION['user_id'])) {
+    header('Location: login.php');
+} else {
+    $userArray = $_SESSION['user_id'];
+    $userID = implode(" ", array($userArray));
+    $currentUser = $userID;
+}
 
 //var_dump($_POST);
 

@@ -1,20 +1,21 @@
 <?php
 session_start();
-if (empty($_SESSION['user_id'])) {
-    header('Location: login.php');
-}
-//Hier worden de buddies getoond.
-
 include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Message.php");
 include_once(__DIR__."/classes/User.php");
 
+$userID = "";
+if (empty($_SESSION['user_id'])) {
+    header('Location: login.php');
+} else {
+    $userArray = $_SESSION['user_id'];
+    $userID = implode(" ", array($userArray));
+    $currentUser = $userID;
+}
+//Hier worden de buddies getoond.
 
 
 //Checken welke userid nu aangelogd is.
-$userArray = $_SESSION['user_id'];
-$userID = implode(" ", $userArray);
-$currentUser = $userID;
 
 //voor de namen van de gebruiker
 $user = new User();
