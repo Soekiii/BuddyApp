@@ -9,8 +9,7 @@ if (empty($_SESSION['user_id'])) {
     header('Location: login.php');
 } else {
     $userArray = $_SESSION['user_id'];
-    $userID = implode(" ", array($userArray));
-    $currentUser = $userID;
+    $userID = implode(" ", $userArray);
 }
 
 $user = new User();
