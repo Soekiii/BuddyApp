@@ -9,7 +9,7 @@ class Buddy extends User
     private $hobbyUser;
     private $hobbyOthers;
     private $buddyID;
-    private $userID;
+    protected $userID;
     private $status;
     private $rejectMsg;
 
