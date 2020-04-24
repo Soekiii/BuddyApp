@@ -2,25 +2,43 @@
 include_once (__DIR__ . "/classes/User.php");
 include_once (__DIR__ . "/classes/Validate.php");
     // Wanneer er op het formulier word gedrukt voort men deze if uit
+  session_start();
+if ( !isset($_SESSION['pogingen']) ){   
+    $_SESSION['pogingen']=4;
+} 
+if ($_SESSION['pogingen'] <=0 ){   
+    $_SESSION['pogingen']=4;
+} 
+
 if ($_POST){
+  
+    
     if (!empty($_POST)) {
-        
+            $_SESSION['pogingen'] = $_SESSION['pogingen']-1;
             $user = new User();
             $validate = new Validate($_POST);
             $errors = $validate->validateForm();
             $user->setEmail(htmlspecialchars($_POST['email']));
             $user->setPassword(htmlspecialchars($_POST['password']));
+    
             if(empty($errors)){
+               
                 if($user->canILogin() == true){
-                session_start();
+                //session_start();
                 $_SESSION['email'] = $user->getEmail();
                 $_SESSION['user_id'] = $user->getUserId();
                 header('Location: index.php');
                 } else {
-                $error = "Email en passwoord komen niet overeen."; 
+
+                        $error = 'Email en passwoord komen niet overeen. nog '.$_SESSION['pogingen'].' pogingen'; 
+        
                 }
-            } else {
-                $error = "Email en passwoord komen niet overeen.";  
+            }else {
+                    // error om aan te geven dat je 3 pogingen hebt en anders 10s moet wachten. 
+                    $error = 'De gegevens die je invoerde zijn niet correct. <br> 
+                    Na 3 verkeerde pogingen, moet je 10 seconden wachten. <br> 
+                    Je hebt nog '.$_SESSION['pogingen'].' pogingen';  
+              
             }
         } 
         
@@ -87,7 +105,7 @@ if ($_POST){
             
         
         <div class="form-group mb-4 d-flex justify-content-between">
-            <button type="submit" class="btn left">Aanmelden</button>
+            <button type="submit"  id="btn" class="btn left">Aanmelden</button>
             <p class="text-center mt-4"><a href="paswoord-vergeten.php" class="link mt-2 mr-0">Passwoord vergeten?</a></p>
         </div>
         
@@ -97,5 +115,44 @@ if ($_POST){
     </div>
     
 </div>
+    </div>
+    </div>
+    <script>
+
+    // JS voor gebruik van functie om Brute force Attacking te bemoeilijken. 
+    var button;
+    var aantalkeer;
+    var msg;
+            //initialiseer functie om sessie gebruiken (server sided) via JS-AJAX (client sided). 
+            //Wanneer sessie wordt gestart krijg je 3 pogingen om in te loggen. 
+            //nadien wordt button geblokkeerd voor 10 seconden. 
+    function init() {
+        
+
+    }
+    
+      if ((msg = <?php echo json_encode($_SESSION['pogingen'])?>) === 0){ 
+        //php.net: JSON_encode Returns a string containing the JSON representation of the supplied value
+        wachten();
+     }
+ 
+     function myFunction() {
+     document.getElementById('btn').disabled = false;
+      
+     }
+
+
+     function wachten(){ 
+        document.getElementById('btn').disabled = true;
+
+        setTimeout(myFunction, 10000)
+     }
+
+    // van zodra de pagina wordt herladen de functie 'init' aanroepen. 
+    window.addEventListener("load", init);
+    
+
+    </script>
+
 </body>
 </html>
