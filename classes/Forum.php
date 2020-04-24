@@ -97,4 +97,24 @@ class Forum extends User {
 
         return $result;
     }
+
+    public function specificPost($postID){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT * FROM post INNER JOIN user ON post.userID = user.userID WHERE post.postID = :postID');
+        $stmt->bindParam(':postID', $postID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function specificComments($postID){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID');
+        $stmt->bindParam(':postID', $postID);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
 }
