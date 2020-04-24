@@ -171,7 +171,7 @@ $posts = $fetchPosts->fetchPosts();
             <?php foreach ($posts as $post) : ?>
                 <div class="posts">
                     <div>
-                        <?php echo $post['firstname'] . " " . $post['lastname'] . " | " .  $post['postTxt']; ?>
+                        <a href="topic.php?id=<?php echo $post['postID'] ?>"><?php echo $post['postTxt']; ?></a>
                     </div>
                 </div>
             <?php endforeach ?>
