@@ -93,7 +93,7 @@ $searchResult = "";
         <button type="submit" name="filter-search">Search</button>
    
     </form>
-    </div>
+    
     <!-- zoekresultaat hits -->
     <?php if(isset($result)): ?>
         <div class="result"><h2><?php echo $result; ?></h2></div>
@@ -101,14 +101,29 @@ $searchResult = "";
     <?php if(isset($resultCount)): ?>
         <div class="resultCount"><p2><?php echo $resultCount; ?></p2></div>
     <?php endif; ?>
-
+    </div>
+    </div>
+    </div>
+    </div>
     <!-- zoekresultaten uitlezen als er iets inzit-->
-    <div class="result-container">
+    <div class="d-flex justify-content-center align-items-center text-center" >
+    <div class="container">
+    <div class="row card-deck">
+    
     <?php if (is_array($searchResult) || is_object($searchResult)) {
         foreach($searchResult as $r): ?>
-        <img src="avatars/<?php echo $r['avatar']; ?>" alt="" style="height:100px">
-        <h3><?php echo($r['firstname'] . " " . $r['lastname']); ?></h3>
+    
+    <div class="col-md-3">
+    <div class="card" style="height: 200px">
+        <div class="card-body"><img src="avatars/<?php echo $r['avatar']; ?>" alt="" class="img-fluid">
+        <h3 class="card-title"><?php echo($r['firstname'] . " " . $r['lastname']); ?></h3>
+        <p><?php echo $r['bio']; ?></p>
+        </div>
+        </div>
+        </div>
         <?php endforeach; }?>
+        </>
+    </div>
     </div>
 
      <!-- filter hobby uitlezen als er iets inzit-->
@@ -152,8 +167,8 @@ $searchResult = "";
         <?php endforeach; }?>
     </div>
 
-    </div>
-    </div>
-    </div>
+
+    
+    
 </body>
 </html>
