@@ -52,13 +52,12 @@ if (!empty($_POST['request'])) {
 $displayGetal = new User();
 $userNumbers = $displayGetal->AllUsers();
 
-
 // functie om gematchte buddies te displayen
 $matchedBuddiesNumber = $displayGetal->AllMatchedBuddies();
 
-// haal bestaande forum posts & de bijhorende comments op
-$retrievePosts = new Forum();
-$posts = $retrievePosts->retrievePosts();
+// haal bestaande forum posts & comments op
+$fetchPosts = new Forum();
+$posts = $fetchPosts->fetchPosts();
 
 ?>
 
@@ -174,13 +173,6 @@ $posts = $retrievePosts->retrievePosts();
                     <div>
                         <?php echo $post['firstname'] . " " . $post['lastname'] . " | " .  $post['postTxt']; ?>
                     </div>
-                    <div>
-                        <a href="/topic.php">bekijk alle commentaar</a>
-                    </div>
-                    <form action="" method="post">
-                        <textarea name="" id="" cols="70" rows="2" placeholder="Reageer..."></textarea>
-                        <input type="submit" value="Verstuur">
-                    </form>
                 </div>
             <?php endforeach ?>
         </div>

@@ -1,51 +1,10 @@
 <?php
 include_once(__DIR__ . "/Db.php");
 
-class Forum {
-    private $opID;
-    private $commenterID;
+class Forum extends User {
     private $postID;
     private $commentID;
-
-    /**
-     * Get the value of userID
-     */ 
-    public function getOpID()
-    {
-        return $this->opID;
-    }
-
-    /**
-     * Set the value of userID
-     *
-     * @return  self
-     */ 
-    public function setOpID($opID)
-    {
-        $this->opID = $opID;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of buddyID
-     */ 
-    public function getCommenterID()
-    {
-        return $this->commenterID;
-    }
-
-    /**
-     * Set the value of buddyID
-     *
-     * @return  self
-     */ 
-    public function setCommenterID($commenterID)
-    {
-        $this->commenterID = $commenterID;
-
-        return $this;
-    }
+    private $commentTxt;
 
     /**
      * Get the value of postID
@@ -87,13 +46,55 @@ class Forum {
         return $this;
     }
 
+        /**
+     * Get the value of commentTxt
+     */ 
+    public function getCommentTxt()
+    {
+        return $this->commentTxt;
+    }
+
+    /**
+     * Set the value of commentTxt
+     *
+     * @return  self
+     */ 
+    public function setCommentTxt($commentTxt)
+    {
+        $this->commentTxt = $commentTxt;
+
+        return $this;
+    }
+
     // fetch alle forum posts en de bijhorende user
-    public function retrievePosts(){
+    public function fetchPosts(){
         $conn = Db::getConnection();
         $stmt = $conn->prepare('SELECT * FROM post INNER JOIN user ON post.userID = user.userID ORDER BY post.postID DESC');
         $stmt->execute();
         $content = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $content;
+    }
+
+    // verstuur comment
+    public function sendComment(){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('INSERT INTO comments (userID, postID, commentsTxt) VALUES (:userID, :postID, :commentsTxt)');
+        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':postID', $postID);
+        $stmt->bindParam(':commentsTxt', $commentTxt);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function fetchComments(){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT * FROM comments');
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
     }
 }
