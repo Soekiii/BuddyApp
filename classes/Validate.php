@@ -5,6 +5,7 @@ class Validate {
   private $data;
   private $errors = [];
   private static $fields = ['email', 'password'];
+  
 
   public function __construct($post_data){
     $this->data = $post_data;
@@ -18,6 +19,7 @@ class Validate {
          return $this->errors;
      }
 
+  
 
   public function validateForm(){
 
@@ -109,8 +111,10 @@ class Validate {
   }
   if(strlen($val< 6)){  // opgelet is al in omgezet en is zeer lang
     $this->addError('password', 'je paswoord te gemakkelijk, kies een beter met min 6 karakters');
+
     //paswoord:            ---> check of paswoord min 6 karakters heeft
   }
+ 
     
   }
 

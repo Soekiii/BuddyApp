@@ -72,6 +72,8 @@ if(isset($_POST["register"])){
     <div class="form-group my-4">
         <h2>Registreer je hier op Amigos</h2>
 
+       
+
     <div class="radio">
         <input type="radio" id="seekBuddy" name="buddy" checked value="0">
         <label> Ik zoek een buddy </label>
@@ -121,15 +123,19 @@ if(isset($_POST["register"])){
 
             <div class="form-group mb-4">
             <label for="password">Paswoord</label>
+
+            
         <?php if(empty($errorMessage['password'])): ?>
             <input type="password" id="password" name="password" type="password" class="form-control" placeholder="Paswoord">
         <?php else: ?>  
+            
             <input type="password" id="password" name="password" type="password" class="form-control is-invalid" placeholder="Paswoord"> 
             <div class="invalid-feedback">
+            
+            </div>
                 <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
         <?php endif; ?>
-            </div>
 
             <div class="d-flex justify-content-between">
             <div class="form-group mb-4">
@@ -138,5 +144,7 @@ if(isset($_POST["register"])){
         </div>
         <p class="text-center mt-4">Hebt u al een account? <a href="login.php" class="link">Log in hier!</a></p>
         </form>
+
+       
 </body>
 </html>
