@@ -29,6 +29,7 @@ html{
     color: #fff;
 }
 
+/* ====== TEMPORARY FORUM STYLING ====== */
 .posts{
     background-color: lightblue;
     display: block;
@@ -51,7 +52,7 @@ html{
 .match {
     margin-bottom: 2em;
 }
-
+/* ====== END: TEMPORARY FORUM STYLING ====== */
 
 @media (min-width: 768px) {
     .h-md-100 { height: 100vh; }
