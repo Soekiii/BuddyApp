@@ -55,7 +55,8 @@ $userNumbers = $displayGetal->AllUsers();
 // functie om gematchte buddies te displayen
 $matchedBuddiesNumber = $displayGetal->AllMatchedBuddies();
 
-// haal bestaande forum posts & comments op
+// haal bestaande forum posts
+
 $fetchPosts = new Forum();
 $posts = $fetchPosts->fetchPosts();
 

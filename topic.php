@@ -21,6 +21,13 @@ if (isset($_GET['id'])) {
     $fetchComments = new Forum();
     $comments = $fetchComments->specificComments($postID);
 }
+
+/*if (!empty($_POST['comment'])){
+    $sendComment = new Forum();
+    $sendComment->setUserID($userID);
+    $sendComment->set
+    $comment = $sendComment->sendComment();
+}*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,9 +53,9 @@ if (isset($_GET['id'])) {
     </div>
 
     <div>
-        <form action="" method="post">
-            <textarea name="reply" id="" cols="140" rows="2"></textarea>
-            <input type="submit" value="Reageer">
+        <form action="" method="post" name="comment">
+            <textarea name="comment" id="" cols="140" rows="2"></textarea>
+            <input type="submit" name="comment" value="Reageer">
         </form>
     </div>
 </body>

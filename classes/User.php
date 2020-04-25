@@ -216,7 +216,7 @@ class User
         return $result;
     }
     public function activatieLink($id,$token){
-        $link = "<a href='http://localhost:8888/BuddyApp//activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
+        $link = "<a href='http://localhost/BuddyApp/activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
         return $link;
     }
     

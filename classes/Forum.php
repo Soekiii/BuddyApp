@@ -1,7 +1,7 @@
 <?php
 include_once(__DIR__ . "/Db.php");
 
-class Forum extends User {
+class Forum extends Buddy {
     private $postID;
     private $commentID;
     private $commentTxt;
@@ -77,7 +77,7 @@ class Forum extends User {
     }
 
     // verstuur comment
-    public function sendComment(){
+    public function sendComment($postID, $userID, $commentTxt){
         $conn = Db::getConnection();
         $stmt = $conn->prepare('INSERT INTO comments (userID, postID, commentsTxt) VALUES (:userID, :postID, :commentsTxt)');
         $stmt->bindParam(':userID', $userID);
