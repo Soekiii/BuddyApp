@@ -125,11 +125,16 @@ if(isset($_POST["register"])){
 
             <div class="form-group mb-4">
             <label for="password">Paswoord</label>
+
+            
         <?php if(empty($errorMessage['password'])): ?>
             <input type="password" id="password" name="password" type="password" class="form-control" placeholder="Paswoord">
         <?php else: ?>  
+            
             <input type="password" id="password" name="password" type="password" class="form-control is-invalid" placeholder="Paswoord"> 
             <div class="invalid-feedback">
+            
+            </div>
                 <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
         <?php endif; ?>
