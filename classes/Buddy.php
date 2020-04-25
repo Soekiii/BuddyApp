@@ -138,12 +138,12 @@ class Buddy extends User
     // check if user already has a buddy
     public function buddyAvailable($userID){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT status FROM buddies WHERE buddy2ID = :userID');
+        $stmt = $conn->prepare('SELECT MAX(status) FROM buddies WHERE buddy2ID = :userID');
         $stmt->bindPAram(':userID', $userID);
         $stmt->execute();
-        $buddyAvailable = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return $buddyAvailable;
+        $buddyAvailable = $stmt->fetch(PDO::FETCH_ASSOC);
+        $available = implode(" ", $buddyAvailable);
+        return $available;
     }
 
     public function rejectRequest($userID, $buddyID, $rejectMsg){

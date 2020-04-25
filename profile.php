@@ -57,36 +57,32 @@ if (isset($_POST['reject'])) {
 
     <?php
     // if user has no buddy yet --> user can still accept requests
-    if ($available == "0" || $available == "3") {
-        foreach ($buddyRequests as $buddyRequest) : ?>
-            <?php
-            // status=0 --> buddy needs to be accepted/rejected
-            if ($buddyRequest['status'] == 0) { ?>
-                <div class="notifs">
-                    <?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname']; ?> heeft je een buddy request gestuurd.
-                    <form action="" method="post">
-                        <div class="request">
+        // if user has no buddy yet --> user is still available
+        if($available == "0"){
+            foreach ($buddyRequests as $buddyRequest) : ?>
+                <?php
+                if ($buddyRequest['status'] == 0) { ?>
+                    <div class="notifs">
+                        <?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname']; ?> heeft je een buddy request gestuurd.
+                        <form action="" method="post">
                             <input type="hidden" name="buddyID" id="" value="<?php echo $buddyRequest['userID'] ?>">
-                            <input type="submit" name="accept" id="accept" value="Accepteer">
-                            <input type="text" name="rejectMsg" id="msg" placeholder="Reden weigering?">
-                            <input type="submit" name="reject" value="Weiger">
-                        </div>
-                    </form>
-                </div>
-            <?php
-            }
-            ?>
-        <?php endforeach;
-    } else {
-        foreach ($buddyRequests as $buddyRequest) : ?>
-            <?php
-            if ($buddyRequest['status'] == 1) { ?>
-                <div class="buddy">
-                    <a href="users.php?id=<?php echo $buddyRequest['userID'] ?>"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname'] ?></a> <?php echo "'s buddy"; ?>
-                </div>
-            <?php } ?>
-    <?php endforeach;
-    } ?>
+                            <input type="submit" name="accept" id="" value="Accepteer">
+                            <input type="submit" name="reject" id="" value="Weiger">
+                        </form>
+                    </div>
+                <?php
+                }
+                ?>
+            <?php endforeach;
+            } else {
+            foreach($buddyRequests as $buddyRequest) : ?>
+                <?php
+                if($buddyRequest['status'] == 1){ ?>
+                    <div class="buddy">
+                        <a href="users.php?id=<?php echo $buddyRequest['userID']?>"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname'] ?></a> <?php echo "'s buddy"; ?>
+                    </div>
+                <?php } ?>
+            <?php endforeach; } ?>
 
 
     <script>
