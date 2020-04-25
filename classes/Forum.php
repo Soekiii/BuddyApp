@@ -1,7 +1,7 @@
 <?php
 include_once(__DIR__ . "/Db.php");
 
-class Forum extends Buddy {
+class Forum {
     private $postID;
     private $commentID;
     private $commentTxt;
