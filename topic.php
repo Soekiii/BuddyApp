@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
     $comments = $fetchComments->specificComments($postID);
 }
 
-if (!empty($_POST['comment'])){
+if (!empty($_POST['comment'])) {
     $sendComment = new Forum();
     $postID = $_POST['postID'];
     $commentTxt = $_POST['commentTxt'];
@@ -32,6 +32,11 @@ if (!empty($_POST['comment'])){
 
     header("Refresh: 0");
 }
+
+$checkMod = new Forum();
+$mod = $checkMod->checkMod($userID);
+echo $mod['modStatus'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,16 +49,22 @@ if (!empty($_POST['comment'])){
 </head>
 
 <body>
+
+    <div>
+        <?php if($mod['modStatus'] == 1){ ?>
+            <button type="submit">Pin deze post</button>
+        <?php } ?>
+    </d>
     <div>
         <div>
             <?php echo $post['firstname'] . " " . $post['lastname'] . " zegt: " . $post['postTxt']; ?>
         </div>
     </div>
-    
+
     <div>
         <?php foreach ($comments as $comment) : ?>
             <div> <?php echo $comment['firstname'] . " " . $comment['lastname'] . " reageert: " . $comment['commentsTxt']; ?> </div>
-        <?php endforeach; ?>    
+        <?php endforeach; ?>
     </div>
 
     <div>
