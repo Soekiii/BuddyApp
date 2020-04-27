@@ -35,7 +35,13 @@ if (!empty($_POST['comment'])) {
 
 $checkMod = new Forum();
 $mod = $checkMod->checkMod($userID);
-echo $mod['modStatus'];
+
+if(isset($_POST['pinPost'])){
+    $pinPost = new Forum();
+    $postID = $_POST['postID'];
+    $pinPost->setPostID($postID);
+    $pin = $pinPost->pinPost($postID);
+}
 
 ?>
 <!DOCTYPE html>
@@ -51,9 +57,12 @@ echo $mod['modStatus'];
 <body>
 
     <div>
+        <form action="" method="post" name="pinPost">
         <?php if($mod['modStatus'] == 1){ ?>
-            <button type="submit">Pin deze post</button>
+            <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
+            <input type="submit" name="pinPost" value="Pin post">
         <?php } ?>
+        </form>
     </d>
     <div>
         <div>

@@ -193,4 +193,15 @@ class Forum extends Buddy{
 
         return $result;
     }
+
+    // pin a post
+    public function pinPost($postID){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('INSERT INTO pinned(postID, pinnedStatus) VALUES (:postID, 1)');
+        $stmt->bindParam(':postID', $postID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
 }
