@@ -1,10 +1,13 @@
 <?php
 include_once(__DIR__ . "/Db.php");
+include_once(__DIR__ . "/Buddy.php");
 
-class Forum {
+class Forum extends Buddy{
     private $postID;
+    private $postTxt;
     private $commentID;
     private $commentTxt;
+    private $mod;
 
     /**
      * Get the value of postID
@@ -66,6 +69,26 @@ class Forum {
         return $this;
     }
 
+        /**
+     * Get the value of postTxt
+     */ 
+    public function getPostTxt()
+    {
+        return $this->postTxt;
+    }
+
+    /**
+     * Set the value of postTxt
+     *
+     * @return  self
+     */ 
+    public function setPostTxt($postTxt)
+    {
+        $this->postTxt = $postTxt;
+
+        return $this;
+    }
+
     // fetch alle forum posts en de bijhorende user
     public function fetchPosts(){
         $conn = Db::getConnection();
@@ -114,6 +137,47 @@ class Forum {
         $stmt->bindParam(':postID', $postID);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    /**
+     * Get the value of mod
+     */ 
+    public function getMod()
+    {
+        return $this->mod;
+    }
+
+    /**
+     * Set the value of mod
+     *
+     * @return  self
+     */ 
+    public function setMod($mod)
+    {
+        $this->mod = $mod;
+
+        return $this;
+    }
+
+    public function checkMod($userID){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT * FROM modteam WHERE userID = :userID');
+        $stmt->bindParam(':userID', $userID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function newPost($userID, $postTxt){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('INSERT INTO post (userID, postTxt) VALUES (:userID, :postTxt)');
+        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':postTxt', $postTxt);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $result;
     }

@@ -22,12 +22,16 @@ if (isset($_GET['id'])) {
     $comments = $fetchComments->specificComments($postID);
 }
 
-/*if (!empty($_POST['comment'])){
+if (!empty($_POST['comment'])){
     $sendComment = new Forum();
+    $postID = $_POST['postID'];
+    $commentTxt = $_POST['commentTxt'];
     $sendComment->setUserID($userID);
-    $sendComment->set
-    $comment = $sendComment->sendComment();
-}*/
+    $sendComment->setPostID($postID);
+    $comment = $sendComment->sendComment($postID, $userID, $commentTxt);
+
+    header("Refresh: 0");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,19 +46,20 @@ if (isset($_GET['id'])) {
 <body>
     <div>
         <div>
-            <?php echo $post['firstname'] . " " . $post['lastname'] . " says: " . $post['postTxt']; ?>
+            <?php echo $post['firstname'] . " " . $post['lastname'] . " zegt: " . $post['postTxt']; ?>
         </div>
     </div>
     
     <div>
         <?php foreach ($comments as $comment) : ?>
-            <div> <?php echo $comment['firstname'] . " " . $comment['lastname'] . " responds: " . $comment['commentsTxt']; ?> </div>
+            <div> <?php echo $comment['firstname'] . " " . $comment['lastname'] . " reageert: " . $comment['commentsTxt']; ?> </div>
         <?php endforeach; ?>    
     </div>
 
     <div>
         <form action="" method="post" name="comment">
-            <textarea name="comment" id="" cols="140" rows="2"></textarea>
+            <textarea name="commentTxt" id="" cols="140" rows="2"></textarea>
+            <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
             <input type="submit" name="comment" value="Reageer">
         </form>
     </div>
