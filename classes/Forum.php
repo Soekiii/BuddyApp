@@ -161,6 +161,7 @@ class Forum extends Buddy{
         return $this;
     }
 
+    // check if user is moderator
     public function checkMod($userID){
         $conn = Db::getConnection();
         $stmt = $conn->prepare('SELECT * FROM modteam WHERE userID = :userID');
@@ -171,6 +172,7 @@ class Forum extends Buddy{
         return $result;
     }
 
+    // create new post
     public function newPost($userID, $postTxt){
         $conn = Db::getConnection();
         $stmt = $conn->prepare('INSERT INTO post (userID, postTxt) VALUES (:userID, :postTxt)');
@@ -178,6 +180,16 @@ class Forum extends Buddy{
         $stmt->bindParam(':postTxt', $postTxt);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    // check if post is pinned
+    public function checkPinned(){
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT * FROM pinned INNER JOIN post ON pinned.postID = post.postID');
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $result;
     }
