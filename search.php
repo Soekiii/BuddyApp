@@ -14,7 +14,7 @@ if (empty($_SESSION['user_id'])) {
 
 $user = new User();
 $email = $user->getEmail();
-
+$userID = $_SESSION['user_id'];
 $hobby = "";
 $film = "";
 $game = "";
@@ -22,6 +22,8 @@ $muziek = "";
 $locatie = "";
 // eigenschappen ophalen van de user
 $eigenschappen = Hobby::getEigenschappen($userID);
+var_dump($userID);
+var_dump($eigenschappen['hobby']);
 if(!empty($_POST['filter'])){
     if(isset($_POST['filter'])){
     
@@ -36,8 +38,6 @@ if(!empty($_POST['filter'])){
         
 }
 }
-    
-
 $searchResult = "";
         if(isset($_POST['submit-search'])){
             $search = htmlspecialchars($_POST['search']);
