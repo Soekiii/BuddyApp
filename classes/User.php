@@ -323,6 +323,16 @@ class User
         return $result;
     }
 
+    public static function lokalen(){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select * from location");
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
     /**
      * Get the value of token
      */ 

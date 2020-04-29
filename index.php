@@ -33,6 +33,12 @@ $hobbyOthers = $others->setHobbyOthers($userID);
 $buddyAvailable = new Buddy();
 $available = $buddyAvailable->buddyAvailable($userID);
 
+// ====== LOKAAL ZOEKEN ======
+$lokaal = User::lokalen();
+
+
+
+
 // ====== SENDING BUDDY REQUESTS ======
 // when button "send buddy request" is clicked
 if (!empty($_POST['request'])) {
@@ -88,7 +94,24 @@ if (!empty($_POST)) {
         <p>Geregistreerde gebruikers: <span class="badge"><?php echo $userNumbers['numbersOfUsers']; ?></span></p>
         <p>Gematchte buddies: <span class="badge"><?php echo $matchedBuddiesNumber['numbersOfMatchedBuddies']; ?></span></p>
     </div>
-
+    <!-- dropdown form -->
+    
+    <div class="form">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <select name="filter" id="input-order" class="form-control mb-4">
+        <!-- lokalen uitlezen in een dropdown -->
+        <option value="">Vind een lokaal.</option>
+        <?php
+            if (! empty($lokaal)) {
+                 foreach ($lokaal as $key => $value) {
+                     echo '<option value="' . $lokaal[$key]['location'] . '">' . $lokaal[$key]['location'] . '</option>';
+                 }
+             }
+        ?>
+        </select>
+        <button type="submit" name="filter-search">Search</button>
+   
+    </form>
     <div class="grid">
         <div class="matches">
             <h5>Potentiële Amigos</h5>
