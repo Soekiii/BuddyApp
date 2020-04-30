@@ -144,6 +144,9 @@ class User
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         if (password_verify($password, $result['password'])) {
+            $_SESSION['user_id'] = $result['userID'];
+            $_SESSION['email'] = $email;
+            header('Location: index.php');
             return true;
         } else {
             return false;
@@ -229,8 +232,8 @@ class User
         $result = $statement->execute();
         if($result){
             $user = $this->getUserById($id);
-            $_SESSION['user'] = $user;
-            $_SESSION['user_id'] = $id;
+            $_SESSION['user_id'] = $user;
+            //$_SESSION['user_id'] = $id;
             header("Location: hobby.php");
         }
 
@@ -240,7 +243,7 @@ class User
     public function getUserById($id)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare('select * from user where userID = :userID');
+        $statement = $conn->prepare('select userID from user where userID = :userID');
         $statement->bindParam(':userID', $id);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -323,7 +326,7 @@ class User
         return $result;
     }
 
-    public static function lokalen(){
+    public function lokalen(){
         $conn = Db::getConnection();
 
         $statement = $conn->prepare("select * from location");
@@ -331,6 +334,17 @@ class User
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    public function lokaalInfo($lokaal){
+        $conn = Db::getConnection();
+
+        $statement = $conn->prepare("select description from location where location = :lokaal");
+        $statement->bindParam(':lokaal', $lokaal);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
 
 
     /**

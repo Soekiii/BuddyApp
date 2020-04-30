@@ -20,26 +20,22 @@ if ($_POST){
             $errors = $validate->validateForm();
             $user->setEmail(htmlspecialchars($_POST['email']));
             $user->setPassword(htmlspecialchars($_POST['password']));
-    
             if(empty($errors)){
-               
-                if($user->canILogin() == true){
-                //session_start();
-                $_SESSION['email'] = $user->getEmail();
-                $_SESSION['user_id'] = $user->getUserId();
-                header('Location: index.php');
+            $user->canILogin();
+                //if($user->canILogin() == true){
+           
                 } else {
 
                         $error = 'Email en passwoord komen niet overeen. nog '.$_SESSION['pogingen'].' pogingen'; 
         
                 }
-            }else {
+            //}else {
                     // error om aan te geven dat je 3 pogingen hebt en anders 10s moet wachten. 
                     $error = 'De gegevens die je invoerde zijn niet correct. <br> 
                     Na 3 verkeerde pogingen, moet je 10 seconden wachten. <br> 
                     Je hebt nog '.$_SESSION['pogingen'].' pogingen';  
               
-            }
+            //}
         } 
         
     }    

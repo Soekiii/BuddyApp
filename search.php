@@ -1,16 +1,14 @@
 <?php 
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+} 
+
+$userID = $_SESSION['user_id'];
 include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Hobby.php");
 include_once(__DIR__."/classes/User.php");
 
-$userID = "";
-if (empty($_SESSION['user_id'])) {
-    header('Location: login.php');
-} else {
-    $userArray = $_SESSION['user_id'];
-    $userID = implode(" ", $userArray);
-}
 
 $user = new User();
 $email = $user->getEmail();

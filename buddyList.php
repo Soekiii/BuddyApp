@@ -1,17 +1,15 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+} 
+
+$userID = $_SESSION['user_id'];
+$currentUser = $userID;
 include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Message.php");
 include_once(__DIR__."/classes/User.php");
 
-$userID = "";
-if (empty($_SESSION['user_id'])) {
-    header('Location: login.php');
-} else {
-    $userArray = $_SESSION['user_id'];
-    $userID = implode(" ", $userArray);
-    $currentUser = $userID;
-}
 //Hier worden de buddies getoond.
 
 

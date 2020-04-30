@@ -1,8 +1,11 @@
 <?php
 session_start();
-if (empty($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
-}
+} 
+
+$userID = $_SESSION['user_id'];
+$currentUser = $userID;
 //Hier mag enkel het gesprek te zien zijn tussen 2 users die met elkaar bevriend zijn
 //tabel buddies >buddyID1 & buddyID2
 
@@ -10,14 +13,6 @@ include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Message.php");
 include_once(__DIR__."/classes/User.php");
 
-$userID = "";
-if (empty($_SESSION['user_id'])) {
-    header('Location: login.php');
-} else {
-    $userArray = $_SESSION['user_id'];
-    $userID = implode(" ", $userArray);
-    $currentUser = $userID;
-}
 
 //var_dump($_POST);
 
