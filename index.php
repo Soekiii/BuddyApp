@@ -100,10 +100,43 @@ if (!empty($_POST)) {
     <p class="alert alert-primary text-center" role="alert">Gematchte buddies: <span class="badge"><?php echo $matchedBuddiesNumber['numbersOfMatchedBuddies']; ?></span></p>
     </div>
     </div>
-    <!-- dropdown form -->
-    <div class="row"> 
-    <div class="col-3">   
+
+    <!-- zoekbalk met 1 zoekveld en 2 dropdowns-->
+    <div class="row m-4"> 
+
+    <!-- zoekveld -->
+    
+    <div class="col-3"> 
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+    <input class="form-control" type="text" name="search" placeholder="search">
+    
+    <!-- zoekveld error -->
+    <?php if(isset($error)): ?>
+        <div class="error" style="color: red"><?php echo $error; ?></div>
+    <?php endif; ?>
+    
+    </div>
+
+    <!-- eigenschappen filter -->
+    
+    <div class="col-3">
+    
+        <select name="filter" id="input-order" class="form-control">
+        <!-- eigenschappen uitlezen van de user in een dropdown -->
+        <option value="">Filter op eigen intresse</option>
+        <option value="<?php echo $eigenschappen['hobby']; ?>"><?php echo $eigenschappen['hobby']; ?></option>
+        <option value="<?php echo $eigenschappen['film']; ?>"><?php echo $eigenschappen['film']; ?></option>
+        <option value="<?php echo $eigenschappen['game']; ?>"><?php echo $eigenschappen['game']; ?></option>
+        <option value="<?php echo $eigenschappen['muziek']; ?>"><?php echo $eigenschappen['muziek']; ?></option>
+        <option value="<?php echo $eigenschappen['locatie']; ?>"><?php echo $eigenschappen['locatie']; ?></option>
+        </select>
+   
+    </div>
+    
+
+    <!-- lokaal-vinder -->
+    <div class="col-3">   
+   
         <select name="lokaalInfo" id="input-order" class="form-control mb-4">
         <!-- lokalen uitlezen in een dropdown -->
         <option class="dropdown-item disabled" value="">Vind een lokaal.</option>
@@ -115,7 +148,9 @@ if (!empty($_POST)) {
              }
         ?>
         </select>
-            </div>
+        </div>
+
+        <!-- zoekknop -->
         <div class="col-3">
         <button class="btn btn-light" type="submit" name="submit-lokaal">Zoeken</button>
         </div>
