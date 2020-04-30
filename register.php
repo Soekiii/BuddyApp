@@ -58,6 +58,7 @@ if(isset($_POST["register"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>Registreer | Amigos</title>
 </head>
@@ -128,15 +129,20 @@ if(isset($_POST["register"])){
 
             
         <?php if(empty($errorMessage['password'])): ?>
-            <input type="password" id="password" name="password" type="password" class="form-control" placeholder="Paswoord">
+            <input type="password" id="password"  name="password" type="password" class="form-control" placeholder="Paswoord" oninput="schuifbalk()">
+            <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"> % safe password
+                </div>
+            </div>
         <?php else: ?>  
             
-            <input type="password" id="password" name="password" type="password" class="form-control is-invalid" placeholder="Paswoord"> 
+            <input type="password" id="password tekst" name="password" type="password" class="form-control is-invalid" placeholder="Paswoord" oninput="schuifbalk()" > 
             <div class="invalid-feedback">
             
             </div>
                 <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
+                
         <?php endif; ?>
             </div>
             <div class="form-group mb-4 d-flex justify-content-between">
@@ -157,5 +163,28 @@ if(isset($_POST["register"])){
         </form>
         </div>
 </div>
+<script>
+ function schuifbalk() { 
+     
+            var  progressBar  =  $('.progress-bar');                                                       
+            var mijnText = 0;
+            mijnText= document.getElementById('password').value;
+            var lengteString = mijnText.length;
+            console.log(lengteString);
+
+            progressBar.css('width', (lengteString * 10)  +  '%');                
+            progressBar.attr('aria-valuenow', (lengteString * 10)); 
+            document.getElementById('progress-bar').innerHTML = (lengteString*10) + '%';
+            if (lengteString>=10){
+                document.getElementById('progress-bar').innerHTML = 'safe password';                
+
+            }
+            
+        
+
+
+        }
+
+</script>
 </body>
 </html>
