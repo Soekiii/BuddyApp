@@ -104,7 +104,7 @@ class Buddy extends User
         if($request){
             $user = $this->getUserById($buddyID);
             //var_dump($user['email']);
-            //$_SESSION['user_id'] = $user['userID'];
+            
             $content = "Iemand wilt je buddy worden.";
             Mail::sendMail("Buddy request", $user['email'],$content);
         }

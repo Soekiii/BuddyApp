@@ -12,7 +12,7 @@ include_once(__DIR__."/classes/User.php");
 
 $user = new User();
 $email = $user->getEmail();
-$userID = $_SESSION['user_id'];
+
 $hobby = "";
 $film = "";
 $game = "";
