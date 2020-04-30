@@ -91,14 +91,18 @@ if (!empty($_POST)) {
 
 <body>
     <!--hier probeersel om code terug te krijgen van User.php - zelfde ook doen op andere pagina whoAreBuddies.php  -->
-    <div class="container-fluid">
-    <div>
-        <p>Geregistreerde gebruikers: <span class="badge"><?php echo $userNumbers['numbersOfUsers']; ?></span></p>
-        <p>Gematchte buddies: <span class="badge"><?php echo $matchedBuddiesNumber['numbersOfMatchedBuddies']; ?></span></p>
+    <div class="container">
+    <div class="d-flex justify-content-center row mt-4">   
+    <div class="col-3">
+    <p>Geregistreerde gebruikers: <span class="badge"><?php echo $userNumbers['numbersOfUsers']; ?></span></p>
+    </div>
+    <div class="col-3">
+    <p>Gematchte buddies: <span class="badge"><?php echo $matchedBuddiesNumber['numbersOfMatchedBuddies']; ?></span></p>
+    </div>
     </div>
     <!-- dropdown form -->
-    
-    <div class="form">
+    <div class="row"> 
+    <div class="col-3">   
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <select name="lokaalInfo" id="input-order" class="form-control mb-4">
         <!-- lokalen uitlezen in een dropdown -->
@@ -111,15 +115,61 @@ if (!empty($_POST)) {
              }
         ?>
         </select>
-        <button type="submit" name="submit-lokaal">Zoeken</button>
-   
+            </div>
+        <div class="col-3">
+        <button class="btn btn-light" type="submit" name="submit-lokaal">Zoeken</button>
+        </div>
     </form>
-    <!-- lokalen info laten zien aan de gebruiker -->
-    <?php foreach($lokaalInfo as $info): ?>
-    <p><?php echo $info; ?></p>
-    <?php endforeach; ?>
+    
+    
     </div>
-    <div class="grid">
+    
+    <!-- lokalen info laten zien aan de gebruiker -->
+    
+    <div class="row">
+    <?php if(!empty($lokaalInfo)) {
+        foreach($lokaalInfo as $info): ?>
+    <div class="alert alert-dark" role="alert">
+    <p><?php echo $info; ?></p>
+    </div>
+    <?php endforeach; } ?>
+    </div>
+    <div class="row">
+    <div class="col-8">
+    <h5>Forum</h5>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postBtn">Maak nieuwe post</button>
+
+            <div class="modal fade" id="postBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="exampleModalLabel">Nieuwe post</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="newPost">
+                                <div class="form-group">
+                                    <label for="message-text" class="control-label">Stel je vraag hier:</label>
+                                    <textarea class="form-control" id="message-text" name="postTxt"></textarea>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="Post" name="newPost" id="submit" class="btn btn-success">
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <?php foreach ($posts as $post) : ?>
+                <div class="posts">
+                    <div>
+                        <a href="topic.php?id=<?php echo $post['postID'] ?>"><?php echo $post['postTxt']; ?></a>
+                    </div>
+                </div>
+            <?php endforeach ?>
+    </div>
+    <div class="col-4">
         <div class="matches">
             <h5>Potentiële Amigos</h5>
             <?php if ($available != "1") {
@@ -205,41 +255,9 @@ if (!empty($_POST)) {
             <?php endforeach;
             } ?>
         </div>
-
-        <div>
-            <h5>Forum</h5>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postBtn">Maak nieuwe post</button>
-
-            <div class="modal fade" id="postBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="exampleModalLabel">Nieuwe post</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="newPost">
-                                <div class="form-group">
-                                    <label for="message-text" class="control-label">Stel je vraag hier:</label>
-                                    <textarea class="form-control" id="message-text" name="postTxt"></textarea>
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" value="Post" name="newPost" id="submit" class="btn btn-success">
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <?php foreach ($posts as $post) : ?>
-                <div class="posts">
-                    <div>
-                        <a href="topic.php?id=<?php echo $post['postID'] ?>"><?php echo $post['postTxt']; ?></a>
-                    </div>
-                </div>
-            <?php endforeach ?>
+    </div>
         </div>
+            
     </div>
 </body>
 
