@@ -243,7 +243,7 @@ class User
     public function getUserById($id)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare('select userID from user where userID = :userID');
+        $statement = $conn->prepare('select * from user where userID = :userID');
         $statement->bindParam(':userID', $id);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);

@@ -140,7 +140,7 @@ if (!empty($_POST)) {
     <div class="container">
     <div class="d-flex justify-content-center row mt-4">   
     <div class="col-3 col-sm-3">
-    <p class="alert alert-primary text-center" role="alert">Geregistreerde gebruikers: <span class="badge"><?php echo $userNumbers['numbersOfUsers']; ?></span></p>
+    <p class="alert alert-primary text-center" role="alert">Geregistreerde gebruikers: <span class="badge text-center"><?php echo $userNumbers['numbersOfUsers']; ?></span></p>
     </div>
     <div class="col-3 col-sm-3">
     <p class="alert alert-primary text-center" role="alert">Gematchte buddies: <span class="badge"><?php echo $matchedBuddiesNumber['numbersOfMatchedBuddies']; ?></span></p>

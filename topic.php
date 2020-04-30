@@ -28,7 +28,7 @@ if (!empty($_POST['comment'])) {
     $sendComment->setUserID($userID);
     $sendComment->setPostID($postID);
     $comment = $sendComment->sendComment($postID, $userID, $commentTxt);
-
+    var_dump($comment['commentID']);
     header("Refresh: 0");
 }
 
@@ -54,7 +54,7 @@ if(isset($_POST['pinPost'])){
 </head>
 
 <body>
-
+    <div class="container">
     <div>
         <form action="" method="post" name="pinPost">
         <?php if($mod['modStatus'] == 1){ ?>
@@ -71,7 +71,9 @@ if(isset($_POST['pinPost'])){
 
     <div>
         <?php foreach ($comments as $comment) : ?>
+            <input type="text" name="commentID" id="" value="<?php echo $comment['commentID']?>">
             <div> <?php echo $comment['firstname'] . " " . $comment['lastname'] . " reageert: " . $comment['commentsTxt']; ?> </div>
+            <i class="far fa-thumbs-up"></i>
         <?php endforeach; ?>
     </div>
 
@@ -82,6 +84,24 @@ if(isset($_POST['pinPost'])){
             <input type="submit" name="comment" value="Reageer">
         </form>
     </div>
+    </div>
 </body>
-
 </html>
+<script>
+    $(document).on('click', '.like_button', function(){
+        var commentID = $(this).data('commentID');
+        $(this).attr('disabled', 'disabled');
+        $.ajax({
+            url: 'like.php',
+            methode: 'POST',
+            data: {commentID:commentID},
+            succes:function(data)
+            {
+                if(data == 'done')
+                {
+                    load_stuff();
+                }
+            }
+        });
+    });
+</script>
