@@ -169,7 +169,7 @@ class User
     {
         $conn = Db::getConnection();
 
-        $statement = $conn->prepare("select * from user where firstname or lastname like :search and email != :email");
+        $statement = $conn->prepare("select * from user where firstname like :search or lastname like :search and email != :email");
         $statement->bindValue(':email', $email);
         $statement->bindValue(':search', '%' . $search . '%');
         $statement->execute();
