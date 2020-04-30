@@ -91,7 +91,7 @@ if (!empty($_POST)) {
 
 <body>
     <!--hier probeersel om code terug te krijgen van User.php - zelfde ook doen op andere pagina whoAreBuddies.php  -->
-
+    <div class="container-fluid">
     <div>
         <p>Geregistreerde gebruikers: <span class="badge"><?php echo $userNumbers['numbersOfUsers']; ?></span></p>
         <p>Gematchte buddies: <span class="badge"><?php echo $matchedBuddiesNumber['numbersOfMatchedBuddies']; ?></span></p>
@@ -118,7 +118,7 @@ if (!empty($_POST)) {
     <?php foreach($lokaalInfo as $info): ?>
     <p><?php echo $info; ?></p>
     <?php endforeach; ?>
-
+    </div>
     <div class="grid">
         <div class="matches">
             <h5>Potentiële Amigos</h5>
