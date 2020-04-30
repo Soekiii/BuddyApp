@@ -1,6 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+} 
 
+$userID = $_SESSION['user_id'];
 include_once(__DIR__ . "/classes/Hobby.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Buddy.php");
@@ -8,13 +12,6 @@ include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/Forum.php");
 
 
-$userID = "";
-if (empty($_SESSION['user_id'])) {
-    header('Location: login.php');
-} else {
-    $userArray = $_SESSION['user_id'];
-    $userID = implode(" ", $userArray);
-}
 
 // if user's hobby = empty --> redirect to hobby.php
 $hobby = new Hobby();
@@ -32,6 +29,17 @@ $hobbyOthers = $others->setHobbyOthers($userID);
 
 $buddyAvailable = new Buddy();
 $available = $buddyAvailable->buddyAvailable($userID);
+
+// ====== LOKAAL ZOEKEN ======
+$lokaal = new User();
+$l = $lokaal->lokalen();
+    if(isset($_POST['submit-lokaal'])){
+    $lokalen = $_POST['lokaalInfo'];
+    $lokaalInfo = $lokaal->lokaalInfo($lokalen);
+}
+
+
+
 
 // ====== SENDING BUDDY REQUESTS ======
 // when button "send buddy request" is clicked
@@ -66,8 +74,8 @@ if (!empty($_POST)) {
     $postTxt = $_POST['postTxt'];
     $newPost->setPostTxt($postTxt);
     $createPost = $newPost->newPost($userID, $postTxt);
-
-    header('Location: index.php');
+    header("Refresh:0");
+    //header('Location: index.php');
 }
 ?>
 
@@ -83,12 +91,34 @@ if (!empty($_POST)) {
 
 <body>
     <!--hier probeersel om code terug te krijgen van User.php - zelfde ook doen op andere pagina whoAreBuddies.php  -->
-
+    <div class="container-fluid">
     <div>
         <p>Geregistreerde gebruikers: <span class="badge"><?php echo $userNumbers['numbersOfUsers']; ?></span></p>
         <p>Gematchte buddies: <span class="badge"><?php echo $matchedBuddiesNumber['numbersOfMatchedBuddies']; ?></span></p>
     </div>
-
+    <!-- dropdown form -->
+    
+    <div class="form">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <select name="lokaalInfo" id="input-order" class="form-control mb-4">
+        <!-- lokalen uitlezen in een dropdown -->
+        <option class="dropdown-item disabled" value="">Vind een lokaal.</option>
+        <?php
+            if (! empty($lokaal)) {
+                 foreach ($l as $key => $value) {
+                     echo '<option value="' . $l[$key]['location'] . '">' . $l[$key]['location'] . '</option>';
+                 }
+             }
+        ?>
+        </select>
+        <button type="submit" name="submit-lokaal">Zoeken</button>
+   
+    </form>
+    <!-- lokalen info laten zien aan de gebruiker -->
+    <?php foreach($lokaalInfo as $info): ?>
+    <p><?php echo $info; ?></p>
+    <?php endforeach; ?>
+    </div>
     <div class="grid">
         <div class="matches">
             <h5>Potentiële Amigos</h5>
