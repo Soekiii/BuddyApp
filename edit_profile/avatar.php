@@ -1,13 +1,14 @@
 <?php
     session_start();    
-    if(empty($_SESSION['user_id'])){
+    if (!isset($_SESSION['user_id'])) {
         header('Location: login.php');
     }
+    
+    $userID = $_SESSION['user_id'];
 
     include_once (__DIR__ . "/../classes/User.php");
-
-    $userArray = $_SESSION['user_id'];
-    $userID = implode(" ", $userArray);
+  
+    
 
     if(!empty($_POST['submit'])){
         $uploadAvatar = new User();

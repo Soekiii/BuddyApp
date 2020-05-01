@@ -1,14 +1,13 @@
 <?php
-    session_start();
-    if (empty($_SESSION['user_id'])) {
+    session_start();    
+    if (!isset($_SESSION['user_id'])) {
         header('Location: login.php');
     }
-
+    
+    $userID = $_SESSION['user_id'];
     include_once (__DIR__ . "/../classes/User.php");
     
-    $userArray = $_SESSION['user_id'];
-    $userID = implode(" ",$userArray);
-            //echo $userID;
+    
     
     function verifyUser($userID, $currentPassword){
         // SET UP CONNECTION AND VERIFY PASSWORD USING userID
