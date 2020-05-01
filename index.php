@@ -157,7 +157,7 @@ if (!empty($_POST)) {
         </div>
 
         <!-- ====== ZOEKBALk MET 3 ZOEKVELDEN ====== -->
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="filter-form my-2">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="filter-form my-md-5">
             <div class="row my-row">
                 <!-- zoekveld -->
                 <div class="col-md-3">
@@ -389,7 +389,7 @@ if (!empty($_POST)) {
 
 
     
-    <div class="row justify-content-start my-row">
+    <div class="row mt-md-5 my-row">
             <div class="col-md-8 my-col">
             <div class="form-group">
                 <div class="mb-4">

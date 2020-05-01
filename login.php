@@ -58,6 +58,7 @@ if ($_POST){
 <div class="col-md-6 p-0 bg-indigo h-md-100">
     <div class="text-white d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
         <div class="logoarea pt-5 pb-5">
+        <img class="mb-3" src="avatars/Logophp_final_wit.svg" width="50%">
         <h2>Leer hier je nieuwe imd amigos kennen.</h2>
         </div>
     </div>
@@ -103,7 +104,6 @@ if ($_POST){
         
         <div class="form-group mb-4 d-flex justify-content-between">
             <button type="submit"  id="btn" class="btn left">Aanmelden</button>
-            <p class="text-center mt-4"><a href="paswoord-vergeten.php" class="link mt-2 mr-0">Passwoord vergeten?</a></p>
         </div>
         
         <p class="text-center mt-4">Nog geen account? <a href="register.php" class="link">Registreer hier!</a></p>

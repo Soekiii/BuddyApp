@@ -14,7 +14,7 @@
 <body>
 <nav class="navbar navbar-expand-sm" style="background-color: #1a27c9;">
   <div class="container-fluid">
-      <a href="index.php" class="navbar-brand"  style="color: #fff;">Amigos</a>
+      <a href="index.php" class="navbar-brand"  style="color: #fff;"><img src="avatars/Logophp_final_wit.svg" width="30%"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">
         <i class="fas fa-bars" style="color:#fff; font-size:24px;"></i>
@@ -25,9 +25,6 @@
           <li class="nav-item">
             <a class="nav-link"  style="color: #fff;" href="index.php">Home</a>
           </li> 
-          <li class="nav-item">
-            <a class="nav-link"  style="color: #fff;" href="profile.php">Profiel</a>
-          </li>
           <li class="nav-item">
             <a class="nav-link"  style="color: #fff;" href="buddyList.php">Buddy's</a>
           </li>
