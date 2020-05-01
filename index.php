@@ -222,29 +222,29 @@ if (!empty($_POST)) {
         <div class="resultCount"><p2><?php echo $resultCount; ?></p2></div>
     <?php endif; ?>
     <!-- zoekresultaten uitlezen als er iets inzit-->
-    <div class="d-flex justify-content-center align-items-center text-center" >
-    <div class="container">
-    <div class="row card-deck">
     
+    <div class="container">
+    <div class="row">
     <?php if(empty($search)) {
 
     } else {
     //if (is_array($searchResult) || is_object($searchResult)) {
         foreach($searchResult as $r): ?>
     
-    <div class="col-md-3">
-    <div class="card" style="height: 200px">
-        <div class="card-body"><img src="avatars/<?php echo $r['avatar']; ?>" alt="" class="img-fluid">
-        <h3 class="card-title"><?php echo($r['firstname'] . " " . $r['lastname']); ?></h3>
+    <div class="col-sm-4 p-sm-3">
+        <div class="matchName"><?php echo($r['firstname'] . " " . $r['lastname']); ?></div>
         <p><?php echo $r['bio']; ?></p>
+        <form action="" method="post">
+            <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+            <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+            <input type="submit" value="stuur verzoek" name="request">
+        </form>
         </div>
-        </div>
-        </div>
-        <?php endforeach; }?>
         
+        <?php endforeach; }?>
+        </div>
     </div>
-    </div>
-    </div>
+    
     <!-- ====== FILTER OUTPUT ====== -->
     <!-- filter hobby uitlezen als er iets inzit-->
     <div class="filter-container">
