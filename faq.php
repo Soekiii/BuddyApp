@@ -26,7 +26,7 @@ $faqs = $checkPinned->checkPinned();
     <div class="container">
     <div class="col my-col">
     <div class="form-group">
-    <h3 class="mb-4">Veelgestelde vragen</h3>
+    <h3 class="my-4">Veelgestelde vragen</h3>
     <?php foreach ($faqs as $faq) : ?>
         <div class="row my-row">
         <div class="col my-col">

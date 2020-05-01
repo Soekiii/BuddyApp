@@ -35,9 +35,6 @@
             <a class="nav-link"  style="color: #fff;" href="faq.php">FAQ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  style="color: #fff;" href="search.php">Zoeken</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" style="color: #fff"; href="editProfile.php">Instellingen</a>
           </li>
           <li class="nav-item">

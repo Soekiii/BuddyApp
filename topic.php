@@ -51,40 +51,68 @@ if(isset($_POST['pinPost'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+        .my-container {
+            border: 1px solid green;
+        }
+
+        .my-row {
+            border: 3px solid red;
+        
+        }
+
+        .my-col {
+            border: 3px dotted blue;
+        }
+    </style> 
 </head>
 
 <body>
     <div class="container">
-    <div>
+    <div class="row my-row">
         <form action="" method="post" name="pinPost">
+        <div class="col justify-content-end">
         <?php if($mod['modStatus'] == 1){ ?>
+            
             <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
-            <input type="submit" name="pinPost" value="Pin post">
-        <?php } ?>
+            <input type="submit" name="pinPost" class="btn btn-primary mt-4" value="Pin post">
+            
+            <?php } ?>
+            </div>
         </form>
-    </d>
-    <div>
-        <div>
-            <?php echo $post['firstname'] . " " . $post['lastname'] . " zegt: " . $post['postTxt']; ?>
-        </div>
+    
+    <div class="col-md-12 my-col">
+                <div class="form-group">
+                <?php echo $post['firstname'] . " " . $post['lastname'] . " zegt: " . $post['postTxt']; ?>
+                </div>
     </div>
 
-    <div>
+   
         <?php foreach ($comments as $comment) : ?>
-            <input type="text" name="commentID" id="" value="<?php echo $comment['commentID']?>">
+            <div class="col-md-12 my-col">
+                <div class="form-group">
+            <input type="hidden" name="commentID" id="" value="<?php echo $comment['commentID']?>">
             <div> <?php echo $comment['firstname'] . " " . $comment['lastname'] . " reageert: " . $comment['commentsTxt']; ?> </div>
             <i class="far fa-thumbs-up"></i>
+                </div>
+            </div>
         <?php endforeach; ?>
-    </div>
+    
 
-    <div>
+    
         <form action="" method="post" name="comment">
-            <textarea name="commentTxt" id="" cols="140" rows="2"></textarea>
+        <div class="col-md-12 my-col justify-content-center">
+            <div class="form-group">
+            <textarea name="commentTxt" id="" cols="col-120" rows="2"></textarea>
             <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
-            <input type="submit" name="comment" value="Reageer">
+            <input type="submit" name="comment" class="btn btn-primary mt-4" value="Reageer">
+            </div>
+        </div>
         </form>
+    
     </div>
-    </div>
+    </div>  
+
 </body>
 </html>
 <script>
