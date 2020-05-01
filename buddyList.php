@@ -9,6 +9,7 @@ $currentUser = $userID;
 include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Message.php");
 include_once(__DIR__."/classes/User.php");
+include_once(__DIR__ . "/classes/Buddy.php");
 
 //Hier worden de buddies getoond.
 
@@ -22,6 +23,40 @@ $user = new User();
 $buddyList = User::getAllBuddies($userID);
 //var_dump($buddyList);
 
+// aanmaken van nieuw object in klasse user
+$buddyMatch = new User();
+$result = $buddyMatch->whoAreBuddies();
+
+$getUserById = new User();
+$userData = $getUserById->getUserData($userID);
+
+$checkRequest = new Buddy();
+$buddyRequests = $checkRequest->checkRequest($userID);
+
+$buddyAvailable = new Buddy();
+$available = $buddyAvailable->buddyAvailable($userID);
+
+// USER ACCEPTED BUDDY REQUEST
+if (isset($_POST['accept'])) {
+    $accept = new Buddy();
+    $accept->setUserID($userID);
+    $buddyID = $_POST['buddyID'];
+    $accept->setBuddyID($buddyID);
+    $acceptRequest = $accept->acceptRequest($userID, $buddyID);
+    //refresh the page to empty the friend request list (user already has a buddy and cannot accept more)
+    header('Location: profile.php');
+}
+
+if (isset($_POST['reject'])) {
+    $reject = new Buddy();
+    $reject->setUserID($userID);
+    $buddyID = $_POST['buddyID'];
+    $reject->setBuddyID($buddyID);
+    $rejectMsg = $_POST['rejectMsg'];
+    $reject->setRejectMsg($rejectMsg);
+    $rejectRequest = $reject->rejectRequest($userID, $buddyID, $rejectMsg);
+    header('Location:profile.php');
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,30 +65,109 @@ $buddyList = User::getAllBuddies($userID);
     <title>Document</title>
 </head>
 <body>
-    <h2>Iedereen zijn buddies zien? <a href="whoAreBuddies.php">klik hier!</a></h2>
-    <h1>Dit zijn jouw buddies: </h1>
+<div class="container">
+
+<!-- BUDDY REQUESTS-->
+<h3 class="my-4"><?php echo $userData['firstname'] . " " . $userData['lastname']; ?></h3>
+<div class="row my-row">
+
+<?php
+// if user has no buddy yet --> user can still accept requests
+    // if user has no buddy yet --> user is still available
+    if($available == "0"){
+        foreach ($buddyRequests as $buddyRequest) : ?>
+       
+            <?php
+            if ($buddyRequest['status'] == 0) { ?>
+                <div class="col-md-3 my-col">
+                    <div class="form-group">
+                    <div class="bold"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname']; ?></div><p>Heeft je een buddy request gestuurd.</p>
+                    <form action="" method="post">
+                        <input type="hidden" name="buddyID" id="" value="<?php echo $buddyRequest['userID'] ?>">
+                        <input type="submit" name="accept" id="" value="Accepteer">
+                        <input type="submit" name="reject" id="" value="Weiger">
+                    </form>
+                </div>
+                </div>
+            <?php
+            }
+            ?>
+        <?php endforeach;
+        } else {
+        foreach($buddyRequests as $buddyRequest) : ?>
+            <?php
+            if($buddyRequest['status'] == 1){ ?>
+                <div class="col-md-3 my-col">
+                    <div class="form-group">
+                    <a href="users.php?id=<?php echo $buddyRequest['userID']?>"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname'] ?></a> <?php echo "'s buddy"; ?>
+                    </div>
+                </div>
+            <?php } ?>
+            
+        
+
+        <?php endforeach; } ?>
+       
+</div>
+<!-- AL DE BUDDY's -->
+<div class="row my-row">
+    <div class="col-md-8 my-col">
+    <div class="form-group">
+<h3 class="mb-4">Wij zijn buddies!</h3>
+
+<?php foreach($result as $afdruk): ?>
+    <div class="row my-row">
+    <div class="col my-col">
+    <div class="card">
+        <div class="card-body ">
+  <div><img src="<?php echo $afdruk["avatar1"]?>"><?php echo $afdruk["firstnameBuddy1"]." ".$afdruk["lastnameBuddy1"]." buddy met ".$afdruk["firstnameBuddy2"]." ".$afdruk["lastnameBuddy2"]?><img src="<?php echo $afdruk["avatar2"]?>"></div>
+                </div>
+    </div>
+    </div>
+    </div>
+  <?php endforeach ?>
+        </div>
+    </div>
+
+    
+
+<!-- JOUW BUDDY -->
+<div class="col-md-4 my-col">
+            <div class="form-group">
+<h3 class="mb-4">Chat met je buddy: </h3>
 <?php foreach($buddyList as $buddy): ?>
+    <div class="row my-row">
+        <div class="col my-col">
     <div><!-- IF currentuser is in buddy1 tabel, moet die buddy uit buddy2 tabel echo'en-->
         <?php if ($currentUser == $buddy['buddy1ID']): ?>
-            <h1>Chat met <?php echo $buddy["buddy2ID"]; ?></h1>
+            <div class="bold">Chat met <?php echo $buddy["buddy2ID"]; ?></div>
             <form action="buddyChat.php" method="POST">
                 <input type="hidden" name="recipientID" id="" value="<?php echo $buddy["buddy2ID"];?>">
                 <div class="">
-                    <button type="submit" class="btn" style="width: 75px">Chat nu</button>
+                    <button type="submit" class="btn btn-primary mt-4">Chat nu</button>
                 </div>
             </form>
         <!-- IF currentuser is in buddy2 tabel, moet die buddy uit buddy1 tabel echo'en-->
         <?php elseif ($currentUser == $buddy['buddy2ID']): ?>
-            <h1>Chat met <?php echo $buddy["buddy1ID"]; ?></h1>
+            <div class="bold">Chat met <?php echo $buddy["buddy1ID"]; ?></div>
             <form action="buddyChat.php" method="POST">
                 <input type="hidden" name="recipientID" id="" value="<?php echo $buddy["buddy1ID"];?>">
                 <div class="">
-                    <button type="submit" class="btn" style="width: 75px">Chat nu</button>
+                    <button type="submit" class="btn" class="btn btn-primary mt-4">Chat nu</button>
                 </div>
             </form>
         <?php endif;?>
     </div>
+                            </div>
+    </div>
 <?php endforeach;?>
+
+</div>
+</div>
+</div>
+    </div> <!-- row -->
+    
+</div> <!-- container -->
 
 </body>
 </html>
