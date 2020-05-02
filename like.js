@@ -1,8 +1,10 @@
-document.querySelector("#btnUpvote").addEventListener("click", function(){
+$(document).ready(function(){
+    $("#btnUpvote").click(function() {
+
     // postid ? 
     let commentId = this.dataset.commentid;
-    let postId = document.querySelector("#postID").value;
-    let userId = document.querySelector("#userID").value;
+    let postId = $("#postID").val();
+    let userId = $("#userID").val();
     console.log(commentId);
     console.log(postId);
     console.log(userId);
@@ -15,7 +17,7 @@ document.querySelector("#btnUpvote").addEventListener("click", function(){
     method: 'POST',
     body: formData
     })
-    
+
     .then(response => response.json())
     .then(result => {
     console.log('Success:', result);
@@ -23,4 +25,5 @@ document.querySelector("#btnUpvote").addEventListener("click", function(){
     .catch(error => {
     console.error('Error:', error);
     });
+});
 });

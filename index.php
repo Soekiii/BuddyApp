@@ -91,10 +91,9 @@ if (!empty($_POST['request'])) {
     // 2. insert userID, buddyID and status=0 in db (buddy table)
     $request->setUserID($userID);
     $request->setBuddyID($buddyID);
+    $buddyName = $request->buddyData($buddyID);
     $sendRequest = $request->buddyRequest($userID, $buddyID);
-    echo "Request sent to userID ";
-
-    echo $buddyID;
+    $succes = "Buddy verzoek is verstuurd naar " . $buddyName['firstname'] . " " . $buddyName['lastname'];
 }
 
 // functie om users te displayen
@@ -429,7 +428,7 @@ if (!empty($_POST)) {
                                 <div class="card-body ">
                                     <?php echo $post['firstname'] . " " . $post['lastname'] . ":" ?>
 
-                                    <input type="text" value="<?php echo $post['postID'] ?>">
+                                    <input type="hidden" value="<?php echo $post['postID'] ?>">
                                     <a href="topic.php?id=<?php echo $post['postID'] ?>" class="">
                                         <?php echo $post['postTxt']; ?>
                                     </a>
@@ -449,6 +448,18 @@ if (!empty($_POST)) {
         <div class="col-md-4 my-col">
             <div class="form-group">
                 <h3 class="mb-4">Potentiële Amigos</h3>
+
+            <!-- vriendverzoek verzonden  -->
+                <?php if (!empty($succes)){ ?>
+                <div class="col my-col">
+            
+                    <div class="alert alert-primary" role="alert">
+                        <p><?php echo $succes; ?></p>
+                    </div>
+            
+                </div>
+                <?php }  ?>
+
                 <?php if ($available != "1") {
                     foreach ($hobbyOthers as $hobbyOther) : ?>
                         <div class="row my-row">
