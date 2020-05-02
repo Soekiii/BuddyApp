@@ -176,4 +176,13 @@ class Buddy extends User
             $buddy = $stmt->fetch(PDO::FETCH_ASSOC);
             return $buddy;
         }
+
+        public function countRequest($userID){
+            $conn = Db::getConnection();
+            $stmt = $conn->prepare('SELECT COUNT(buddyID) FROM buddies WHERE status = "0" AND buddy2ID = :userID');
+            $stmt->bindParam(':userID', $userID);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }
 }
