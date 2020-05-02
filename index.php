@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 
 // ====== SENDING BUDDY REQUESTS ======
 // when button "send buddy request" is clicked
-if (!empty($_POST['sendRequest'])) {
+/*if (!empty($_POST['sendRequest'])) {
     $request = new Buddy();
     // 1. retrieve buddyID value from $_POST
     $buddyID = $_POST['buddyID'];
@@ -94,7 +94,7 @@ if (!empty($_POST['sendRequest'])) {
     $buddyName = $request->buddyData($buddyID);
     $sendRequest = $request->buddyRequest($userID, $buddyID);
     $succes = "Buddy verzoek is verstuurd naar " . $buddyName['firstname'] . " " . $buddyName['lastname'];
-}
+}*/
 
 // functie om users te displayen
 $displayGetal = new User();
@@ -116,7 +116,6 @@ if (!empty($_POST['newPost'])) {
     $createPost = $newPost->newPost($userID, $postTxt);
     header("Location: index.php");
 } else {
-
 }
 ?>
 
@@ -209,7 +208,7 @@ if (!empty($_POST['newPost'])) {
                 <!-- zoekknop -->
                 <div class="col-md-3 mt-md-4">
                     <div class="form-group">
-                        
+
                         <button class="btn btn-light form-control" type="submit" name="submit">Zoeken</button>
                     </div>
                 </div>
@@ -221,348 +220,343 @@ if (!empty($_POST['newPost'])) {
         </form>
         <!-- ====== ZOEKRESULTAAT OP NAAM OUTPUT ====== -->
         <?php if (isset($result)) : ?>
-                    <div class="result">
-                        <h2><?php echo $result; ?></h2>
-                    </div>
-                <?php endif; ?>
-                <?php if (isset($resultCount)) : ?>
-                    <div class="row my-row">
-                        <div class="col-8">
-                    
-                        <p2><?php echo $resultCount; ?></p2>
-                
+            <div class="result">
+                <h2><?php echo $result; ?></h2>
             </div>
-        </div>
+        <?php endif; ?>
+        <?php if (isset($resultCount)) : ?>
+            <div class="row my-row">
+                <div class="col-8">
 
-    <?php endif; ?>
+                    <p2><?php echo $resultCount; ?></p2>
 
-        <?php if(isset($_POST['submit'])){ ?>
-        <div class="row my-row">
-        <!-- lokalen info laten zien aan de gebruiker -->
-       
-        
-       
-            <?php if (!empty($lokaalInfo)) {
-                foreach ($lokaalInfo as $info) : ?>
-                <div class="col my-col">
-            <div class="form-group">
-                    <div class="alert alert-primary" role="alert">
-                        <p><?php echo $info; ?></p>
-                    </div>
-                </div>
-                </div>
-            <?php endforeach;
-            } ?>
-       
-        
-                
-    <!-- zoekresultaten uitlezen als er iets inzit-->
-
-    
-    
-            <?php if (empty($search)) {
-            } else {
-                //if (is_array($searchResult) || is_object($searchResult)) {
-                foreach ($searchResult as $r) : ?>
-        
-            <div class="col-md-3 my-col">
-            <div class="form-group">
-            
-                 
-                        <div class="bold"><?php echo htmlspecialchars($r['firstname'] . " " . $r['lastname']); ?></div>
-                        <p><?php echo htmlspecialchars($r['bio']); ?></p>
-                        
-                        <form action="" method="post">
-                        <?php foreach ($hobbyOthers as $hobbyOther) : ?>
-                            <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                            <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                        <?php endforeach; ?>
-                            <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
-                        </form>
-                        
-                    
-                    </div>
-            </div>
-            <?php endforeach;
-            } ?>
-        
-        
-
-    <!-- ====== FILTER OUTPUT ====== -->
-    <!-- filter hobby uitlezen als er iets inzit-->
-    
-        <?php if (is_array($hobby) || is_object($hobby)) {
-            foreach ($hobby as $h) : ?>
-             <div class="col-md-3 my-col">
-                <div class="form-group">
-                
-                <div class="bold"><?php echo ($h['firstname'] . " " . $h['lastname']); ?></div>
-                <p><?php echo $h['hobby']; ?></p>
-                <form action="" method="post">
-                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
-                </form>
-                
-                </div>
-             </div>
-        <?php endforeach;
-        } ?>
-    
-    <!-- filter film uitlezen als er iets inzit-->
-    
-        <?php if (is_array($film) || is_object($film)) {
-            foreach ($film as $f) : ?>
-            <div class="col-md-3 my-col">
-                <div class="form-group">
-                <div class="bold"><?php echo ($f['firstname'] . " " . $f['lastname']); ?></div>
-                <p><?php echo $f['film']; ?></p>
-                <form action="" method="post">
-                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
-                </form>
                 </div>
             </div>
-        <?php endforeach;
-        } ?>
-    
-    <!-- filter game uitlezen als er iets inzit-->
-    
-        <?php if (is_array($game) || is_object($game)) {
-            foreach ($game as $g) : ?>
-                <div class="col-md-3 my-col">
-                <div class="form-group">
-                <div class="bold"><?php echo ($g['firstname'] . " " . $g['lastname']); ?></div>
-                <p><?php echo $g['game']; ?></p>
-                <form action="" method="post">
-                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
-                </form>
-                </div>
-                </div>
-        
-        <?php endforeach;
-        } ?>
-    
-    <!-- filter muziek uitlezen als er iets inzit-->
-    
-        <?php if (is_array($muziek) || is_object($muziek)) {
-            foreach ($muziek as $m) : ?>
-            <div class="col-md-3 my-col">
-                <div class="form-group">
-                <div class="bold"><?php echo ($m['firstname'] . " " . $m['lastname'] . " " . $m['muziek']); ?></div>
-                <p><?php echo $m['muziek']; ?></p>
-                <form action="" method="post">
-                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
-                </form>
-                </div>
-            </div>
-        
-        <?php endforeach;
-        } ?>
-    
-    <!-- filter film locatie als er iets inzit-->
-    
-        <?php if (is_array($locatie) || is_object($locatie)) {
-            foreach ($locatie as $l) : ?>
-                <div class="col-md-3 my-col">
-                <div class="form-group">
-                <div class="bold"><?php echo ($l['firstname'] . " " . $l['lastname'] . " " . $l['locatie']); ?></div>
-                <p><?php echo $l['locatie']; ?></p>
-                <form action="" method="post">
-                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
-                </form>
-                </div>
-            </div>
-        
-        <?php endforeach;
-        } ?>
-    
-    </div>
-      
-    
-    <?php } ?>
-    <!-- ====== FORUM ====== -->
+
+        <?php endif; ?>
+
+        <?php if (isset($_POST['submit'])) { ?>
+            <div class="row my-row">
+                <!-- lokalen info laten zien aan de gebruiker -->
 
 
-    
-    <div class="row mt-md-5 my-row">
-            <div class="col-md-8 my-col">
-            <div class="form-group">
-                <div class="mb-4">
-                    <h3 class="mb-4">Forum</h3>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postBtn">Maak nieuwe post</button>
-                </div>
-                <div class="modal fade" id="postBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="exampleModalLabel">Nieuwe post</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="newPost">
-                                    <div class="form-group">
-                                        <label for="message-text" class="control-label">Stel je vraag hier:</label>
-                                        <textarea class="form-control" id="message-text" name="postTxt"></textarea>
-                                    </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="submit" value="Post" name="newPost" id="submit" class="btn btn-success">
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
-
-                <?php foreach ($posts as $post) : ?>
-                    <div class="row my-row">
+                <?php if (!empty($lokaalInfo)) {
+                    foreach ($lokaalInfo as $info) : ?>
                         <div class="col my-col">
-                            <div class="card">
-                                <div class="card-body ">
-                                    <?php echo $post['firstname'] . " " . $post['lastname'] . ":" ?>
-
-                                    <input type="hidden" value="<?php echo $post['postID'] ?>">
-                                    <a href="topic.php?id=<?php echo $post['postID'] ?>" class="">
-                                        <?php echo $post['postTxt']; ?>
-                                    </a>
+                            <div class="form-group">
+                                <div class="alert alert-primary" role="alert">
+                                    <p><?php echo $info; ?></p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
+                <?php endforeach;
+                } ?>
 
 
 
+                <!-- zoekresultaten uitlezen als er iets inzit-->
 
-        <!-- ====== POTENTIELE AMIGOS(MATCHES) ====== -->
 
-        <div class="col-md-4 my-col">
-            <div class="form-group">
-                <h3 class="mb-4">Potentiële Amigos</h3>
 
-            <!-- vriendverzoek verzonden  -->
-                <?php if (!empty($succes)){ ?>
-                <div class="col my-col">
-            
-                    <div class="alert alert-primary" role="alert">
-                        <p><?php echo $succes; ?></p>
-                    </div>
-            
-                </div>
-                <?php }  ?>
+                <?php if (empty($search)) {
+                } else {
+                    //if (is_array($searchResult) || is_object($searchResult)) {
+                    foreach ($searchResult as $r) : ?>
 
-                <?php if ($available != "1") {
-                    foreach ($hobbyOthers as $hobbyOther) : ?>
-                        <div class="row my-row">
-                            <div class="col my-col">
-                                <?php
-                                $scores = [];
-                                $score = 0;
+                        <div class="col-md-3 my-col">
+                            <div class="form-group">
 
-                                // if they share an interests, add 10 points to score
-                                if ($hobbyUser['game'] == $hobbyOther['game']) {
-                                    $score += 10;
-                                    $equal = 1;
-                                }
 
-                                if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
-                                    $score += 10;
-                                }
+                                <div class="bold"><?php echo htmlspecialchars($r['firstname'] . " " . $r['lastname']); ?></div>
+                                <p><?php echo htmlspecialchars($r['bio']); ?></p>
 
-                                if ($hobbyUser['film'] == $hobbyOther['film']) {
-                                    $score += 10;
-                                }
+                                <form action="" method="post">
+                                    <?php foreach ($hobbyOthers as $hobbyOther) : ?>
+                                        <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                                        <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <?php endforeach; ?>
+                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                </form>
 
-                                if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
-                                    $score += 10;
-                                }
-
-                                if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
-                                    $score += 10;
-                                }
-
-                                // convert hobbyOther from array to string
-                                $otherID = $hobbyOther['userID'];
-
-                                // place score in scores array of matching user
-                                $scores[$otherID] = $score;
-
-                                // als score niet 0 is, print de naam en leg uit waarom users matchen
-                                if ($score >= 20) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="card-title"><?php echo $hobbyOther['firstname'] . " " . $hobbyOther['lastname'] . ":"; ?></div>
-
-                                            <div class="card-text">
-                                                <?php
-                                                if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
-                                                    echo "jullie zijn allebei dol op " . lcfirst($hobbyOther['hobby']);
-                                                }
-
-                                                if ($hobbyUser['hobby'] == $hobbyOther['hobby'] && $hobbyUser['game'] == $hobbyOther['game']) {
-                                                    echo " en " . $hobbyOther['game'];
-                                                } else if ($hobbyUser['game'] == $hobbyOther['game']) {
-                                                    echo "jullie zijn allebei dol op " . $hobbyOther['game'];
-                                                } else {
-                                                }
-
-                                                if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game']) || $hobbyUser['film'] == $hobbyOther['film']) {
-                                                    echo " en " . $hobbyOther['film'];
-                                                } else if ($hobbyUser['film'] == $hobbyOther['film']) {
-                                                    echo "jullie zijn allebei dol op " . $hobbyOther['film'];
-                                                } else {
-                                                }
-
-                                                if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film']) && $hobbyUser['muziek'] == $hobbyOther['muziek']) {
-                                                    echo " en " . $hobbyOther['muziek'];
-                                                } else if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
-                                                    echo "jullie zijn allebei dol op " . $hobbyOther['muziek'];
-                                                } else {
-                                                }
-
-                                                if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film'] || $hobbyUser['muziek'] == $hobbyOther['muziek']) && $hobbyUser['locatie'] == $hobbyOther['locatie']) {
-                                                    echo " en wonen in " . $hobbyOther['locatie'];
-                                                } else if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
-                                                    echo "jullie wonen allebei in " . $hobbyOther['locatie'];
-                                                } else {
-                                                }
-                                                ?>
-                                                <form action="" method="post">
-                                                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                                                    <input type="submit" class="btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                <?php } ?>
 
                             </div>
                         </div>
                 <?php endforeach;
                 } ?>
+
+
+
+                <!-- ====== FILTER OUTPUT ====== -->
+                <!-- filter hobby uitlezen als er iets inzit-->
+
+                <?php if (is_array($hobby) || is_object($hobby)) {
+                    foreach ($hobby as $h) : ?>
+                        <div class="col-md-3 my-col">
+                            <div class="form-group">
+
+                                <div class="bold"><?php echo ($h['firstname'] . " " . $h['lastname']); ?></div>
+                                <p><?php echo $h['hobby']; ?></p>
+                                <form action="" method="post">
+                                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                </form>
+
+                            </div>
+                        </div>
+                <?php endforeach;
+                } ?>
+
+                <!-- filter film uitlezen als er iets inzit-->
+
+                <?php if (is_array($film) || is_object($film)) {
+                    foreach ($film as $f) : ?>
+                        <div class="col-md-3 my-col">
+                            <div class="form-group">
+                                <div class="bold"><?php echo ($f['firstname'] . " " . $f['lastname']); ?></div>
+                                <p><?php echo $f['film']; ?></p>
+                                <form action="" method="post">
+                                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                </form>
+                            </div>
+                        </div>
+                <?php endforeach;
+                } ?>
+
+                <!-- filter game uitlezen als er iets inzit-->
+
+                <?php if (is_array($game) || is_object($game)) {
+                    foreach ($game as $g) : ?>
+                        <div class="col-md-3 my-col">
+                            <div class="form-group">
+                                <div class="bold"><?php echo ($g['firstname'] . " " . $g['lastname']); ?></div>
+                                <p><?php echo $g['game']; ?></p>
+                                <form action="" method="post">
+                                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                </form>
+                            </div>
+                        </div>
+
+                <?php endforeach;
+                } ?>
+
+                <!-- filter muziek uitlezen als er iets inzit-->
+
+                <?php if (is_array($muziek) || is_object($muziek)) {
+                    foreach ($muziek as $m) : ?>
+                        <div class="col-md-3 my-col">
+                            <div class="form-group">
+                                <div class="bold"><?php echo ($m['firstname'] . " " . $m['lastname'] . " " . $m['muziek']); ?></div>
+                                <p><?php echo $m['muziek']; ?></p>
+                                <form action="" method="post">
+                                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                </form>
+                            </div>
+                        </div>
+
+                <?php endforeach;
+                } ?>
+
+                <!-- filter film locatie als er iets inzit-->
+
+                <?php if (is_array($locatie) || is_object($locatie)) {
+                    foreach ($locatie as $l) : ?>
+                        <div class="col-md-3 my-col">
+                            <div class="form-group">
+                                <div class="bold"><?php echo ($l['firstname'] . " " . $l['lastname'] . " " . $l['locatie']); ?></div>
+                                <p><?php echo $l['locatie']; ?></p>
+                                <form action="" method="post">
+                                    <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                </form>
+                            </div>
+                        </div>
+
+                <?php endforeach;
+                } ?>
+
+            </div>
+
+
+        <?php } ?>
+        <!-- ====== FORUM ====== -->
+
+
+
+        <div class="row mt-md-5 my-row">
+            <div class="col-md-8 my-col">
+                <div class="form-group">
+                    <div class="mb-4">
+                        <h3 class="mb-4">Forum</h3>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postBtn">Maak nieuwe post</button>
+                    </div>
+                    <div class="modal fade" id="postBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="exampleModalLabel">Nieuwe post</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="newPost">
+                                        <div class="form-group">
+                                            <label for="message-text" class="control-label">Stel je vraag hier:</label>
+                                            <textarea class="form-control" id="message-text" name="postTxt"></textarea>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" value="Post" name="newPost" id="submit" class="btn btn-success">
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <?php foreach ($posts as $post) : ?>
+                        <div class="row my-row">
+                            <div class="col my-col">
+                                <div class="card">
+                                    <div class="card-body ">
+                                        <?php echo $post['firstname'] . " " . $post['lastname'] . ":" ?>
+
+                                        <input type="hidden" value="<?php echo $post['postID'] ?>">
+                                        <a href="topic.php?id=<?php echo $post['postID'] ?>" class="">
+                                            <?php echo $post['postTxt']; ?>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+
+
+
+            <!-- ====== POTENTIELE AMIGOS(MATCHES) ====== -->
+
+            <div class="col-md-4 my-col">
+                <div class="form-group">
+                    <h3 class="mb-4">Potentiële Amigos</h3>
+
+                    <!-- vriendverzoek verzonden  -->
+                    <?php if (!empty($succes)) { ?>
+                        <div class="col my-col">
+
+                            <div class="alert alert-primary" role="alert">
+                                <p><?php echo $succes; ?></p>
+                            </div>
+
+                        </div>
+                    <?php }  ?>
+
+                    <?php if ($available != "1") {
+                        foreach ($hobbyOthers as $hobbyOther) : ?>
+                            <div class="row my-row">
+                                <div class="col my-col">
+                                    <?php
+                                    $scores = [];
+                                    $score = 0;
+
+                                    // if they share an interests, add 10 points to score
+                                    if ($hobbyUser['game'] == $hobbyOther['game']) {
+                                        $score += 10;
+                                        $equal = 1;
+                                    }
+
+                                    if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
+                                        $score += 10;
+                                    }
+
+                                    if ($hobbyUser['film'] == $hobbyOther['film']) {
+                                        $score += 10;
+                                    }
+
+                                    if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
+                                        $score += 10;
+                                    }
+
+                                    if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
+                                        $score += 10;
+                                    }
+
+                                    // convert hobbyOther from array to string
+                                    $otherID = $hobbyOther['userID'];
+
+                                    // place score in scores array of matching user
+                                    $scores[$otherID] = $score;
+
+                                    // als score niet 0 is, print de naam en leg uit waarom users matchen
+                                    if ($score >= 10) { ?>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="card-title"><?php echo $hobbyOther['firstname'] . " " . $hobbyOther['lastname'] . ":"; ?></div>
+
+                                                <div class="card-text">
+                                                    <?php
+                                                    if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
+                                                        echo "jullie zijn allebei dol op " . lcfirst($hobbyOther['hobby']);
+                                                    }
+
+                                                    if ($hobbyUser['hobby'] == $hobbyOther['hobby'] && $hobbyUser['game'] == $hobbyOther['game']) {
+                                                        echo " en " . $hobbyOther['game'];
+                                                    } else if ($hobbyUser['game'] == $hobbyOther['game']) {
+                                                        echo "jullie zijn allebei dol op " . $hobbyOther['game'];
+                                                    } else {
+                                                    }
+
+                                                    if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game']) || $hobbyUser['film'] == $hobbyOther['film']) {
+                                                        echo " en " . $hobbyOther['film'];
+                                                    } else if ($hobbyUser['film'] == $hobbyOther['film']) {
+                                                        echo "jullie zijn allebei dol op " . $hobbyOther['film'];
+                                                    } else {
+                                                    }
+
+                                                    if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film']) && $hobbyUser['muziek'] == $hobbyOther['muziek']) {
+                                                        echo " en " . $hobbyOther['muziek'];
+                                                    } else if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
+                                                        echo "jullie zijn allebei dol op " . $hobbyOther['muziek'];
+                                                    } else {
+                                                    }
+
+                                                    if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film'] || $hobbyUser['muziek'] == $hobbyOther['muziek']) && $hobbyUser['locatie'] == $hobbyOther['locatie']) {
+                                                        echo " en wonen in " . $hobbyOther['locatie'];
+                                                    } else if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
+                                                        echo "jullie wonen allebei in " . $hobbyOther['locatie'];
+                                                    } else {
+                                                    }
+                                                    ?>
+                                                    <form action="" method="post">
+                                                        <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                                                        <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                                        <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <?php } ?>
+
+                                </div>
+                            </div>
+                    <?php endforeach;
+                    } ?>
+                </div>
             </div>
         </div>
-
-    
-    </div>
-
-
-
-
     </div> <!-- container -->
 
+    <script src="notif.js"></script>
 
 </body>
 
