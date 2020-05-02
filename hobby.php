@@ -9,9 +9,6 @@ $userID = $_SESSION['user_id'];
 include_once(__DIR__."/classes/User.php");
 include_once(__DIR__."/classes/Hobby.php");
 
-$userArray = $_SESSION['user_id'];
-$userID = implode(" ", $userArray);
-
 
 if(isset($_POST["muziek"])){
     
