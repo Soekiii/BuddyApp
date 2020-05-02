@@ -208,7 +208,23 @@ class User
 
         return $result;
     }
-    
+
+    public function searchEmail($searchEmail){  
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from user where email = :email");
+        $statement->bindValue(":email", $searchEmail);
+        $statement->execute();
+        $count = $statement->rowCount();
+        //var_dump($count);
+        $result = "";
+        if($count > 0){
+            $result = 'bestaat';
+        } else {
+            $result =  'bestaat nog niet';
+        }
+        return $result;
+    }
+
     public function getUser(){
         $conn = Db::getConnection();
         $statement = $conn->prepare('select * from user where email = :email');

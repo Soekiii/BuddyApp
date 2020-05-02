@@ -5,6 +5,7 @@ include_once (__DIR__ . "/classes/Validate.php");
 include_once (__DIR__ . "/classes/Db.php");
 
 
+
 if(isset($_POST["register"])){
 
        if (!empty($_POST)) {
@@ -116,10 +117,13 @@ if(isset($_POST["register"])){
             <div class="form-group mb-3">
             <label for="email">Emailadres</label>
         <?php if(empty($errorMessage['email'])): ?>
-            <input type="text"id="email" name="email" type="text" class="form-control" placeholder="Email"> 
+            <input type="text" id="email" name="email" type="text" class="form-control" placeholder="Email" onBlur="checkAvailability()"> 
+            <div id="emailGebruik"></div>
+            
         <?php else: ?>  
-            <input type="text"id="email" name="email" type="text" class="form-control is-invalid" placeholder="Email">
+            <input type="text"id="email" name="email" type="text" class="form-control is-invalid" placeholder="Email" onBlur="checkAvailability()">
             <div class="invalid-feedback">
+            <div id="emailGebruik"></div>
             <?php echo $errorMessage['email'] ?? '' ?>
             </div>
         <?php endif; ?>
@@ -164,7 +168,23 @@ if(isset($_POST["register"])){
         </form>
         </div>
 </div>
+<!--<script src="emailChecker.js"></script>-->
 <script>
+function checkAvailability() {
+jQuery.ajax({
+url: "ajax/check.php",
+data:'email='+$("#email").val(),
+type: "POST",
+success:function(data){
+$("#emailGebruik").html(data);
+},
+error:function (){}
+});
+}
+
+
+
+
  function schuifbalk() { 
      
             var  progressBar  =  $('.progress-bar');                                                       
