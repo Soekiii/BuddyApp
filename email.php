@@ -6,7 +6,8 @@
     }
     
     $userID = $_SESSION['user_id'];
-    include_once (__DIR__ . "/../classes/User.php");
+    include_once(__DIR__ . "/classes/User.php");
+
 
     
             //echo $userID;

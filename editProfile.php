@@ -32,10 +32,10 @@ if (!empty($_POST)) {
 
 <body>
     <div><a href="index.php">Cancel</a></div>
-    <div class="avatar"><a href="edit_profile\avatar.php">Upload avatar</a></div>
-    <div class="bio"><a href="edit_profile\bio.php">Edit bio</a></div>
-    <div class="email"><a href="edit_profile\email.php">Change email</a></div>
-    <div class="password"><a href="edit_profile\password.php">Change password</a></div>
+    <div class="avatar"><a href="avatar.php">Upload avatar</a></div>
+    <div class="bio"><a href="bio.php">Edit bio</a></div>
+    <div class="email"><a href="email.php">Change email</a></div>
+    <div class="password"><a href="spassword.php">Change password</a></div>
 
 
     <form action="edit_profile.php" method="post" style="width: 366px">
