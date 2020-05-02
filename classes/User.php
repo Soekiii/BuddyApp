@@ -215,7 +215,7 @@ class User
         $statement->bindValue(":email", $searchEmail);
         $statement->execute();
         $count = $statement->rowCount();
-        var_dump($count);
+        //var_dump($count);
         $result = "";
         if($count > 0){
             $result = 'bestaat';

@@ -1,16 +1,16 @@
 <?php 
     session_start();
     include_once(__DIR__ . "/../classes/Db.php");
-    if(isset($_POST["email"])){
+    if(!empty($_POST["email"])){
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select * from user where email = '".$_POST["email"] ."'");
+        $statement = $conn->prepare("select * from user where email = :email");
+        $statement->bindValue(":email", $_POST["email"]);
         $statement->execute();
         $count = $statement->rowCount();
-        $result = "";
-        if($count){
-            $result = 'email al in gebruik';
+        if($count > 0){
+            echo "<span class='status-not-available' style='color:red;'> email al in gebruik </span>";
         } else {
-            $result =  'email nog niet gebruikt';
+            echo  "<span class='status-not-available' style='color:green;'> email nog niet gebruikt </span>";
         }
-        return $result;
+       
     }
