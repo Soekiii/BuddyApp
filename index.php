@@ -269,14 +269,17 @@ if (!empty($_POST)) {
             <div class="form-group">
             
                  
-                        <div class="bold"><?php echo ($r['firstname'] . " " . $r['lastname']); ?></div>
-                        <p><?php echo $r['bio']; ?></p>
+                        <div class="bold"><?php echo htmlspecialchars($r['firstname'] . " " . $r['lastname']); ?></div>
+                        <p><?php echo htmlspecialchars($r['bio']); ?></p>
+                        
                         <form action="" method="post">
+                        <?php foreach ($hobbyOthers as $hobbyOther) : ?>
                             <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                             <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                        <?php endforeach; ?>
                             <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
                         </form>
-                    
+                        
                     
                     </div>
             </div>
@@ -426,7 +429,7 @@ if (!empty($_POST)) {
                                 <div class="card-body ">
                                     <?php echo $post['firstname'] . " " . $post['lastname'] . ":" ?>
 
-
+                                    <input type="text" value="<?php echo $post['postID'] ?>">
                                     <a href="topic.php?id=<?php echo $post['postID'] ?>" class="">
                                         <?php echo $post['postTxt']; ?>
                                     </a>

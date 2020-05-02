@@ -112,9 +112,10 @@ class Forum extends Buddy{
         return $result;
     }
 
-    public function fetchComments(){
+    public function fetchComments($postID){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT * FROM comments');
+        $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID');
+        $stmt->bindParam(':postID', $postID);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -136,7 +137,7 @@ class Forum extends Buddy{
         $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID');
         $stmt->bindParam(':postID', $postID);
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $result;
     }
