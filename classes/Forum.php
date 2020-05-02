@@ -165,7 +165,7 @@ class Forum extends Buddy{
     // check if user is moderator
     public function checkMod($userID){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT * FROM modteam WHERE userID = :userID');
+        $stmt = $conn->prepare('SELECT modStatus FROM modteam WHERE userID = :userID');
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

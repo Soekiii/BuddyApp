@@ -28,7 +28,8 @@ if (!empty($_POST['comment'])) {
 }
 
 $checkMod = new Forum();
-$mod = $checkMod->checkMod($userID);
+$mod = implode(" ", $checkMod->checkMod($userID));
+
 
 if (isset($_POST['pinPost'])) {
     $pinPost = new Forum();
@@ -67,7 +68,7 @@ if (isset($_POST['pinPost'])) {
         <div class="row my-row">
             <form action="" method="post" name="pinPost">
                 <div class="col justify-content-end">
-                    <?php if ($mod['modStatus'] == 1) { ?>
+                    <?php if ($mod === "1") { ?>
 
                         <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
                         <input type="submit" name="pinPost" class="btn btn-primary mt-4" value="Pin post">
