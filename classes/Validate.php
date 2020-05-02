@@ -78,7 +78,7 @@ class Validate {
   if(!empty($val)){ //als hij niet leeg is dan kijken naar fouten
     
     if (!filter_var($val, FILTER_VALIDATE_EMAIL)){ //email niet correct met @ enz...
-      $this->addError('email', 'email niet correct');
+      $this->addError('email', 'Email niet correct');
 
     }
     else { //is niet leeg en staan geen fouten in dan kijken of mailadres student.thomasmore.be juist is
@@ -94,29 +94,34 @@ class Validate {
 
   $val = trim($this->data['firstName']);
   if(empty($val)){
-    $this->addError('firstName', 'hoe heet jij alweer?');
+    $this->addError('firstName', 'Hoe heet jij alweer?');
   // voornaam:            ---> check of voornaam is ingevuld! + melding indien niet ingevuld
 
   }
 
   $val = trim($this->data['lastName']);
   if(empty($val)){
-    $this->addError('lastName', 'geef hier je achternaam?');
+    $this->addError('lastName', 'Geef hier je achternaam?');
   // achternaam:          ---> check of achternaam is ingevuld! + melding indien niet ingevuld
   }
   $val = trim($this->data['password']);
   if(empty($val)){
-    $this->addError('password', 'geef hier je paswoord op, ik zal niet meekijken hoor :-)');
+    $this->addError('password', 'Geef hier je paswoord op, ik zal niet meekijken hoor :-)');
   //paswoord:            ---> check of paswoord is ingevuld! + melding indien niet ingevuld
   }
-  if(strlen($val< 6)){  // opgelet is al in omgezet en is zeer lang
-    $this->addError('password', 'je paswoord te gemakkelijk, kies een beter met min 6 karakters');
+  if(strlen($val)<10){  
+    $this->addError('password', 'Je paswoord is niet lang genoeg');
 
-    //paswoord:            ---> check of paswoord min 6 karakters heeft
+    //paswoord:           ---> check of paswoord min 6 karakters heeft
   }
  
-    
-  }
+  
+if (!preg_match("/[A-Z+&@#\/%?=~_|!:,.;]/",$val)) { 
+  $this->addError('password', 'Je paswoord moet minstens 1 hoofdletter of 1 speciaal karakter bevatten');
+}
+ 
+    // paswoord:           ---> The preg_match() function searches a string for pattern, returning true if the pattern exists, and false otherwise.
+ }
 
 
 

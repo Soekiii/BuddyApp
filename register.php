@@ -131,6 +131,7 @@ if(isset($_POST["register"])){
 
             <div class="form-group mb-4">
             <label for="password">Paswoord</label>
+            <p style="color:blue;">Je paswoord moet minstens 10 karakters, 1 hoofdletter of 1 speciaal karakter (@,#,..) bevatten! </p>
 
             
         <?php if(empty($errorMessage['password'])): ?>
@@ -143,8 +144,6 @@ if(isset($_POST["register"])){
             
             <input type="password" id="password tekst" name="password" type="password" class="form-control is-invalid" placeholder="Paswoord" oninput="schuifbalk()" > 
             <div class="invalid-feedback">
-            
-            </div>
                 <?php echo $errorMessage['password'] ?? '' ?>
                 </div>
                 
@@ -186,22 +185,32 @@ error:function (){}
 
 
  function schuifbalk() { 
+
+     // is PW juiste lengte? ==> ok! 
+     // is er een ander karakter (@#...) ==> ok
+     // is er een hoofdletter? ==> 
      
             var  progressBar  =  $('.progress-bar');                                                       
             var mijnText = 0;
             mijnText= document.getElementById('password').value;
             var lengteString = mijnText.length;
             console.log(lengteString);
-
+            if (lengteString>10){lengteString=10;}
             progressBar.css('width', (lengteString * 10)  +  '%');                
             progressBar.attr('aria-valuenow', (lengteString * 10)); 
             document.getElementById('progress-bar').innerHTML = (lengteString*10) + '%';
-            if (lengteString>=10){
-                document.getElementById('progress-bar').innerHTML = 'safe password';                
+            var patt = /[A-Z+&@#\/%?=~_|!:,.;]/g;
+            var resultregex = patt.test(mijnText); // W3: 
+                                                        //A regular expression is an object that describes a pattern of characters.
+                                                       //Regular expressions are used to perform pattern-matching and "search-and-replace" functions on text.
+                                                      // The test() method tests for a match in a string.
+                                                     //This method returns true if it finds a match, otherwise it returns false.
+           
+            if (lengteString>=10, resultregex){
+                document.getElementById('progress-bar').innerHTML = 'Je hebt een veilig paswoord gekozen!';                
 
             }
             
-        
 
 
         }
