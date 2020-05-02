@@ -4,6 +4,16 @@ include_once (__DIR__ . "/classes/User.php");
 include_once (__DIR__ . "/classes/Validate.php");
 include_once (__DIR__ . "/classes/Db.php");
 
+// email veld nakijken
+if(isset($_POST["email"])){
+ 
+ $searchEmail = trim($_POST["email"]);
+ $e = new User();
+ //$test = $e->searchEmail($searchEmail);
+ echo $e->searchEmail($searchEmail);
+ //var_dump($test);
+}
+
 
 if(isset($_POST["register"])){
 
@@ -116,10 +126,13 @@ if(isset($_POST["register"])){
             <div class="form-group mb-3">
             <label for="email">Emailadres</label>
         <?php if(empty($errorMessage['email'])): ?>
-            <input type="text"id="email" name="email" type="text" class="form-control" placeholder="Email"> 
+            <input type="text" id="email" name="email" type="text" class="form-control" placeholder="Email"> 
+            <div id="emailGebruik"></div>
+            
         <?php else: ?>  
             <input type="text"id="email" name="email" type="text" class="form-control is-invalid" placeholder="Email">
             <div class="invalid-feedback">
+            <div id="emailGebruik"></div>
             <?php echo $errorMessage['email'] ?? '' ?>
             </div>
         <?php endif; ?>
@@ -164,6 +177,7 @@ if(isset($_POST["register"])){
         </form>
         </div>
 </div>
+<script src="emailChecker.js"></script>
 <script>
  function schuifbalk() { 
      
