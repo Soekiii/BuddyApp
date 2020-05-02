@@ -28,7 +28,11 @@ if (!empty($_POST['comment'])) {
 }
 
 $checkMod = new Forum();
-$mod = implode(" ", $checkMod->checkMod($userID));
+$mod = $checkMod->checkMod($userID);
+if(empty($mod)){
+} else {
+    $mod = implode(" ", $mod);
+}
 
 
 if (isset($_POST['pinPost'])) {
