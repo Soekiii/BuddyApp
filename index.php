@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 
 // ====== SENDING BUDDY REQUESTS ======
 // when button "send buddy request" is clicked
-if (!empty($_POST['request'])) {
+if (!empty($_POST['sendRequest'])) {
     $request = new Buddy();
     // 1. retrieve buddyID value from $_POST
     $buddyID = $_POST['buddyID'];
@@ -108,14 +108,15 @@ $fetchPosts = new Forum();
 $posts = $fetchPosts->fetchPosts();
 
 // fetch input from new post and submit into database
-if (!empty($_POST)) {
+if (!empty($_POST['newPost'])) {
     $newPost = new Forum();
     $newPost->setUserID($userID);
     $postTxt = $_POST['postTxt'];
     $newPost->setPostTxt($postTxt);
     $createPost = $newPost->newPost($userID, $postTxt);
-    header("Refresh:0");
-    //header('Location: index.php');
+    header("Location: index.php");
+} else {
+
 }
 ?>
 
@@ -539,7 +540,7 @@ if (!empty($_POST)) {
                                                 <form action="" method="post">
                                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                                                     <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                                                    <input type="submit" class="btn btn-primary mt-4" value="stuur verzoek" name="request">
+                                                    <input type="submit" class="btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
                                                 </form>
                                             </div>
                                         </div>
