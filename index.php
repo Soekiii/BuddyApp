@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 
 // ====== SENDING BUDDY REQUESTS ======
 // when button "send buddy request" is clicked
-/*if (!empty($_POST['sendRequest'])) {
+if (!empty($_POST['sendRequest'])) {
     $request = new Buddy();
     // 1. retrieve buddyID value from $_POST
     $buddyID = $_POST['buddyID'];
@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
     $buddyName = $request->buddyData($buddyID);
     $sendRequest = $request->buddyRequest($userID, $buddyID);
     $succes = "Buddy verzoek is verstuurd naar " . $buddyName['firstname'] . " " . $buddyName['lastname'];
-}*/
+}
 
 // functie om users te displayen
 $displayGetal = new User();
@@ -274,9 +274,9 @@ if (!empty($_POST['newPost'])) {
                                 <form action="" method="post">
                                     <?php foreach ($hobbyOthers as $hobbyOther) : ?>
                                         <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                                        <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                        <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
                                     <?php endforeach; ?>
-                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                    <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
                                 </form>
 
 
@@ -299,8 +299,8 @@ if (!empty($_POST['newPost'])) {
                                 <p><?php echo $h['hobby']; ?></p>
                                 <form action="" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                    <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
                                 </form>
 
                             </div>
@@ -318,8 +318,8 @@ if (!empty($_POST['newPost'])) {
                                 <p><?php echo $f['film']; ?></p>
                                 <form action="" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                    <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
                                 </form>
                             </div>
                         </div>
@@ -336,8 +336,8 @@ if (!empty($_POST['newPost'])) {
                                 <p><?php echo $g['game']; ?></p>
                                 <form action="" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                    <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
                                 </form>
                             </div>
                         </div>
@@ -355,8 +355,8 @@ if (!empty($_POST['newPost'])) {
                                 <p><?php echo $m['muziek']; ?></p>
                                 <form action="" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                    <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
                                 </form>
                             </div>
                         </div>
@@ -374,8 +374,8 @@ if (!empty($_POST['newPost'])) {
                                 <p><?php echo $l['locatie']; ?></p>
                                 <form action="" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                                    <input type="hidden" name="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                                    <input type="submit" value="stuur verzoek" class="btn btn-primary mt-4" name="request">
+                                    <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                    <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
                                 </form>
                             </div>
                         </div>
