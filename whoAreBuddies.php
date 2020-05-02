@@ -1,11 +1,4 @@
 <?php 
-//queryprobeersels
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-} 
-
-$userID = $_SESSION['user_id'];
 include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Validate.php");

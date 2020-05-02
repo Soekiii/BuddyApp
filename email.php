@@ -1,14 +1,6 @@
 <?php
-// IF USER NOT SIGNED IN (user_id = empty) -> redirect to login page
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-}
-
-$userID = $_SESSION['user_id'];
+include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
-
-
 
 //echo $userID;
 

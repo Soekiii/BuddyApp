@@ -1,11 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-} 
-
-$userID = $_SESSION['user_id'];
-$currentUser = $userID;
 //Hier mag enkel het gesprek te zien zijn tussen 2 users die met elkaar bevriend zijn
 //tabel buddies >buddyID1 & buddyID2
 
@@ -22,14 +15,14 @@ $recipientID = $_POST['recipientID'];
 //msg wordt in databank gestopt
 if(!empty($_POST['message'])){
     $msg = new Message();
-    $msg->setUserID($currentUser);
+    $msg->setUserID($userID);
     $msg->setRecipientID($recipientID);
     $msg->setMessage(htmlspecialchars($_POST['message']));
     $msg->writeMessage();
 }
 
 //msg wordt afgedrukt/gereturned
-$messages = Message::messagePrint($currentUser,$recipientID);
+$messages = Message::messagePrint($userID,$recipientID);
 
 
 ?><!DOCTYPE html>
@@ -49,7 +42,7 @@ $messages = Message::messagePrint($currentUser,$recipientID);
     <div>
         <form action="" method="post">
             <input type="text" name="message">
-            <input type="hidden" name="senderID" id="" value="<?php echo $currentUser?>">
+            <input type="hidden" name="senderID" id="" value="<?php echo $userID?>">
             <input type="hidden" name="recipientID" id="" value="<?php echo $recipientID?>">
             <div class="">
                 <button type="submit" class="btn" style="width: 90px">Send</button>

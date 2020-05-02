@@ -1,11 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-} 
-
-$userID = $_SESSION['user_id'];
-$currentUser = $userID;
 include_once(__DIR__."/inc/header.inc.php");
 include_once(__DIR__."/classes/Message.php");
 include_once(__DIR__."/classes/User.php");
@@ -138,8 +131,8 @@ if (isset($_POST['reject'])) {
 <?php foreach($buddyList as $buddy): ?>
     <div class="row my-row">
         <div class="col my-col">
-    <div><!-- IF currentuser is in buddy1 tabel, moet die buddy uit buddy2 tabel echo'en-->
-        <?php if ($currentUser == $buddy['buddy1ID']): ?>
+    <div><!-- IF userID is in buddy1 tabel, moet die buddy uit buddy2 tabel echo'en-->
+        <?php if ($userID == $buddy['buddy1ID']): ?>
             <div class="bold">Chat met <?php echo $buddy["buddy2ID"]; ?></div>
             <form action="buddyChat.php" method="POST">
                 <input type="hidden" name="recipientID" id="" value="<?php echo $buddy["buddy2ID"];?>">
@@ -147,8 +140,8 @@ if (isset($_POST['reject'])) {
                     <button type="submit" class="btn btn-primary mt-4">Chat nu</button>
                 </div>
             </form>
-        <!-- IF currentuser is in buddy2 tabel, moet die buddy uit buddy1 tabel echo'en-->
-        <?php elseif ($currentUser == $buddy['buddy2ID']): ?>
+        <!-- IF userID is in buddy2 tabel, moet die buddy uit buddy1 tabel echo'en-->
+        <?php elseif ($userID == $buddy['buddy2ID']): ?>
             <div class="bold">Chat met <?php echo $buddy["buddy1ID"]; ?></div>
             <form action="buddyChat.php" method="POST">
                 <input type="hidden" name="recipientID" id="" value="<?php echo $buddy["buddy1ID"];?>">
