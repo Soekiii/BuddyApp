@@ -14,7 +14,7 @@ if (!empty($_POST['submit'])) {
     $uploadAvatar = new User();
     // store name of avatar (files with the same name will cause conflict -> solve by adding timestamp)
     $avatar = time() . ' ' . $_FILES['avatar']['name'];
-    $target = '../avatars/' . $avatar;
+    $target = 'avatars/' . $avatar;
 
     $imgSize = $_FILES['avatar']['size'];
     $imgType =  array(
