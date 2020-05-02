@@ -28,8 +28,9 @@ if (!empty($_POST['comment'])) {
     $sendComment->setUserID($userID);
     $sendComment->setPostID($postID);
     $comment = $sendComment->sendComment($postID, $userID, $commentTxt);
-    var_dump($comment['commentID']);
     header("Refresh: 0");
+} else {
+    
 }
 
 $checkMod = new Forum();
