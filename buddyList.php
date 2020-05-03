@@ -37,7 +37,7 @@ if (isset($_POST['accept'])) {
     $accept->setBuddyID($buddyID);
     $acceptRequest = $accept->acceptRequest($userID, $buddyID);
     //refresh the page to empty the friend request list (user already has a buddy and cannot accept more)
-    header('Location: profile.php');
+    header('Location: buddyList.php');
 }
 
 if (isset($_POST['reject'])) {
@@ -48,7 +48,7 @@ if (isset($_POST['reject'])) {
     $rejectMsg = $_POST['rejectMsg'];
     $reject->setRejectMsg($rejectMsg);
     $rejectRequest = $reject->rejectRequest($userID, $buddyID, $rejectMsg);
-    header('Location:profile.php');
+    header('Location:buddyList.php');
 }
 ?><!DOCTYPE html>
 <html lang="en">
