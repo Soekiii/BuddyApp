@@ -2,6 +2,7 @@
 include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
 
+
 //update user met ben ik buddy of zoek ik buddy
 if (!empty($_POST)) {
     $user = new User();
@@ -25,7 +26,16 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-    <div><a href="index.php">Cancel</a></div>
+<div class="container">
+    <div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+
+                </div>
+    
+                <div><a href="index.php">Cancel</a></div>
     <div class="avatar"><a href="avatar.php">Upload avatar</a></div>
     <div class="bio"><a href="bio.php">Edit bio</a></div>
     <div class="email"><a href="email.php">Change email</a></div>

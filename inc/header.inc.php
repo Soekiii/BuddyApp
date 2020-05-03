@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
   $userID = $_SESSION['user_id'];
 }
 
-include_once(__DIR__ . "\..\classes\Buddy.php");
+include_once(__DIR__ . "/../classes/Buddy.php");
 
 $countRequest = new Buddy();
 $total = $countRequest->countRequest($userID);
