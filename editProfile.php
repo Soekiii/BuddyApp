@@ -2,7 +2,8 @@
 include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
 
-
+$getUserById = new User();
+$userData = $getUserById->getUserData($userID);
 //update user met ben ik buddy of zoek ik buddy
 if (!empty($_POST)) {
     $user = new User();
@@ -32,15 +33,15 @@ if (!empty($_POST)) {
                 <div class="card text-center">
                     <div class="card-body">
                     <!-- SIDEBAR USERPIC -->
-                    <div class="profile-userpic m-4">
-
-                    </div>
-                    <!-- END SIDEBAR USERPIC -->
-                    <!-- SIDEBAR USER TITLE -->
-                    <div class="profile-usertitle-name m-4">
-                            Marcus Doe
-                    </div>
-                    <!-- END SIDEBAR USER TITLE -->
+                        
+                    <img class="img-fluid" src="avatars/<?php echo $userData["avatar"]?>">
+                       
+                       <!-- END SIDEBAR USERPIC -->
+                       <!-- SIDEBAR USER TITLE -->
+                       <div class="bold m-4">
+                       <?php echo $userData['firstname'] . " " . $userData['lastname']; ?>
+                       </div>
+                       <!-- END SIDEBAR USER TITLE -->
                     <!-- SIDEBAR MENU -->
                     
                     <div class="mb-4"><a href="index.php">Cancel</a></div>
