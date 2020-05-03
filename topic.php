@@ -24,12 +24,11 @@ if (!empty($_POST['comment'])) {
     $comment = $sendComment->sendComment($postID, $userID, $commentTxt);
     header("Refresh: 0");
 } else {
-    
 }
 
 $checkMod = new Forum();
 $mod = $checkMod->checkMod($userID);
-if(empty($mod)){
+if (empty($mod)) {
 } else {
     $mod = implode(" ", $mod);
 }
@@ -92,21 +91,27 @@ if (isset($_POST['pinPost'])) {
                 <div class="col-md-12 my-col">
                     <div class="form-group">
                         <?php echo $comment['firstname'] . " " . $comment['lastname'] . " reageert: " . $comment['commentsTxt']; ?>
-                        <input type="hidden" name="userID" id="userID" value="<?php echo $post['userID']?>">
-                        <input type="hidden" name="postID" id="postID" value="<?php echo $post['postID']?>">
-                        <input type="submit" id="btnUpvote" data-commentid="<?php echo $comment['commentID'] ?>" class="btn btn-primary" value="Upvote">
-                        
+                        <input type="hidden" name="userID" id="userID" value="<?php echo $post['userID'] ?>">
+                        <input type="hidden" name="postID" id="postID" value="<?php echo $post['postID'] ?>">
+                        <!-- <input type="submit" id="btnUpvote" data-commentid="<?php echo $comment['commentID'] ?>" class="btn btn-primary" value="Upvote"> -->
+
 
                     </div>
                 </div>
             <?php endforeach; ?>
 
-
+            <div class="col-md-12 my-col justify-content-center">
+                <form action="" method="post" name="loadMore">
+                    <div class="form-group">
+                        <button type="button" class="btn-other btn-link btn-sm">Laad nieuwe comments</button>
+                    </div>
+                </form>
+            </div>
 
             <form action="" method="post" name="comment">
                 <div class="col-md-12 my-col justify-content-center">
                     <div class="form-group">
-                        <textarea name="commentTxt" id="" cols="col-120" rows="2"></textarea>
+                        <textarea name="commentTxt" id="" cols="100" rows="2"></textarea>
                         <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
                         <input type="submit" name="comment" class="btn btn-primary mt-4" value="Reageer">
                     </div>
