@@ -26,35 +26,57 @@ if (!empty($_POST)) {
 </head>
 
 <body>
-<div class="container">
-    <div class="row profile">
-		<div class="col-md-3">
-			<div class="profile-sidebar">
-				<!-- SIDEBAR USERPIC -->
-				<div class="profile-userpic">
+    <div class="container">
+        <div class="row profile mt-4">
+            <div class="col-md-3 ">
+                <div class="card text-center">
+                    <div class="card-body">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic m-4">
 
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle-name m-4">
+                            Marcus Doe
+                    </div>
+                    <!-- END SIDEBAR USER TITLE -->
+                    <!-- SIDEBAR MENU -->
+                    
+                    <div class="mb-4"><a href="index.php">Cancel</a></div>
+                    <div class="mb-4"><a href="avatar.php">Upload avatar</a></div>
+                    <div class="mb-4"><a href="bio.php">Edit bio</a></div>
+                    <div class="mb-4"><a href="email.php">Change email</a></div>
+                    <div class="mb-4"><a href="password.php">Change password</a></div>
+                    
+
+                    <form action="edit_profile.php" method="post">
+                        <div class="radio">
+                            <input type="radio" id="seekBuddy" name="buddy" checked value="0">
+                            <label> Ik zoek een buddy </label>
+                        </div>
+
+                        <div class="radio">
+                            <input type="radio" id="iAmBuddy" name="buddy" value="1">
+                            <label> Ik ben een buddy </label>
+                        </div>
+
+                        <button type="submit" class="btn" style="width: 150px" id="aanpassen" name="aanpassen">aanpassen</button>
+                    </form>
+
+                    <!-- END MENU -->
+                    <!-- END MENU -->
+                    </div>
                 </div>
-    
-                <div><a href="index.php">Cancel</a></div>
-    <div class="avatar"><a href="avatar.php">Upload avatar</a></div>
-    <div class="bio"><a href="bio.php">Edit bio</a></div>
-    <div class="email"><a href="email.php">Change email</a></div>
-    <div class="password"><a href="spassword.php">Change password</a></div>
-
-
-    <form action="edit_profile.php" method="post" style="width: 366px">
-        <div class="radio">
-            <input type="radio" id="seekBuddy" name="buddy" checked value="0">
-            <label> Ik zoek een buddy </label>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                        <div class="card-body ">
+                    Some user related content goes here...
+                </div>
+            </div>
         </div>
-
-        <div class="radio">
-            <input type="radio" id="iAmBuddy" name="buddy" value="1">
-            <label> Ik ben een buddy </label>
-        </div>
-
-        <button type="submit" class="btn" style="width: 150px" id="aanpassen" name="aanpassen">aanpassen</button>
-    </form>
+    </div>
 
 </body>
 
