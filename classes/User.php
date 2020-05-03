@@ -283,9 +283,10 @@ class User
     //database statement om aan te passen of je buddy bent of een buddy zoekt
     public function updateUserBuddy()
     {
-
         $conn = Db::getConnection();
-        $statement = $conn->prepare("UPDATE user SET buddy='$this->buddy' WHERE userID = '$this->userBuddy'");
+        $statement = $conn->prepare("UPDATE user SET buddy= :buddy WHERE userID = :userBuddy");
+        $statement->bindParam(':buddy', $this->buddy);
+        $statement->bindParam(':userBuddy', $this->userBuddy);
         $result = $statement->execute();
         return $result;
     }
