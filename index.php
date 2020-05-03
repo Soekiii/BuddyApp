@@ -75,7 +75,6 @@ if (isset($_POST['submit'])) {
 
 
 
-
 // ====== SENDING BUDDY REQUESTS ======
 // when button "send buddy request" is clicked
 if (!empty($_POST['sendRequest'])) {
@@ -88,6 +87,7 @@ if (!empty($_POST['sendRequest'])) {
     $buddyName = $request->buddyData($buddyID);
     $sendRequest = $request->buddyRequest($userID, $buddyID);
     $succes = "Buddy verzoek is verstuurd naar " . $buddyName['firstname'] . " " . $buddyName['lastname'];
+    header("Location: index.php");
 }
 
 // functie om users te displayen
