@@ -112,9 +112,14 @@ if (isset($_POST['reject'])) {
     <div class="row my-row">
     <div class="col my-col">
     <div class="card">
-        <div class="card-body ">
-  <div><img src="<?php echo $afdruk["avatar1"]?>"><?php echo $afdruk["firstnameBuddy1"]." ".$afdruk["lastnameBuddy1"]." buddy met ".$afdruk["firstnameBuddy2"]." ".$afdruk["lastnameBuddy2"]?><img src="<?php echo $afdruk["avatar2"]?>"></div>
-                </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+        <div><img width="50px"src="avatars/<?php echo $afdruk["avatar1"]?>">
+        <?php echo $afdruk["firstnameBuddy1"]." ".$afdruk["lastnameBuddy1"]?></div>
+        <div class="d-flex align-items-center"><p class="bold">Buddy met</p></div>
+        <div><?php echo $afdruk["firstnameBuddy2"]." ".$afdruk["lastnameBuddy2"]?><img width="50px" src="avatars/<?php echo $afdruk["avatar2"]?>"></div>
+        </div>
+    </div>
     </div>
     </div>
     </div>
