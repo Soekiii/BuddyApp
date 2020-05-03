@@ -150,7 +150,7 @@ if (!empty($_POST['newPost'])) {
         </div>
 
         <!-- ====== ZOEKBALk MET 3 ZOEKVELDEN ====== -->
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="filter-form my-md-5">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="filter-form my-md-5">
             <div class="row my-row">
                 <!-- zoekveld -->
                 <div class="col-md-3">
@@ -265,7 +265,7 @@ if (!empty($_POST['newPost'])) {
                                 <div class="bold"><?php echo htmlspecialchars($r['firstname'] . " " . $r['lastname']); ?></div>
                                 <p><?php echo htmlspecialchars($r['bio']); ?></p>
 
-                                <form action="" method="post">
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <?php foreach ($hobbyOthers as $hobbyOther) : ?>
                                         <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                                         <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
@@ -291,7 +291,7 @@ if (!empty($_POST['newPost'])) {
 
                                 <div class="bold"><?php echo ($h['firstname'] . " " . $h['lastname']); ?></div>
                                 <p><?php echo $h['hobby']; ?></p>
-                                <form action="" method="post">
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                                     <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
                                     <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
@@ -310,7 +310,7 @@ if (!empty($_POST['newPost'])) {
                             <div class="form-group">
                                 <div class="bold"><?php echo ($f['firstname'] . " " . $f['lastname']); ?></div>
                                 <p><?php echo $f['film']; ?></p>
-                                <form action="" method="post">
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                                     <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
                                     <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
@@ -328,7 +328,7 @@ if (!empty($_POST['newPost'])) {
                             <div class="form-group">
                                 <div class="bold"><?php echo ($g['firstname'] . " " . $g['lastname']); ?></div>
                                 <p><?php echo $g['game']; ?></p>
-                                <form action="" method="post">
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                                     <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
                                     <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
@@ -347,7 +347,7 @@ if (!empty($_POST['newPost'])) {
                             <div class="form-group">
                                 <div class="bold"><?php echo ($m['firstname'] . " " . $m['lastname'] . " " . $m['muziek']); ?></div>
                                 <p><?php echo $m['muziek']; ?></p>
-                                <form action="" method="post">
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                                     <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
                                     <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
@@ -366,7 +366,7 @@ if (!empty($_POST['newPost'])) {
                             <div class="form-group">
                                 <div class="bold"><?php echo ($l['firstname'] . " " . $l['lastname'] . " " . $l['locatie']); ?></div>
                                 <p><?php echo $l['locatie']; ?></p>
-                                <form action="" method="post">
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                                     <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
                                     <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
@@ -530,7 +530,7 @@ if (!empty($_POST['newPost'])) {
                                                     } else {
                                                     }
                                                     ?>
-                                                    <form action="" method="post">
+                                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                                         <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
                                                         <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
                                                         <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">

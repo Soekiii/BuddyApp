@@ -50,7 +50,7 @@ if (!empty($_POST)) {
                     <div class="mb-4"><a href="password.php">Change password</a></div>
                     
 
-                    <form action="edit_profile.php" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="radio">
                             <input type="radio" id="seekBuddy" name="buddy" checked value="0">
                             <label> Ik zoek een buddy </label>

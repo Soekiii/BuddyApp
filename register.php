@@ -78,7 +78,7 @@ if(isset($_POST["register"])){
 
 <div class="col-md-6 p-0 bg-white h-md-100 loginarea">
 		<div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center">
-        <form action="register.php" method="post" class="border rounded p-5">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="border rounded p-5">
     <div class="form-group my-4">
         <h2>Registreer je hier op Amigos</h2>
     <!-- succes message -->

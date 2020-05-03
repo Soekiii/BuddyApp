@@ -40,7 +40,7 @@ $messages = Message::messagePrint($userID,$recipientID);
         </div>
     <?php endforeach;?>
     <div>
-        <form action="" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <input type="text" name="message">
             <input type="hidden" name="senderID" id="" value="<?php echo $userID?>">
             <input type="hidden" name="recipientID" id="" value="<?php echo $recipientID?>">

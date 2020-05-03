@@ -55,7 +55,7 @@ if (isset($_POST['reject'])) {
                 if ($buddyRequest['status'] == 0) { ?>
                     <div class="notifs">
                         <?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname']; ?> heeft je een buddy request gestuurd.
-                        <form action="" method="post">
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <input type="hidden" name="buddyID" id="" value="<?php echo $buddyRequest['userID'] ?>">
                             <input type="submit" name="accept" id="" value="Accepteer">
                             <input type="submit" name="reject" id="" value="Weiger">

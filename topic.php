@@ -70,7 +70,7 @@ if (isset($_POST['pinPost'])) {
 <body>
     <div class="container">
         <div class="row my-row">
-            <form action="" method="post" name="pinPost">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" name="pinPost">
                 <div class="col justify-content-end">
                     <?php if ($mod === "1") { ?>
 
@@ -99,7 +99,7 @@ if (isset($_POST['pinPost'])) {
             <?php endforeach; ?>
 
             <div class="col-md-12 my-col justify-content-center">
-                <form action="" method="post" name="loadMore">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" name="loadMore">
                     <div class="form-group">
                         <input type="hidden" id="loadPostID" name="postID" value="<?php echo $post['postID'] ?>">
                         <a href="#" id="loadMore">Laad meer comments...</a>
@@ -107,7 +107,7 @@ if (isset($_POST['pinPost'])) {
                 </form>
             </div>
 
-            <form action="" method="post" name="comment">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" name="comment">
                 <div class="col-md-12 my-col justify-content-center">
                     <div class="form-group">
                         <textarea name="commentTxt" id="" cols="100" rows="2"></textarea>
