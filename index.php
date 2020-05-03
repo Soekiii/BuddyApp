@@ -550,8 +550,6 @@ if (!empty($_POST['newPost'])) {
         </div>
     </div> <!-- container -->
 
-    <script src="notif.js"></script>
-
 </body>
 
 </html>
