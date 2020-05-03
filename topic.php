@@ -7,12 +7,13 @@ include_once(__DIR__ . "/classes/Forum.php");
 
 if (isset($_GET['id'])) {
     $postID = $_GET['id'];
+    $limit = 0;
 
     $fetchPost = new Forum();
     $post = $fetchPost->specificPost($postID);
 
     $fetchComments = new Forum();
-    $comments = $fetchComments->fetchComments($postID);
+    $comments = $fetchComments->fetchComments($postID, $limit);
 }
 
 if (!empty($_POST['comment'])) {
@@ -90,12 +91,9 @@ if (isset($_POST['pinPost'])) {
             <?php foreach ($comments as $comment) : ?>
                 <div class="col-md-12 my-col">
                     <div class="form-group">
-                        <?php echo $comment['firstname'] . " " . $comment['lastname'] . " reageert: " . $comment['commentsTxt']; ?>
-                        <input type="hidden" name="userID" id="userID" value="<?php echo $post['userID'] ?>">
-                        <input type="hidden" name="postID" id="postID" value="<?php echo $post['postID'] ?>">
-                        <!-- <input type="submit" id="btnUpvote" data-commentid="<?php echo $comment['commentID'] ?>" class="btn btn-primary" value="Upvote"> -->
-
-
+                        <div id="comments">
+                            <?php echo $comment['firstname'] . " " . $comment['lastname'] . " reageert: " . $comment['commentsTxt']; ?>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -103,7 +101,8 @@ if (isset($_POST['pinPost'])) {
             <div class="col-md-12 my-col justify-content-center">
                 <form action="" method="post" name="loadMore">
                     <div class="form-group">
-                        <button type="button" class="btn-other btn-link btn-sm">Laad nieuwe comments</button>
+                        <input type="hidden" id="loadPostID" name="postID" value="<?php echo $post['postID'] ?>">
+                        <a href="#" id="loadMore">Laad meer comments...</a>
                     </div>
                 </form>
             </div>
@@ -120,7 +119,7 @@ if (isset($_POST['pinPost'])) {
 
         </div>
     </div>
-    <script src="like.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
