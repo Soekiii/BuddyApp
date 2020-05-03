@@ -8,6 +8,7 @@ class Forum extends Buddy{
     private $commentID;
     private $commentTxt;
     private $mod;
+    private $limit;
 
     /**
      * Get the value of postID
@@ -112,10 +113,11 @@ class Forum extends Buddy{
         return $result;
     }
 
-    public function fetchComments($postID){
+    public function fetchComments($postID, $limit){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID');
+        $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID LIMIT (4 + :limit)');
         $stmt->bindParam(':postID', $postID);
+        $stmt->bindParam(':limit', $limit);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -204,5 +206,25 @@ class Forum extends Buddy{
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $result;
+    }
+
+    /**
+     * Get the value of limit
+     */ 
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * Set the value of limit
+     *
+     * @return  self
+     */ 
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
     }
 }
