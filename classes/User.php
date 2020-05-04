@@ -235,7 +235,7 @@ class User
         return $result;
     }
     public function activatieLink($id,$token){
-        $link = "<a href='http://localhost/BuddyApp/activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
+        $link = "<a href='http://www.imdamigos.site/activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
         return $link;
     }
     
