@@ -3,17 +3,12 @@ include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/Forum.php");
 
-
-
 if (isset($_GET['id'])) {
     $postID = $_GET['id'];
-    $limit = 0;
-
     $fetchPost = new Forum();
     $post = $fetchPost->specificPost($postID);
-
     $fetchComments = new Forum();
-    $comments = $fetchComments->fetchComments($postID, $limit);
+    $comments = $fetchComments->fetchComments($postID);
 }
 
 if (!empty($_POST['comment'])) {
@@ -41,8 +36,8 @@ if (isset($_POST['pinPost'])) {
     $pinPost->setPostID($postID);
     $pin = $pinPost->pinPost($postID);
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,12 +50,10 @@ if (isset($_POST['pinPost'])) {
         .my-container {
             border: 1px solid green;
         }
-
         .my-row {
             border: 3px solid red;
         
         }
-
         .my-col {
             border: 3px dotted blue;
         }
@@ -69,48 +62,37 @@ if (isset($_POST['pinPost'])) {
 
 <body>
     <div class="container">
+
         <div class="row my-row">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" name="pinPost">
+            <form action="" method="post" name="pinPost">
                 <div class="col justify-content-end">
                     <?php if ($mod === "1") { ?>
-
                         <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
                         <input type="submit" name="pinPost" class="btn btn-primary mt-4" value="Pin post">
-
                     <?php } ?>
                 </div>
             </form>
 
             <div class="col-md-12 my-col">
                 <div class="form-group">
-                    <?php echo $post['firstname'] . " " . $post['lastname'] . " zegt: " . $post['postTxt']; ?>
+                    <b><a href="users.php?id=<?php echo $post['userID'] ?>"><?php echo $post['firstname'] . " " . $post['lastname'] ?></a><?php echo " zegt: " .  $post['postTxt']; ?></b>
                 </div>
             </div>
-
 
             <?php foreach ($comments as $comment) : ?>
                 <div class="col-md-12 my-col">
                     <div class="form-group">
-                        <div id="comments">
-                            <?php echo $comment['firstname'] . " " . $comment['lastname'] . " reageert: " . $comment['commentsTxt']; ?>
-                        </div>
+                        <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo $comment['firstname'] . " " . $comment['lastname'] ?></a><?php echo " reageert: " .  $comment['commentsTxt']; ?>
+                        <input type="hidden" name="userID" id="userID" value="<?php echo $post['userID'] ?>">
+                        <input type="hidden" name="postID" id="postID" value="<?php echo $post['postID'] ?>">
                     </div>
                 </div>
             <?php endforeach; ?>
 
-            <div class="col-md-12 my-col justify-content-center">
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" name="loadMore">
-                    <div class="form-group">
-                        <input type="hidden" id="loadPostID" name="postID" value="<?php echo $post['postID'] ?>">
-                        <a href="#" id="loadMore">Laad meer comments...</a>
-                    </div>
-                </form>
-            </div>
-
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" name="comment">
+            <form action="" method="post" name="comment">
                 <div class="col-md-12 my-col justify-content-center">
                     <div class="form-group">
-                        <textarea name="commentTxt" id="" cols="100" rows="2"></textarea>
+                        <textarea name="commentTxt" id="" cols="col-120" rows="2"></textarea>
                         <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
                         <input type="submit" name="comment" class="btn btn-primary mt-4" value="Reageer">
                     </div>
@@ -119,7 +101,9 @@ if (isset($_POST['pinPost'])) {
 
         </div>
     </div>
-    <script src="app.js"></script>
+
+    <script src="like.js"></script>
+
 </body>
 
 </html>

@@ -113,11 +113,10 @@ class Forum extends Buddy{
         return $result;
     }
 
-    public function fetchComments($postID, $limit){
+    public function fetchComments($postID){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID LIMIT (4 + :limit)');
+        $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID');
         $stmt->bindParam(':postID', $postID);
-        $stmt->bindParam(':limit', $limit);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
