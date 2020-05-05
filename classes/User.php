@@ -202,13 +202,20 @@ class User
             $user = $this->getUser();
             $_SESSION['user_id'] = $this->getUserId();
             $content = $this->activatieLink($user['userID'], $user['token']);
-            Mail::sendMail("Account Activatie", $user['email'],$content);
+            $verkey = $this->getKey();
+            Mail::sendMail($verkey['Ver_key'], "Account Activatie", $user['email'],$content);
             $_SESSION['succes'] = "Bevestig je registratie via email";
         }
 
         return $result;
     }
-
+    public function getKey(){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from mailKey");
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
     public function searchEmail($searchEmail){  
         $conn = Db::getConnection();
         $statement = $conn->prepare("select * from user where email = :email");

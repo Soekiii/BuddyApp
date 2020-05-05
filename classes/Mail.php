@@ -3,10 +3,9 @@ require './vendor/autoload.php';
 class Mail
 {
     //email sturen
-    public static function sendMail($subject, $email,$content){
-        $key = "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";
+    public static function sendMail($key, $subject, $email,$content){
         $mail = new \SendGrid\Mail\Mail(); 
-        $mail->setFrom("frederichermans@hotmail.com", "Amigos");
+        $mail->setFrom("info@imdamigos.site", "Amigos");
         $mail->setSubject($subject);
         $mail->addTo($email);
         $mail->addContent("text/html", $content);
@@ -18,4 +17,6 @@ class Mail
             echo 'Caught exception: '. $e->getMessage() ."\n";
         }
     }
+
+    
 }
