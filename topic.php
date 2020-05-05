@@ -75,14 +75,14 @@ if (isset($_POST['pinPost'])) {
 
             <div class="col-md-12 my-col">
                 <div class="form-group">
-                    <b><a href="users.php?id=<?php echo $post['userID'] ?>"><?php echo $post['firstname'] . " " . $post['lastname'] ?></a><?php echo " zegt: " .  $post['postTxt']; ?></b>
+                    <b><a href="users.php?id=<?php echo $post['userID'] ?>"><?php echo $post['firstname'] . " " . $post['lastname'] ?></a><?php echo ": " .  $post['postTxt']; ?></b>
                 </div>
             </div>
 
             <?php foreach ($comments as $comment) : ?>
                 <div class="col-md-12 my-col">
                     <div class="form-group">
-                        <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo $comment['firstname'] . " " . $comment['lastname'] ?></a><?php echo " reageert: " .  $comment['commentsTxt']; ?>
+                        <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo $comment['firstname'] . " " . $comment['lastname'] ?></a><?php echo ": " .  $comment['commentsTxt']; ?>
                         <input type="hidden" name="userID" id="userID" value="<?php echo $post['userID'] ?>">
                         <input type="hidden" name="postID" id="postID" value="<?php echo $post['postID'] ?>">
                     </div>
