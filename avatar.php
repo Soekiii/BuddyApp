@@ -23,14 +23,14 @@ if (!empty($_POST['submit'])) {
                 $conn = Db::getConnection();
                 $uploadAvatar = $conn->prepare("UPDATE user SET avatar = '$avatar' WHERE userID = '$userID'");
                 $uploadAvatar->execute();
-                echo "Avatar successfully uploaded!";
+                echo "Je avatar werd succesvol opgeladen!";
             } else {
             }
         } else {
-            echo "Only .jpg, .jpeg, .png and .gif images allowed.";
+            echo "Alleen .jpg, .jpeg, .png and .gif afbeeldingen zijn toegestaan.";
         }
     } else {
-        echo "File size is too large";
+        echo "Je afbeelding is te groot";
     }
 }
 ?>

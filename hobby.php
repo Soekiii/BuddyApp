@@ -32,7 +32,7 @@ if(isset($_POST["muziek"])){
 
     }
     catch(throwable $e){
-        $error = "Iets is mis gegaan.";
+        $error = "Er ging iets mis!";
     }
 }else {
     $error = "Vul alle velden in";
@@ -73,7 +73,7 @@ if(isset($_POST["muziek"])){
     <div class="form ">
         <!--<input type="text" id="locatie" name="locatie">-->
         <select id="locatie" name="locatie" class="form-control mb-4">
-            <option value="" class="dropdown-item disabled">Vanwaar ben je? (Provincie)</option>
+            <option value="" class="dropdown-item disabled">Uit welke provincie ben je afkomstig?</option>
             <option value="West-vlaanderen">West-Vlaanderen</option>
             <option value="Oost-Vlaandere">Oost-Vlaanderen</option>
             <option value="Vlaams-Brabant">Vlaams-Brabant</option>
@@ -104,7 +104,7 @@ if(isset($_POST["muziek"])){
     <div class="form">
         <!--<input type="text" id="game" name="game">-->
         <select id="game" name="game" class="form-control mb-4">
-            <option value="" class="dropdown-item disabled">Welk spel speel je graag?</option>
+            <option value="" class="dropdown-item disabled">Welk videospel speel je graag?</option>
             <option value="World of Warcraft">World of Warcraft</option>
             <option value="Call of Duty">Call of Duty</option>
             <option value="Mario Kart">Mario Kart</option>
@@ -118,11 +118,11 @@ if(isset($_POST["muziek"])){
     <div class="form">
         <!--<input type="text" id="film" name="film">-->
         <select id="film" name="film" class="form-control mb-4">
-            <option value="" class="dropdown-item disabled">Naar wat voor genne filmen kijk je graag?</option>
+            <option value="" class="dropdown-item disabled">Naar welk filmgenre kijk je graag?</option>
             <option value="Horror">Horror</option>
             <option value="Drama">Drama</option>
             <option value="Comedy">Comedy</option>
-            <option value="Sciencefiction">Sciencefiction</option>
+            <option value="Sciencefiction">Science Fiction</option>
             <option value="Actie">Actie</option>
             <option value="Animatie">Animatie</option>
             <option value="Romantisch">Romantisch</option>
@@ -132,14 +132,14 @@ if(isset($_POST["muziek"])){
     <div class="form">
         <!--<input type="text" id="muziek" name="muziek">-->
         <select id="muziek" name="muziek"  class="form-control">
-            <option value="" class="dropdown-item disabled">Naar wat voor genre muziek luister je graag?</option>
+            <option value="" class="dropdown-item disabled">Naar welk muziekgenre luister je graag?</option>
             <option value="Metal">Metal</option>
             <option value="Pop">Pop</option>
             <option value="RnB">RnB</option>
             <option value="Hip-Hop">Hip-Hop</option>
             <option value="Rap">Rap</option>
             <option value="Jazz">Jazz</option>
-            <option value="Drum 'n Bass">Drum 'n Bass</option>
+            <option value="Drum 'n Bass">Drum'n Bass</option>
             <option value="Dance">Dance</option>
         </select>
     </div>

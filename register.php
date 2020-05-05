@@ -163,7 +163,7 @@ if(isset($_POST["register"])){
             <button type="submit" class="btn" style="width: 150px" id="register" name="register">Registreren</button>
             </div>
     
-        <p class="text-center mt-4">Hebt u al een account? <a href="login.php" class="link">Log in hier!</a></p>
+        <p class="text-center mt-4">Heb je al een account? <a href="login.php" class="link">Log in hier!</a></p>
         </form>
         </div>
 </div>

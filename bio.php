@@ -11,9 +11,9 @@ if (!empty($_POST)) {
         $conn = Db::getConnection();
         $changeBio = $conn->prepare("UPDATE user SET bio = '$newBio' WHERE userID = '$userID'");
         $changeBio->execute();
-        echo "Bio added!";
+        echo "Bio toegevoegd!";
     } else {
-        echo "Please write a bio.";
+        echo "Schrijf een korte bio van jezelf!";
     }
 }
 ?>
@@ -35,7 +35,7 @@ if (!empty($_POST)) {
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <!-- ==== BIO TEXT FIELD ==== -->
         <div>
-            <textarea name="bio" id="" cols="30" rows="10" placeholder="Keep it short ;)"></textarea>
+            <textarea name="bio" id="" cols="30" rows="10" placeholder="Hou het kort ;)"></textarea>
         </div>
 
         <!-- ==== SUBMIT ==== -->

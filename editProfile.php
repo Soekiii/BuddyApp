@@ -44,11 +44,11 @@ if (!empty($_POST)) {
                        <!-- END SIDEBAR USER TITLE -->
                     <!-- SIDEBAR MENU -->
                     
-                    <div class="mb-4"><a href="index.php">Cancel</a></div>
-                    <div class="mb-4"><a href="avatar.php">Upload avatar</a></div>
-                    <div class="mb-4"><a href="bio.php">Edit bio</a></div>
-                    <div class="mb-4"><a href="email.php">Change email</a></div>
-                    <div class="mb-4"><a href="password.php">Change password</a></div>
+                    <div class="mb-4"><a href="index.php">Annuleren</a></div>
+                    <div class="mb-4"><a href="avatar.php">Avatar aanpassen</a></div>
+                    <div class="mb-4"><a href="bio.php">Bio aanpassen</a></div>
+                    <div class="mb-4"><a href="email.php">Email aanpassen</a></div>
+                    <div class="mb-4"><a href="password.php">Paswoord aanpassen</a></div>
                     
 
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -62,7 +62,7 @@ if (!empty($_POST)) {
                             <label> Ik ben een buddy </label>
                         </div>
 
-                        <button type="submit" class="btn" style="width: 150px" id="aanpassen" name="aanpassen">aanpassen</button>
+                        <button type="submit" class="btn" style="width: 150px" id="aanpassen" name="aanpassen">Aanpassen</button>
                     </form>
 
                     <!-- END MENU -->

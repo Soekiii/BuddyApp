@@ -8,9 +8,9 @@
         $statement->execute();
         $count = $statement->rowCount();
         if($count > 0){
-            echo "<span class='status-not-available' style='color:red;'> email al in gebruik </span>";
+            echo "<span class='status-not-available' style='color:red;'> Email al in gebruik </span>";
         } else {
-            echo  "<span class='status-not-available' style='color:green;'> email nog niet gebruikt </span>";
+            echo  "<span class='status-not-available' style='color:green;'> Email nog niet in gebruik </span>";
         }
        
     }

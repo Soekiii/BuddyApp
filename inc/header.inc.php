@@ -42,7 +42,7 @@ $total = $countRequest->countRequest($userID);
             <a class="nav-link" style="color: #fff;" href="index.php">Home</a>
           </li>
           <li class="nav-item">
-<a class="nav-link" style="color: #fff;" href="buddyList.php">Buddy's <?php $notifs = implode(" ", $total); if ($notifs > 0) { ?> <span class="badge badge-danger"><?php echo implode(" ", $total) ?></span> <?php } else {}; ?> </a>
+<a class="nav-link" style="color: #fff;" href="buddyList.php">Buddies <?php $notifs = implode(" ", $total); if ($notifs > 0) { ?> <span class="badge badge-danger"><?php echo implode(" ", $total) ?></span> <?php } else {}; ?> </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" style="color: #fff;" href="faq.php">FAQ</a>

@@ -74,7 +74,7 @@ if (isset($_POST['reject'])) {
             if ($buddyRequest['status'] == 0) { ?>
                 <div class="col-md-3 my-col">
                     <div class="form-group">
-                    <div class="bold"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname']; ?></div><p>Heeft je een buddy request gestuurd.</p>
+                    <div class="bold"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname']; ?></div><p>heeft je een buddy request gestuurd.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <input type="hidden" name="buddyID" id="" value="<?php echo $buddyRequest['userID'] ?>">
                         <input type="submit" name="accept" id="" value="Accepteer">

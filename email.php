@@ -34,9 +34,9 @@ if (!empty($_POST)) {
             $conn = Db::getConnection();
             $changeEmail = $conn->prepare("UPDATE user SET email = '$newEmail' WHERE userID = '$userID'");
             $changeEmail->execute();
-            echo "Email successfully changed!";
+            echo "Email succesvol aangepast!";
         } else {
-            echo "Failed to change email.";
+            echo "Het is niet gelukt je email aan te passen.";
         }
     }
 }
@@ -48,23 +48,23 @@ if (!empty($_POST)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change email</title>
+    <title>Email aanpassen</title>
 </head>
 
 <body>
-    <a href="editProfile.php">Go back</a>
-    <h3>Change email</h3>
+    <a href="editProfile.php">Ga terug</a>
+    <h3>Email aanpassen</h3>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <!-- ==== NEW EMAIL ==== -->
         <div>
-            <label for="newEmail">New email</label>
+            <label for="newEmail">Nieuwe email</label>
             <input type="text" id="newEmail" name="newEmail">
         </div>
 
         <!-- ==== PASSWORD ==== -->
         <div>
-            <label for="verifyPassword">Enter password</label>
+            <label for="verifyPassword"> Geef je paswoord in</label>
             <input type="password" name="password" id="password">
         </div>
 

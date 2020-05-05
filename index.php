@@ -390,19 +390,19 @@ if (!empty($_POST['newPost'])) {
                 <div class="form-group">
                     <div class="mb-4">
                         <h3 class="mb-4">Forum</h3>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postBtn">Maak nieuwe post</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postBtn">Plaats een nieuw bericht</button>
                     </div>
                     <div class="modal fade" id="postBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="exampleModalLabel">Nieuwe post</h4>
+                                    <h4 class="modal-title" id="exampleModalLabel">Nieuw bericht</h4>
                                 </div>
                                 <div class="modal-body">
                                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="newPost">
                                         <div class="form-group">
-                                            <label for="message-text" class="control-label">Stel je vraag hier:</label>
+                                            <label for="message-text" class="control-label">Stel hier je vraag:</label>
                                             <textarea class="form-control" id="message-text" name="postTxt"></textarea>
                                         </div>
                                 </div>

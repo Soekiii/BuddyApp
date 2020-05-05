@@ -35,12 +35,12 @@ if (!empty($_POST)) {
                 $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT, ["cost" => 12]);
                 $changePassword = $conn->prepare("UPDATE user SET password = '$hashedPassword' WHERE userID = '$userID'");
                 $changePassword->execute();
-                echo "Password changed successfully!";
+                echo "Paswoord is succesvol aangepast!";
             } else {
-                echo "Current password is incorrect.";
+                echo "Huidig paswoord is niet correct.";
             }
         } else {
-            echo "Failed to change password. New password and its confirmation don't match.";
+            echo "Het is niet gelukt je paswoord aan te passen. Beide paswoorden komen niet overeen!";
         }
     }
 }
@@ -52,29 +52,29 @@ if (!empty($_POST)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change password</title>
+    <title>Paswoord aanpassen</title>
 </head>
 
 <body>
     <a href="editProfile.php">Go back</a>
-    <h3>Change password</h3>
+    <h3>Paswoord aanpassen</h3>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <!-- ==== NEW PASSWORD ==== -->
         <div>
-            <label for="newPassword">New password</label>
+            <label for="newPassword">Nieuw paswoord</label>
             <input type="password" name="newPassword" id="newPassword">
         </div>
 
         <!-- ==== CONFIRM NEW PASSWORD ==== -->
         <div>
-            <label for="confirmPassword">Confirm new password</label>
+            <label for="confirmPassword">Bevestig nieuw paswoord</label>
             <input type="password" name="confirmPassword" id="confirmPassword">
         </div>
 
         <!-- ==== CURRENT PASSWORD ==== -->
         <div>
-            <label for="currentPassword">Current password</label>
+            <label for="currentPassword">Huidig paswoord</label>
             <input type="password" name="currentPassword" id="currentPassword">
         </div>
 

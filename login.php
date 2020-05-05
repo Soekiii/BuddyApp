@@ -59,7 +59,7 @@ if ($_POST){
     <div class="text-white d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
         <div class="logoarea pt-5 pb-5">
         <img class="mb-3" src="avatars/Logophp_final_wit.svg" width="50%">
-        <h2>Leer hier je nieuwe imd amigos kennen.</h2>
+        <h2>Leer hier je nieuwe IMD amigos kennen.</h2>
         </div>
     </div>
 </div>
@@ -89,7 +89,7 @@ if ($_POST){
         <?php endif; ?>
         </div>
         <div class="form-group mb-4">
-            <label for="Password">Passwoord</label>
+            <label for="Password">Paswoord</label>
         <?php if(!isset($error)): ?>
             <input type="password" class="form-control" id="Password" name="password" placeholder="passwoord">
         <?php else: ?>
