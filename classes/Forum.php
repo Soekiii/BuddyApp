@@ -226,4 +226,15 @@ class Forum extends Buddy{
 
         return $this;
     }
+
+    public function saveLike(){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('INSERT into comments_like (userID, commentID) values (:userID, :commentID)');
+        $userID = $this->userID;
+        $commentID = $this->commentID;
+        $statement->bindValue(":userID", $userID);
+        $statement->bindValue(":commentID", $commentID);
+        $result = $statement->execute();
+        return $result;
+    }
 }

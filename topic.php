@@ -84,9 +84,10 @@ if (isset($_POST['pinPost'])) {
                     <div class="form-group">
                         <form action="" method="post">
                             <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo $comment['firstname'] . " " . $comment['lastname'] ?></a><?php echo ": " .  $comment['commentsTxt']; ?>
-                            <input type="hidden" name="userID" id="userID" value="<?php echo $post['userID'] ?>">
-                            <input type="hidden" name="postID" id="postID" value="<?php echo $post['postID'] ?>">
-                            <a href="#" class="fa fa-thumbs-up"></a>
+                            <input type="hidden" name="userID" class="userID" value="<?php echo $userID ?>">
+                            <input type="hidden" name="postID" class="commentID" value="<?php echo $comment['commentID'] ?>">
+                            <a href="#" style="color:Gainsboro" id="btnUpvote" class="fa fa-thumbs-up"></a>
+                            <?php echo $comment['commentID'] ?>
                         </form>
                     </div>
                 </div>
@@ -105,7 +106,36 @@ if (isset($_POST['pinPost'])) {
         </div>
     </div>
 
-    <script></script>
+    <script>
+        Array.from(document.querySelectorAll("#btnUpvote")).forEach(bttn => {
+            bttn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                let commentID = e.target.parentNode.querySelector('.commentID').value;
+                let userID = e.target.parentNode.querySelector('.userID').value;
+
+                console.info(commentID, userID);
+
+
+                const formData = new FormData();
+
+                formData.append('userID', userID);
+                formData.append('commentID', commentID);
+
+                fetch('savelike.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log('Success:', result);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    </script>
 
 </body>
 
