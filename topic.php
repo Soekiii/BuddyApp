@@ -128,7 +128,7 @@ if (isset($_POST['pinPost'])) {
                     })
                     .then(response => response.json())
                     .then(result => {
-                        console.log('Success:', result);
+                        let liked = bttn.style.color="blue";
                     })
                     .catch(error => {
                         console.error('Error:', error);
