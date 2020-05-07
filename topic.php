@@ -36,6 +36,7 @@ if (isset($_POST['pinPost'])) {
     $pinPost->setPostID($postID);
     $pin = $pinPost->pinPost($postID);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +88,6 @@ if (isset($_POST['pinPost'])) {
                             <input type="hidden" name="userID" class="userID" value="<?php echo $userID ?>">
                             <input type="hidden" name="postID" class="commentID" value="<?php echo $comment['commentID'] ?>">
                             <a href="#" style="color:Gainsboro" id="btnUpvote" class="fa fa-thumbs-up"></a>
-                            <?php echo $comment['commentID'] ?>
                         </form>
                     </div>
                 </div>
