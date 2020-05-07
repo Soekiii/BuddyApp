@@ -37,6 +37,8 @@ if (isset($_POST['pinPost'])) {
     $pin = $pinPost->pinPost($postID);
 }
 
+$checkLike = new Forum();
+$checkLike->setUserID($userID);
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +89,14 @@ if (isset($_POST['pinPost'])) {
                             <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo $comment['firstname'] . " " . $comment['lastname'] ?></a><?php echo ": " .  $comment['commentsTxt']; ?>
                             <input type="hidden" name="userID" class="userID" value="<?php echo $userID ?>">
                             <input type="hidden" name="postID" class="commentID" value="<?php echo $comment['commentID'] ?>">
-                            <a href="#" style="color:Gainsboro" id="btnUpvote" class="fa fa-thumbs-up"></a>
+                            <?php
+                            $commentID = $comment['commentID'];
+                            $checkLike->setCommentID($commentID);
+                            $liked = $checkLike->checkLike();
+                            ?>
+                            <?php if($liked == 0){ ?>
+                            <a style="color:Gainsboro" id="btnUpvote" class="fa fa-thumbs-up"></a> <?php } else { ?>
+                            <span class="fa fa-thumbs-up" style="color:blue"></span> <?php } ?>
                         </form>
                     </div>
                 </div>
@@ -128,7 +137,7 @@ if (isset($_POST['pinPost'])) {
                     })
                     .then(response => response.json())
                     .then(result => {
-                        let liked = btn.style.color="blue";
+                        let liked = btn.style.color = "blue";
                     })
                     .catch(error => {
                         console.error('Error:', error);

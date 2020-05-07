@@ -246,4 +246,18 @@ class Forum extends Buddy{
         $result = $statement->execute();
         return $result;
     }
+
+    public function checkLike(){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('SELECT COUNT(comment_likeID) FROM comments_like WHERE userID = :userID AND commentID = :commentID');
+        $commentID = $this->commentID;
+        $userID = $this->userID;
+        $statement->bindValue(":commentID", $commentID);
+        $statement->bindValue(":userID", $userID);
+        $result = $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        $liked = implode(" ", $result);
+        return $liked;
+    }
 }
