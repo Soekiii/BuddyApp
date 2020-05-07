@@ -82,14 +82,17 @@ if (isset($_POST['pinPost'])) {
             <?php foreach ($comments as $comment) : ?>
                 <div class="col-md-12 my-col">
                     <div class="form-group">
-                        <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo $comment['firstname'] . " " . $comment['lastname'] ?></a><?php echo ": " .  $comment['commentsTxt']; ?>
-                        <input type="hidden" name="userID" id="userID" value="<?php echo $post['userID'] ?>">
-                        <input type="hidden" name="postID" id="postID" value="<?php echo $post['postID'] ?>">
+                        <form action="" method="post">
+                            <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo $comment['firstname'] . " " . $comment['lastname'] ?></a><?php echo ": " .  $comment['commentsTxt']; ?>
+                            <input type="hidden" name="userID" id="userID" value="<?php echo $post['userID'] ?>">
+                            <input type="hidden" name="postID" id="postID" value="<?php echo $post['postID'] ?>">
+                            <a href="#" class="fa fa-thumbs-up"></a>
+                        </form>
                     </div>
                 </div>
             <?php endforeach; ?>
 
-            <form action="" method="post" name="comment">
+            <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post" name="comment">
                 <div class="col-md-12 my-col justify-content-center">
                     <div class="form-group">
                         <textarea name="commentTxt" id="" cols="col-120" rows="2"></textarea>
@@ -102,7 +105,7 @@ if (isset($_POST['pinPost'])) {
         </div>
     </div>
 
-    <script src="like.js"></script>
+    <script></script>
 
 </body>
 
