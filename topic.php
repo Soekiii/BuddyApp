@@ -107,8 +107,8 @@ if (isset($_POST['pinPost'])) {
     </div>
 
     <script>
-        Array.from(document.querySelectorAll("#btnUpvote")).forEach(bttn => {
-            bttn.addEventListener('click', (e) => {
+        Array.from(document.querySelectorAll("#btnUpvote")).forEach(btn => {
+            btn.addEventListener('click', (e) => {
                 e.preventDefault();
 
                 let commentID = e.target.parentNode.querySelector('.commentID').value;
@@ -128,7 +128,7 @@ if (isset($_POST['pinPost'])) {
                     })
                     .then(response => response.json())
                     .then(result => {
-                        let liked = bttn.style.color="blue";
+                        let liked = btn.style.color="blue";
                     })
                     .catch(error => {
                         console.error('Error:', error);
