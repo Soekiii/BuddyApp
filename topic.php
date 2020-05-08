@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
     $comments = $fetchComments->fetchComments($postID);
 }
 
-if (!empty($_POST['comment'])) {
+/*if (!empty($_POST['comment'])) {
     $sendComment = new Forum();
     $postID = $_POST['postID'];
     $commentTxt = $_POST['commentTxt'];
@@ -20,7 +20,7 @@ if (!empty($_POST['comment'])) {
     $comment = $sendComment->sendComment($postID, $userID, $commentTxt);
     header("Refresh: 0");
 } else {
-}
+}*/
 
 $checkMod = new Forum();
 $mod = $checkMod->checkMod($userID);
@@ -29,12 +29,24 @@ if (empty($mod)) {
     $mod = implode(" ", $mod);
 }
 
+$isPinned = new Forum();
+$pinned = $isPinned->isPinned($postID);
+
 
 if (isset($_POST['pinPost'])) {
     $pinPost = new Forum();
     $postID = $_POST['postID'];
     $pinPost->setPostID($postID);
     $pin = $pinPost->pinPost($postID);
+    header('Refresh:0');
+}
+
+if (isset($_POST['unpinPost'])) {
+    $unpinPost = new Forum();
+    $postID = $_POST['postID'];
+    $unpinPost->setPostID($postID);
+    $unpin = $unpinPost->unpinPost($postID);
+    header('Refresh:0');
 }
 
 $checkLike = new Forum();
@@ -67,14 +79,21 @@ $checkLike->setUserID($userID);
     <div class="container">
 
         <div class="row my-row">
-            <form action="" method="post" name="pinPost">
-                <div class="col justify-content-end">
-                    <?php if ($mod === "1") { ?>
-                        <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
-                        <input type="submit" name="pinPost" class="btn btn-primary mt-4" value="Pin post">
+            <div class="col justify-content-end">
+                <?php if ($mod === "1") { ?>
+                    <?php if ($pinned == 1) { ?>
+                        <form action="" method="post" name="unpinPost">
+                            <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
+                            <input type="submit" style="background-color:salmon; border:1px solid salmon;" name="unpinPost" class="btn btn-primary mt-4" value="unpin post">
+                        </form>
+                    <?php } else{ ?>
+                        <form action="" method="post" name="pinPost">
+                            <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
+                            <input type="submit" name="pinPost" class="btn btn-primary mt-4" value="pin post">
+                        </form>
                     <?php } ?>
-                </div>
-            </form>
+                <?php } ?>
+            </div>
 
             <div class="col-md-12 my-col">
                 <div class="form-group">
@@ -94,9 +113,9 @@ $checkLike->setUserID($userID);
                             $checkLike->setCommentID($commentID);
                             $liked = $checkLike->checkLike();
                             ?>
-                            <?php if($liked == 0){ ?>
-                            <a style="color:Gainsboro" id="btnUpvote" class="fa fa-thumbs-up"></a> <?php } else { ?>
-                            <span class="fa fa-thumbs-up" style="color:blue"></span> <?php } ?>
+                            <?php if ($liked == 0) { ?>
+                                <a style="color:Gainsboro" id="btnUpvote" class="fa fa-thumbs-up"></a> <?php } else { ?>
+                                <span class="fa fa-thumbs-up" style="color:blue"></span> <?php } ?>
                         </form>
                     </div>
                 </div>
@@ -105,9 +124,9 @@ $checkLike->setUserID($userID);
             <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post" name="comment">
                 <div class="col-md-12 my-col justify-content-center">
                     <div class="form-group">
-                        <textarea name="commentTxt" id="" cols="col-120" rows="2"></textarea>
-                        <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
-                        <input type="submit" name="comment" class="btn btn-primary mt-4" value="Reageer">
+                        <textarea name="commentTxt" id="commentTxt" cols="col-120" rows="2"></textarea>
+                        <input type="hidden" name="postID" id="reactPostID" value="<?php echo $post['postID'] ?>">
+                        <input type="submit" name="comment" id="react" class="btn btn-primary mt-4" value="Reageer">
                     </div>
                 </div>
             </form>
@@ -143,6 +162,34 @@ $checkLike->setUserID($userID);
                         console.error('Error:', error);
                     });
             });
+        });
+
+        $("#react").click(function(e) {
+            e.preventDefault();
+
+            let postID = document.querySelector("#reactPostID").value;
+            let userID = <?php echo $userID ?>;
+            let commentTxt = document.querySelector("#commentTxt").value;
+
+            console.info(postID, userID, commentTxt);
+
+            const formData = new FormData();
+            formData.append('userID', userID);
+            formData.append('postID', postID);
+            formData.append('commentTxt', commentTxt);
+
+            fetch('sendcomment.php', {
+                    method: 'POST',
+                    body: formData
+                })
+
+                .then(response => response.json())
+                .then(result => {
+                    let comment = "";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         });
     </script>
 
