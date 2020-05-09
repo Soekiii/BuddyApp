@@ -10,6 +10,10 @@ if(isset($_GET['id'])){
 
     $buddyData = new Buddy();
     $data = $buddyData->buddyData($buddyID);
+
+    $user = new User();
+    $userData = $User->getUserById($_GET['id']);
+    var_dump($userData);
 }
 ?>
 

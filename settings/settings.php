@@ -2,9 +2,12 @@
 
     const SETTINGS = [
         "db" => [
-            "user"      => "popcoeq437_popcoeq437",
-            "password"  => "2IMDphp",
+            "user"      => "root",
+            // "user"      => "popcoeq437_popcoeq437",
+            "password"  => "",
+            // "password"  => "2IMDphp",
             "host"      => "localhost",
-            "db"        => "popcoeq437_buddyphp"
+            // "db"        => "popcoeq437_buddyphp"
+            "db"        => "buddyphp"
         ]
     ];
