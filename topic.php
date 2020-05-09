@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
     $comments = $fetchComments->fetchComments($postID);
 }
 
-/*if (!empty($_POST['comment'])) {
+if (!empty($_POST['comment'])) {
     $sendComment = new Forum();
     $postID = $_POST['postID'];
     $commentTxt = $_POST['commentTxt'];
@@ -20,7 +20,7 @@ if (isset($_GET['id'])) {
     $comment = $sendComment->sendComment($postID, $userID, $commentTxt);
     header("Refresh: 0");
 } else {
-}*/
+}
 
 $checkMod = new Forum();
 $mod = $checkMod->checkMod($userID);
@@ -46,7 +46,7 @@ if (isset($_POST['unpinPost'])) {
     $postID = $_POST['postID'];
     $unpinPost->setPostID($postID);
     $unpin = $unpinPost->unpinPost($postID);
-    header('Refresh:0');
+        header('Refresh:0');
 }
 
 $checkLike = new Forum();
@@ -162,34 +162,6 @@ $checkLike->setUserID($userID);
                         console.error('Error:', error);
                     });
             });
-        });
-
-        $("#react").click(function(e) {
-            e.preventDefault();
-
-            let postID = document.querySelector("#reactPostID").value;
-            let userID = <?php echo $userID ?>;
-            let commentTxt = document.querySelector("#commentTxt").value;
-
-            console.info(postID, userID, commentTxt);
-
-            const formData = new FormData();
-            formData.append('userID', userID);
-            formData.append('postID', postID);
-            formData.append('commentTxt', commentTxt);
-
-            fetch('sendcomment.php', {
-                    method: 'POST',
-                    body: formData
-                })
-
-                .then(response => response.json())
-                .then(result => {
-                    let comment = "";
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
         });
     </script>
 

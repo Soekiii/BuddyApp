@@ -103,19 +103,14 @@ class Forum extends Buddy
     }
 
     // verstuur comment
-    public function sendComment()
-    {
+    public function sendComment($postID, $userID, $commentTxt){
         $conn = Db::getConnection();
         $stmt = $conn->prepare('INSERT INTO comments (userID, postID, commentsTxt) VALUES (:userID, :postID, :commentsTxt)');
-        $userID = $this->userID;
-        $postID = $this->postID;
-        $commentTxt = $this->commentTxt;
         $stmt->bindParam(':userID', $userID);
         $stmt->bindParam(':postID', $postID);
         $stmt->bindParam(':commentsTxt', $commentTxt);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
         return $result;
     }
 
