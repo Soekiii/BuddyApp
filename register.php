@@ -185,10 +185,6 @@ error:function (){}
 
 
  function schuifbalk() { 
-
-     // is PW juiste lengte? ==> ok! 
-     // is er een ander karakter (@#...) ==> ok
-     // is er een hoofdletter? ==> 
      
             var  progressBar  =  $('.progress-bar');                                                       
             var mijnText = 0;
