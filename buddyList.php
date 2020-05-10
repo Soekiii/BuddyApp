@@ -138,7 +138,7 @@ if (isset($_POST['reject'])) {
         <div class="col my-col">
     <div><!-- IF userID is in buddy1 tabel, moet die buddy uit buddy2 tabel echo'en-->
         <?php if ($userID == $buddy['buddy1ID']): ?>
-            <div class="bold">Chat met <?php echo $buddy["buddy2ID"]; ?></div>
+            <div class="bold">Chat met <?php echo $buddy["firstname"] . " " . $buddy["lastname"]; ?></div>
             <form action="buddyChat.php" method="POST">
                 <input type="hidden" name="recipientID" id="" value="<?php echo $buddy["buddy2ID"];?>">
                 <div class="">
@@ -147,7 +147,7 @@ if (isset($_POST['reject'])) {
             </form>
         <!-- IF userID is in buddy2 tabel, moet die buddy uit buddy1 tabel echo'en-->
         <?php elseif ($userID == $buddy['buddy2ID']): ?>
-            <div class="bold">Chat met <?php echo $buddy["buddy1ID"]; ?></div>
+            <div class="bold">Chat met <?php echo $buddy["firstname"] . " " . $buddy["lastname"]; ?></div>
             <form action="buddyChat.php" method="POST">
                 <input type="hidden" name="recipientID" id="" value="<?php echo $buddy["buddy1ID"];?>">
                 <div class="">
