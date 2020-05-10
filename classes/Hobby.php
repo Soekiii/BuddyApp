@@ -112,15 +112,21 @@ class Hobby {
 
             //$statement = $conn->prepare("insert into hobby(locatie,hobby,game,film,muziek,userID) values(:locatie,:hobby,:game,:film,:muziek,'".$userID."')");
             $statement = $conn->prepare("insert into hobby(locatie,hobby,game,film,muziek,userID) values(:locatie,:hobby,:game,:film,:muziek,:userID)");
-            $statement->bindParam(':locatie', $this->locatie);
-            $statement->bindParam(':hobby', $this->hobby);
-            $statement->bindParam(':game', $this->game);
-            $statement->bindParam(':film', $this->film);
-            $statement->bindParam(':muziek', $this->muziek);
-            $statement->bindParam(':userID', $this->userID);
+            $locatie = $this->getLocatie();
+            $hobby = $this->getHobby();
+            $game = $this->getGame();
+            $film = $this->getFilm();
+            $muziek = $this->getMuziek();
+            $userID = $this->getUserID();
+            $statement->bindValue(':locatie', $locatie);
+            $statement->bindValue(':hobby', $hobby);
+            $statement->bindValue(':game', $game);
+            $statement->bindValue(':film', $film);
+            $statement->bindValue(':muziek', $muziek);
+            $statement->bindValue(':userID', $userID);
             $result = $statement->execute();
-            $result = $statement->fetch(PDO::FETCH_ASSOC);
             return $result;
+            
 
     }
 

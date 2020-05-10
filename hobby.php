@@ -1,31 +1,25 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-} 
-
-$userID = $_SESSION['user_id'];
-
+include_once(__DIR__ . "/inc/session.inc.php");
 include_once(__DIR__."/classes/User.php");
 include_once(__DIR__."/classes/Hobby.php");
-
 
 if(isset($_POST["muziek"])){
     
     if(!empty($_POST["muziek"] && $_POST['game'] && $_POST['film'] && $_POST['hobby'] && $_POST['locatie'])){
     try{
         $hobby = new Hobby();
-        $hobby->setLocatie(htmlspecialchars($_POST['locatie']));
-        $hobby->setHobby(htmlspecialchars($_POST['hobby']));
-        $hobby->setFilm(htmlspecialchars($_POST['film']));
-        $hobby->setGame(htmlspecialchars($_POST['game']));
-        $hobby->setMuziek(htmlspecialchars($_POST['muziek']));
-        $hobby->setUserID(htmlspecialchars($userID));
+        $hobby->setLocatie($_POST['locatie']);
+        $hobby->setHobby($_POST['hobby']);
+        $hobby->setFilm($_POST['film']);
+        $hobby->setGame($_POST['game']);
+        $hobby->setMuziek($_POST['muziek']);
+        $hobby->setUserID($userID);
         $hobby->hobbyInvullen();
+        header('Location: index.php');
         //$hobby->hobbyInvullen($_POST);
 
         
-       header('Location: index.php');
+       
 
 
 
