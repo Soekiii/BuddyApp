@@ -1,21 +1,20 @@
 <?php
 include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/EditProfile.php");
+
 
 if (!empty($_POST)) {
-    $changeBio = new User();
-
-    $newBio = htmlspecialchars($_POST['bio']);
-
-    if (!empty($newBio)) {
-        $conn = Db::getConnection();
-        $changeBio = $conn->prepare("UPDATE user SET bio = '$newBio' WHERE userID = '$userID'");
-        $changeBio->execute();
-        echo "Bio toegevoegd!";
-    } else {
-        echo "Schrijf een korte bio van jezelf!";
-    }
+    $changeBio = new EditProfile();
+    $bio = $_POST['bio'];
+    $changeBio->setUserID($userID);
+    $changeBio->setBio($bio);
+    $bio = $changeBio->editBio($userID, $bio);
+    echo "Bio toegevoegd!";
+} else {
+    echo "Schrijf een korte bio van jezelf!";
 }
+
 ?>
 
 <!DOCTYPE html>

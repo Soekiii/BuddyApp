@@ -1,6 +1,8 @@
 <?php
 include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/EditProfile.php");
+
 
 if (!empty($_POST['submit'])) {
     $uploadAvatar = new User();
@@ -20,9 +22,10 @@ if (!empty($_POST['submit'])) {
         if (in_array($_FILES['avatar']['type'], $imgType)) {
             // move avatar from temporary storage to target folder = "avatars"
             if (move_uploaded_file($_FILES['avatar']['tmp_name'], $target)) {
-                $conn = Db::getConnection();
-                $uploadAvatar = $conn->prepare("UPDATE user SET avatar = '$avatar' WHERE userID = '$userID'");
-                $uploadAvatar->execute();
+                $changeAvatar = new EditProfile();
+                $changeAvatar->setUserID($userID);
+                $changeAvatar->setAvatar($avatar);
+                $avatar = $changeAvatar->editAvatar($userID, $avatar);
                 echo "Je avatar werd succesvol opgeladen!";
             } else {
             }

@@ -1,45 +1,31 @@
 <?php
 include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/EditProfile.php");
 
 //echo $userID;
 
-function verifyUser($userID, $password)
-{
-    // SET UP CONNECTION AND VERIFY PASSWORD USING userID
-    $conn = Db::getConnection();
-    $statement = $conn->prepare('SELECT * FROM user WHERE userID = :userID');
-    $statement->bindParam(':userID', $userID);
-    $statement->execute();
-
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
-
-    if (password_verify($password, $result['password'])) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 // if submitted form is not empty
 if (!empty($_POST)) {
-    // create new instance of class User = changeEmail
-    $changeEmail = new User();
-    // retrieve submitted data and place in variables
-    $newEmail = $_POST['newEmail'];
+    $email = $_POST['newEmail'];
     $password = $_POST['password'];
 
-    if (!empty($newEmail) && !empty($password)) {
-        if (verifyUser($userID, $password)) {
-            $conn = Db::getConnection();
-            $changeEmail = $conn->prepare("UPDATE user SET email = '$newEmail' WHERE userID = '$userID'");
-            $changeEmail->execute();
+    $verifyUser = new EditProfile();
+    $verifyUser->setUserID($userID);
+    $verifyUser->setPassword($password);
+    $verified = $verifyUser->verifyUser($userID, $password);
+
+        if ($verified == 1) {
+            $changeEmail = new EditProfile();
+            $changeEmail->setUserID($userID);
+            $changeEmail->setEmail($email);
+            $email = $changeEmail->editEmail($userID, $email);
             echo "Email succesvol aangepast!";
         } else {
             echo "Het is niet gelukt je email aan te passen.";
         }
     }
-}
+
 ?>
 
 <!DOCTYPE html>

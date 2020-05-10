@@ -1,47 +1,31 @@
 <?php
 include_once(__DIR__ . "/inc/header.inc.php");
 include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/EditProfile.php");
 
-
-
-
-function verifyUser($userID, $currentPassword)
-{
-    // SET UP CONNECTION AND VERIFY PASSWORD USING userID
-    $conn = Db::getConnection();
-    $statement = $conn->prepare('SELECT * FROM user WHERE userID = :userID');
-    $statement->bindParam(':userID', $userID);
-    $statement->execute();
-
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
-
-    if (password_verify($currentPassword, $result['password'])) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 if (!empty($_POST)) {
-    $changePassword = new User();
-    $newPassword = htmlspecialchars($_POST['newPassword']);
-    $confirmPassword = htmlspecialchars($_POST['confirmPassword']);
-    $currentPassword = htmlspecialchars($_POST['currentPassword']);
+    $password = $_POST['currentPassword'];
+    $newPassword = $_POST['newPassword'];
+    $confirmPassword = $_POST['confirmPassword'];
 
-    if (!empty($newPassword) && !empty($confirmPassword) && !empty($currentPassword)) {
-        if ($newPassword === $confirmPassword) {
-            if (verifyUser($userID, $currentPassword)) {
-                $conn = Db::getConnection();
-                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT, ["cost" => 12]);
-                $changePassword = $conn->prepare("UPDATE user SET password = '$hashedPassword' WHERE userID = '$userID'");
-                $changePassword->execute();
-                echo "Paswoord is succesvol aangepast!";
-            } else {
-                echo "Huidig paswoord is niet correct.";
-            }
+    $verifyUser = new EditProfile();
+    $verifyUser->setUserID($userID);
+    $verifyUser->setPassword($password);
+    $verified = $verifyUser->verifyUser($userID, $password);
+
+    if ($newPassword === $confirmPassword) {
+        if ($verified == 1) {
+            $changePassword = new EditProfile();
+            $changePassword->setUserID($userID);
+            $changePassword->setNewPassword($newPassword);
+            $password = $changePassword->editPassword($userID, $newPassword);
+            echo "Paswoord is succesvol aangepast!";
         } else {
-            echo "Het is niet gelukt je paswoord aan te passen. Beide paswoorden komen niet overeen!";
+            echo "Huidig paswoord is niet correct.";
         }
+    } else {
+        echo "Het is niet gelukt je paswoord aan te passen. Beide paswoorden komen niet overeen!";
     }
 }
 ?>
