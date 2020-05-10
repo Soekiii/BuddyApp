@@ -4,9 +4,9 @@ include_once(__DIR__ . "/Mail.php");
 include_once(__DIR__ . "/Hobby.php");
 class User
 {
-    private $userID;
+    protected $userID;
     protected $email;
-    private $password;
+    protected $password;
     private $firstName;
     private $lastName;
     private $buddy;
