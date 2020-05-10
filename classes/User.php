@@ -333,7 +333,7 @@ class User
 
     public function AllMatchedBuddies(){
         $conn = Db::getConnection();
-        $statement = $conn->prepare('SELECT COUNT(*) AS numbersOfMatchedBuddies FROM buddies');
+        $statement = $conn->prepare('SELECT COUNT(*) AS numbersOfMatchedBuddies FROM buddies WHERE status = 1');
         $statement->execute();
         $booBoo = $statement->fetch();
         return $booBoo;
