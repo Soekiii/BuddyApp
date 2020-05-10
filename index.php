@@ -454,97 +454,107 @@ if (!empty($_POST['newPost'])) {
                         </div>
                     <?php }  ?>
 
-                    <?php if ($available != "1") {
+                    <?php if ($available == 1) {
                         foreach ($hobbyOthers as $hobbyOther) : ?>
                             <div class="row my-row">
                                 <div class="col my-col">
                                     <?php
-                                    $scores = [];
-                                    $score = 0;
+                                    $userAvailable = new Buddy();
+                                    $buddyID = $hobbyOther['userID'];
+                                    $userAvailable->setBuddyID($buddyID);
+                                    $available = $userAvailable->usersAvailable($buddyID);
 
-                                    // if they share an interests, add 10 points to score
-                                    if ($hobbyUser['game'] == $hobbyOther['game']) {
-                                        $score += 10;
-                                        $equal = 1;
-                                    }
+                                    if ($available == 1) {
+                                        $scores = [];
+                                        $score = 0;
 
-                                    if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
-                                        $score += 10;
-                                    }
+                                        // if they share an interests, add 10 points to score
+                                        if ($hobbyUser['game'] == $hobbyOther['game']) {
+                                            $score += 10;
+                                            $equal = 1;
+                                        }
 
-                                    if ($hobbyUser['film'] == $hobbyOther['film']) {
-                                        $score += 10;
-                                    }
+                                        if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
+                                            $score += 10;
+                                        }
 
-                                    if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
-                                        $score += 10;
-                                    }
+                                        if ($hobbyUser['film'] == $hobbyOther['film']) {
+                                            $score += 10;
+                                        }
 
-                                    if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
-                                        $score += 10;
-                                    }
+                                        if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
+                                            $score += 10;
+                                        }
 
-                                    // convert hobbyOther from array to string
-                                    $otherID = $hobbyOther['userID'];
+                                        if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
+                                            $score += 10;
+                                        }
 
-                                    // place score in scores array of matching user
-                                    $scores[$otherID] = $score;
+                                        // convert hobbyOther from array to string
+                                        $otherID = $hobbyOther['userID'];
 
-                                    // als score niet 0 is, print de naam en leg uit waarom users matchen
-                                    if ($score >= 10) { ?>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="card-title"><?php echo $hobbyOther['firstname'] . " " . $hobbyOther['lastname'] . ":"; ?></div>
+                                        // place score in scores array of matching user
+                                        $scores[$otherID] = $score;
 
-                                                <div class="card-text">
-                                                    <?php
-                                                    if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
-                                                        echo "jullie zijn allebei dol op " . lcfirst($hobbyOther['hobby']);
-                                                    }
+                                        // als score niet 0 is, print de naam en leg uit waarom users matchen
+                                        if ($score >= 10) { ?>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="card-title"><?php echo $hobbyOther['firstname'] . " " . $hobbyOther['lastname'] . ":"; ?></div>
 
-                                                    if ($hobbyUser['hobby'] == $hobbyOther['hobby'] && $hobbyUser['game'] == $hobbyOther['game']) {
-                                                        echo " en " . $hobbyOther['game'];
-                                                    } else if ($hobbyUser['game'] == $hobbyOther['game']) {
-                                                        echo "jullie zijn allebei dol op " . $hobbyOther['game'];
-                                                    } else {
-                                                    }
+                                                    <div class="card-text">
+                                                        <?php
+                                                        if ($hobbyUser['hobby'] == $hobbyOther['hobby']) {
+                                                            echo "jullie zijn allebei dol op " . lcfirst($hobbyOther['hobby']);
+                                                        }
 
-                                                    if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game']) && $hobbyUser['film'] == $hobbyOther['film']) {
-                                                        echo " en " . $hobbyUser['film'];
-                                                    } else if ($hobbyUser['film'] == $hobbyOther['film']) {
-                                                        echo "jullie zijn allebei dol op " . $hobbyOther['film'];
-                                                    } else {
-                                                    }
+                                                        if ($hobbyUser['hobby'] == $hobbyOther['hobby'] && $hobbyUser['game'] == $hobbyOther['game']) {
+                                                            echo " en " . $hobbyOther['game'];
+                                                        } else if ($hobbyUser['game'] == $hobbyOther['game']) {
+                                                            echo "jullie zijn allebei dol op " . $hobbyOther['game'];
+                                                        } else {
+                                                        }
 
-                                                    if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film']) && $hobbyUser['muziek'] == $hobbyOther['muziek']) {
-                                                        echo " en " . $hobbyOther['muziek'];
-                                                    } else if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
-                                                        echo "jullie zijn allebei dol op " . $hobbyOther['muziek'];
-                                                    } else {
-                                                    }
+                                                        if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game']) && $hobbyUser['film'] == $hobbyOther['film']) {
+                                                            echo " en " . $hobbyUser['film'];
+                                                        } else if ($hobbyUser['film'] == $hobbyOther['film']) {
+                                                            echo "jullie zijn allebei dol op " . $hobbyOther['film'];
+                                                        } else {
+                                                        }
 
-                                                    if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film'] || $hobbyUser['muziek'] == $hobbyOther['muziek']) && $hobbyUser['locatie'] == $hobbyOther['locatie']) {
-                                                        echo " en wonen in " . $hobbyOther['locatie'];
-                                                    } else if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
-                                                        echo "jullie wonen allebei in " . $hobbyOther['locatie'];
-                                                    } else {
-                                                    }
-                                                    ?>
-                                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                                        <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
-                                                        <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
-                                                        <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
-                                                    </form>
+                                                        if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film']) && $hobbyUser['muziek'] == $hobbyOther['muziek']) {
+                                                            echo " en " . $hobbyOther['muziek'];
+                                                        } else if ($hobbyUser['muziek'] == $hobbyOther['muziek']) {
+                                                            echo "jullie zijn allebei dol op " . $hobbyOther['muziek'];
+                                                        } else {
+                                                        }
+
+                                                        if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game'] || $hobbyUser['film'] == $hobbyOther['film'] || $hobbyUser['muziek'] == $hobbyOther['muziek']) && $hobbyUser['locatie'] == $hobbyOther['locatie']) {
+                                                            echo " en wonen in " . $hobbyOther['locatie'];
+                                                        } else if ($hobbyUser['locatie'] == $hobbyOther['locatie']) {
+                                                            echo "jullie wonen allebei in " . $hobbyOther['locatie'];
+                                                        } else {
+                                                        }
+                                                        ?>
+                                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                                            <input type="hidden" name="userID" id="" value="<?php echo $userID ?>">
+                                                            <input type="hidden" name="buddyID" class="buddyID" id="" value="<?php echo $hobbyOther['userID'] ?>">
+                                                            <input type="submit" class="request btn btn-primary mt-4" value="stuur verzoek" name="sendRequest">
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    <?php } ?>
+                                        <?php } ?>
 
                                 </div>
                             </div>
-                    <?php endforeach;
-                    } ?>
+                <?php } else {
+                                    }
+                                endforeach;
+                            } else {
+                                echo "Je hebt al een buddy.";
+                            } ?>
                 </div>
             </div>
         </div>

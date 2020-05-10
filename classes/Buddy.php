@@ -72,7 +72,6 @@ class Buddy extends User
     // FETCH USER'S HOBBY TABLE AND JOIN IT WITH THEIR USER TABLE
     public function setHobbyUser($userID)
     {
-        $hobbyUser = $this->hobbyUser;
         $conn = Db::getConnection();
         $statementUser = $conn->prepare('SELECT * FROM hobby INNER JOIN user ON hobby.userID = user.userID and user.userID = :userID');
         $statementUser->bindValue(':userID', $userID);
@@ -85,7 +84,6 @@ class Buddy extends User
     // FETCH OTHER USERS' HOBBY TABLE AND JOIN IT WITH THEIR USER TABLE
     public function setHobbyOthers($userID)
     {
-        $hobbyOthers = $this->hobbyOthers;
         $conn = Db::getConnection();
         $statementOthers = $conn->prepare('SELECT * FROM hobby INNER JOIN user ON hobby.userID = user.userID and user.userID != :userID');
         $statementOthers->bindValue(':userID', $userID);
@@ -93,6 +91,20 @@ class Buddy extends User
         $hobbyOthers = $statementOthers->fetchAll(PDO::FETCH_ASSOC);
 
         return $hobbyOthers;
+    }
+
+    public function usersAvailable($buddyID){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('SELECT MAX(status) FROM buddies WHERE buddy2ID = :buddyID OR buddy1ID = :buddyID');
+        $statement->bindValue(':buddyID', $buddyID);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $available = implode(" ", $result);
+        if ($available == 0 || $available == 3) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function buddyRequest($userID, $buddyID){
