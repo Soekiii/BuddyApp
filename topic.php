@@ -9,6 +9,9 @@ if (isset($_GET['id'])) {
     $post = $fetchPost->specificPost($postID);
     $fetchComments = new Forum();
     $comments = $fetchComments->fetchComments($postID);
+
+    $checkForLikes = new Forum();
+    $check = $checkForLikes->checkForLikes($postID);
 }
 
 if (!empty($_POST['comment'])) {
@@ -29,12 +32,24 @@ if (empty($mod)) {
     $mod = implode(" ", $mod);
 }
 
+$isPinned = new Forum();
+$pinned = $isPinned->isPinned($postID);
+
 
 if (isset($_POST['pinPost'])) {
     $pinPost = new Forum();
     $postID = $_POST['postID'];
     $pinPost->setPostID($postID);
     $pin = $pinPost->pinPost($postID);
+    header('Refresh:0');
+}
+
+if (isset($_POST['unpinPost'])) {
+    $unpinPost = new Forum();
+    $postID = $_POST['postID'];
+    $unpinPost->setPostID($postID);
+    $unpin = $unpinPost->unpinPost($postID);
+    header('Refresh:0');
 }
 
 $checkLike = new Forum();
@@ -67,20 +82,37 @@ $checkLike->setUserID($userID);
     <div class="container">
 
         <div class="row my-row">
-            <form action="" method="post" name="pinPost">
-                <div class="col justify-content-end">
-                    <?php if ($mod === "1") { ?>
-                        <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
-                        <input type="submit" name="pinPost" class="btn btn-primary mt-4" value="Pin post">
+            <div class="col justify-content-end">
+                <?php if ($mod === "1") { ?>
+                    <?php if ($pinned == 1) { ?>
+                        <form action="" method="post" name="unpinPost">
+                            <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
+                            <input type="submit" style="background-color:salmon; border:1px solid salmon;" name="unpinPost" class="btn btn-primary mt-4" value="unpin post">
+                        </form>
+                    <?php } else { ?>
+                        <form action="" method="post" name="pinPost">
+                            <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
+                            <input type="submit" name="pinPost" class="btn btn-primary mt-4" value="pin post">
+                        </form>
                     <?php } ?>
-                </div>
-            </form>
+                <?php } ?>
+            </div>
 
             <div class="col-md-12 my-col">
                 <div class="form-group">
                     <b><a href="users.php?id=<?php echo $post['userID'] ?>"><?php echo $post['firstname'] . " " . $post['lastname'] ?></a><?php echo ": " .  $post['postTxt']; ?></b>
                 </div>
             </div>
+
+            <?php if ($check == 1) {
+                $mostLiked = new Forum();
+                $likes = $mostLiked->mostLikes($postID); ?>
+                <div class="col-md-12 my-col">
+                    <div class="form-group">
+                        <b><span class="fa fa-star" style="color:#FFDB58"></span> <a href="users.php?id=<?php echo $likes['userID'] ?>"><?php echo $likes['firstname'] . " " . $likes['lastname'] ?></a><?php echo ": " .  $likes['commentsTxt']; ?></b>
+                    </div>
+                </div> <?php } else {
+                    } ?>
 
             <?php foreach ($comments as $comment) : ?>
                 <div class="col-md-12 my-col">
@@ -94,9 +126,9 @@ $checkLike->setUserID($userID);
                             $checkLike->setCommentID($commentID);
                             $liked = $checkLike->checkLike();
                             ?>
-                            <?php if($liked == 0){ ?>
-                            <a style="color:Gainsboro" id="btnUpvote" class="fa fa-thumbs-up"></a> <?php } else { ?>
-                            <span class="fa fa-thumbs-up" style="color:blue"></span> <?php } ?>
+                            <?php if ($liked == 0) { ?>
+                                <a style="color:Gainsboro" id="btnUpvote" class="fa fa-thumbs-up"></a> <?php } else { ?>
+                                <span class="fa fa-thumbs-up" style="color:blue"></span> <?php } ?>
                         </form>
                     </div>
                 </div>
@@ -105,9 +137,9 @@ $checkLike->setUserID($userID);
             <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post" name="comment">
                 <div class="col-md-12 my-col justify-content-center">
                     <div class="form-group">
-                        <textarea name="commentTxt" id="" cols="col-120" rows="2"></textarea>
-                        <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
-                        <input type="submit" name="comment" class="btn btn-primary mt-4" value="Reageer">
+                        <textarea name="commentTxt" id="commentTxt" cols="col-120" rows="2"></textarea>
+                        <input type="hidden" name="postID" id="reactPostID" value="<?php echo $post['postID'] ?>">
+                        <input type="submit" name="comment" id="react" class="btn btn-primary mt-4" value="Reageer">
                     </div>
                 </div>
             </form>
