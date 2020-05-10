@@ -103,7 +103,8 @@ class Forum extends Buddy
     }
 
     // verstuur comment
-    public function sendComment($postID, $userID, $commentTxt){
+    public function sendComment($postID, $userID, $commentTxt)
+    {
         $conn = Db::getConnection();
         $stmt = $conn->prepare('INSERT INTO comments (userID, postID, commentsTxt) VALUES (:userID, :postID, :commentsTxt)');
         $stmt->bindParam(':userID', $userID);
@@ -295,5 +296,33 @@ class Forum extends Buddy
 
         $liked = implode(" ", $result);
         return $liked;
+    }
+
+    // get comment with most likes from specific post and retrieve user data as well
+    public function mostLikes($postID)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('SELECT * FROM comments_like INNER JOIN comments ON comments_like.commentID = comments.commentID INNER JOIN user ON comments.userID = user.userID WHERE comments.postID = :postID GROUP BY comments_like.commentID ORDER BY COUNT(comments_like.userID) DESC LIMIT 1');
+        $statement->bindValue(':postID', $postID);
+        $result = $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    // check if there's at least one liked comment in a topic
+    public function checkForLikes($postID)
+    {
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT * FROM comments_like INNER JOIN comments ON comments_like.commentID = comments.commentID WHERE postID = :postID');
+        $stmt->bindValue(':postID', $postID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
+
+        return $result;
     }
 }

@@ -9,6 +9,9 @@ if (isset($_GET['id'])) {
     $post = $fetchPost->specificPost($postID);
     $fetchComments = new Forum();
     $comments = $fetchComments->fetchComments($postID);
+
+    $checkForLikes = new Forum();
+    $check = $checkForLikes->checkForLikes($postID);
 }
 
 if (!empty($_POST['comment'])) {
@@ -46,7 +49,7 @@ if (isset($_POST['unpinPost'])) {
     $postID = $_POST['postID'];
     $unpinPost->setPostID($postID);
     $unpin = $unpinPost->unpinPost($postID);
-        header('Refresh:0');
+    header('Refresh:0');
 }
 
 $checkLike = new Forum();
@@ -86,7 +89,7 @@ $checkLike->setUserID($userID);
                             <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
                             <input type="submit" style="background-color:salmon; border:1px solid salmon;" name="unpinPost" class="btn btn-primary mt-4" value="unpin post">
                         </form>
-                    <?php } else{ ?>
+                    <?php } else { ?>
                         <form action="" method="post" name="pinPost">
                             <input type="hidden" name="postID" id="" value="<?php echo $post['postID'] ?>">
                             <input type="submit" name="pinPost" class="btn btn-primary mt-4" value="pin post">
@@ -100,6 +103,16 @@ $checkLike->setUserID($userID);
                     <b><a href="users.php?id=<?php echo $post['userID'] ?>"><?php echo $post['firstname'] . " " . $post['lastname'] ?></a><?php echo ": " .  $post['postTxt']; ?></b>
                 </div>
             </div>
+
+            <?php if ($check == 1) {
+                $mostLiked = new Forum();
+                $likes = $mostLiked->mostLikes($postID); ?>
+                <div class="col-md-12 my-col">
+                    <div class="form-group">
+                        <b><span class="fa fa-star" style="color:#FFDB58"></span> <a href="users.php?id=<?php echo $likes['userID'] ?>"><?php echo $likes['firstname'] . " " . $likes['lastname'] ?></a><?php echo ": " .  $likes['commentsTxt']; ?></b>
+                    </div>
+                </div> <?php } else {
+                    } ?>
 
             <?php foreach ($comments as $comment) : ?>
                 <div class="col-md-12 my-col">
