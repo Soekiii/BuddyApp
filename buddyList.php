@@ -74,7 +74,7 @@ if (isset($_POST['reject'])) {
             if ($buddyRequest['status'] == 0) { ?>
                 <div class="col-md-3 my-col">
                     <div class="form-group">
-                    <div class="bold"><?php echo $buddyRequest['firstname'] . " " . $buddyRequest['lastname']; ?></div><p>heeft je een buddy request gestuurd.</p>
+                    <div class="bold"><?php echo htmlspecialchars($buddyRequest['firstname'] . " " . $buddyRequest['lastname']); ?></div><p>heeft je een buddy request gestuurd.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <input type="hidden" name="buddyID" id="" value="<?php echo $buddyRequest['userID'] ?>">
                         <input type="submit" name="accept" id="" value="Accepteer">
@@ -117,7 +117,7 @@ if (isset($_POST['reject'])) {
         <div><img width="50px"src="avatars/<?php echo $afdruk["avatar1"]?>">
         <?php echo $afdruk["firstnameBuddy1"]." ".$afdruk["lastnameBuddy1"]?></div>
         <div class="d-flex align-items-center"><p class="bold">Buddy met</p></div>
-        <div><?php echo $afdruk["firstnameBuddy2"]." ".$afdruk["lastnameBuddy2"]?><img width="50px" src="avatars/<?php echo $afdruk["avatar2"]?>"></div>
+        <div><?php echo htmlspecialchars($afdruk["firstnameBuddy2"]." ".$afdruk["lastnameBuddy2"]);?><img width="50px" src="avatars/<?php echo $afdruk["avatar2"]?>"></div>
         </div>
     </div>
     </div>
@@ -138,7 +138,7 @@ if (isset($_POST['reject'])) {
         <div class="col my-col">
     <div><!-- IF userID is in buddy1 tabel, moet die buddy uit buddy2 tabel echo'en-->
         <?php if ($userID == $buddy['buddy1ID']): ?>
-            <div class="bold">Chat met <?php echo $buddy["firstname"] . " " . $buddy["lastname"]; ?></div>
+            <div class="bold">Chat met <?php echo htmlspecialchars($buddy["firstname"] . " " . $buddy["lastname"]); ?></div>
             <form action="buddyChat.php" method="POST">
                 <input type="hidden" name="recipientID" id="" value="<?php echo $buddy["buddy2ID"];?>">
                 <div class="">
@@ -147,7 +147,7 @@ if (isset($_POST['reject'])) {
             </form>
         <!-- IF userID is in buddy2 tabel, moet die buddy uit buddy1 tabel echo'en-->
         <?php elseif ($userID == $buddy['buddy2ID']): ?>
-            <div class="bold">Chat met <?php echo $buddy["firstname"] . " " . $buddy["lastname"]; ?></div>
+            <div class="bold">Chat met <?php echo htmlspecialchars($buddy["firstname"] . " " . $buddy["lastname"]); ?></div>
             <form action="buddyChat.php" method="POST">
                 <input type="hidden" name="recipientID" id="" value="<?php echo $buddy["buddy1ID"];?>">
                 <div class="">

@@ -420,7 +420,7 @@ if (!empty($_POST['newPost'])) {
                             <div class="col my-col">
                                 <div class="card">
                                     <div class="card-body ">
-                                        <?php echo $post['firstname'] . " " . $post['lastname'] . ":" ?>
+                                        <?php echo htmlspecialchars($post['firstname'] . " " . $post['lastname'] . ":"); ?>
 
                                         <input type="hidden" value="<?php echo $post['postID'] ?>">
                                         <a href="topic.php?id=<?php echo $post['postID'] ?>" class="">

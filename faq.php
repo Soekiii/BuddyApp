@@ -28,7 +28,7 @@ $faqs = $checkPinned->checkPinned();
                                 <div class="card">
                                     <div class="card-body ">
 
-                                        <a href="topic.php?id=<?php echo $faq['postID'] ?>"><?php echo $faq['postTxt']; ?></a>
+                                        <a href="topic.php?id=<?php echo $faq['postID'] ?>"><?php echo htmlspecialchars($faq['postTxt']); ?></a>
                                     </div>
                                 </div>
                             </div>

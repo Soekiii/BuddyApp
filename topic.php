@@ -100,7 +100,7 @@ $checkLike->setUserID($userID);
 
             <div class="col-md-12 my-col">
                 <div class="form-group">
-                    <b><a href="users.php?id=<?php echo $post['userID'] ?>"><?php echo $post['firstname'] . " " . $post['lastname'] ?></a><?php echo ": " .  $post['postTxt']; ?></b>
+                    <b><a href="users.php?id=<?php echo $post['userID'] ?>"><?php echo htmlspecialchars($post['firstname'] . " " . $post['lastname']) ?></a><?php echo htmlspecialchars(": " .  $post['postTxt']); ?></b>
                 </div>
             </div>
 
@@ -109,7 +109,7 @@ $checkLike->setUserID($userID);
                 $likes = $mostLiked->mostLikes($postID); ?>
                 <div class="col-md-12 my-col">
                     <div class="form-group">
-                        <b><span class="fa fa-star" style="color:#FFDB58"></span> <a href="users.php?id=<?php echo $likes['userID'] ?>"><?php echo $likes['firstname'] . " " . $likes['lastname'] ?></a><?php echo ": " .  $likes['commentsTxt']; ?></b>
+                        <b><span class="fa fa-star" style="color:#FFDB58"></span> <a href="users.php?id=<?php echo $likes['userID'] ?>"><?php echo htmlspecialchars($likes['firstname'] . " " . $likes['lastname']) ?></a><?php echo htmlspecialchars(": " .  $likes['commentsTxt']); ?></b>
                     </div>
                 </div> <?php } else {
                     } ?>
@@ -118,7 +118,7 @@ $checkLike->setUserID($userID);
                 <div class="col-md-12 my-col">
                     <div class="form-group">
                         <form action="" method="post">
-                            <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo $comment['firstname'] . " " . $comment['lastname'] ?></a><?php echo ": " .  $comment['commentsTxt']; ?>
+                            <a href="users.php?id=<?php echo $comment['userID'] ?>"><?php echo htmlspecialchars($comment['firstname'] . " " . $comment['lastname']) ?></a><?php echo htmlspecialchars(": " .  $comment['commentsTxt']); ?>
                             <input type="hidden" name="userID" class="userID" value="<?php echo $userID ?>">
                             <input type="hidden" name="postID" class="commentID" value="<?php echo $comment['commentID'] ?>">
                             <?php
