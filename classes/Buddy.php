@@ -100,13 +100,14 @@ class Buddy extends User
         $stmtRequest = $conn->prepare('INSERT INTO buddies(buddy1ID, buddy2ID, status) VALUES (:userID, :buddyID, 0)');
         $stmtRequest->bindParam(':userID', $userID);
         $stmtRequest->bindValue(':buddyID', $buddyID);
+        $verkey = $this->getKey();
         $request = $stmtRequest->execute();
         if($request){
             $user = $this->getUserById($buddyID);
             //var_dump($user['email']);
             
             $content = "Iemand wilt je buddy worden.";
-            Mail::sendMail("Buddy request", $user['email'],$content);
+            Mail::sendMail($verkey['Ver_key'], "Buddy request", $user['email'],$content);
         }
 
         return $request;
