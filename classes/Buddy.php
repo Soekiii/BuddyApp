@@ -95,12 +95,11 @@ class Buddy extends User
 
     public function usersAvailable($buddyID){
         $conn = Db::getConnection();
-        $statement = $conn->prepare('SELECT MAX(status) FROM buddies WHERE buddy2ID = :buddyID OR buddy1ID = :buddyID');
+        $statement = $conn->prepare('SELECT * FROM buddies WHERE (buddy2ID = :buddyID OR buddy1ID = :buddyID) AND status = 1');
         $statement->bindValue(':buddyID', $buddyID);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        $available = implode(" ", $result);
-        if ($available == 0 || $available == 3) {
+        if (empty($result)) {
             return true;
         } else {
             return false;
