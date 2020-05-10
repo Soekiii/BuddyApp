@@ -278,21 +278,10 @@ class User
     static function getAllBuddies($userID)
     {
         $conn = Db::getConnection();
-
-<<<<<<< HEAD
-        $statement = $conn->prepare("SELECT * FROM buddies where buddy1ID = :currentUser OR buddy2ID = :currentUser");
-        $statement->bindValue(":currentUser", $currentUser);
-||||||| dd0b7ad
-        $statement = $conn->prepare("SELECT * FROM buddies where buddy1ID = :currentUser OR buddy2ID = :currentUser");
-        //$statement = $conn->prepare("SELECT u.firstname, u.lastname* FROM buddies as b, user u 
-        //WHERE (u.userID = b.buddy1ID OR u.userID = b.buddy2ID) AND (buddy1ID = :currentUser OR buddy2ID = :currentUser)");
-        $statement->bindValue(":currentUser", $currentUser);
-=======
         $statement = $conn->prepare("SELECT * FROM buddies INNER JOIN user ON (CASE WHEN buddy1ID = :userID THEN buddy2ID = user.userID WHEN buddy2ID = :userID THEN buddy1ID = user.userID END)");
         //$statement = $conn->prepare("SELECT u.firstname, u.lastname* FROM buddies as b, user u 
         //WHERE (u.userID = b.buddy1ID OR u.userID = b.buddy2ID) AND (buddy1ID = :currentUser OR buddy2ID = :currentUser)");
         $statement->bindValue(":userID", $userID);
->>>>>>> loadMore
         if ($statement->execute()) {
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
