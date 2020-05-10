@@ -7,7 +7,7 @@
             "password"  => "2IMDphp",
             "host"      => "localhost",
             "db"        => "popcoeq437_buddyphp"
-            "db"        => "buddyphp"
+            
             
         ]
     ];
