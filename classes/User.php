@@ -206,7 +206,7 @@ class User
         $result = $statement->execute();
         if($result){
             $user = $this->getUser();
-            $_SESSION['user_id'] = $this->getUserId();
+            $_SESSION['user_id'] = $user['userID'];
             $content = $this->activatieLink($user['userID'], $user['token']);
             $verkey = $this->getKey();
             Mail::sendMail($verkey['Ver_key'], "Account Activatie", $user['email'],$content);
