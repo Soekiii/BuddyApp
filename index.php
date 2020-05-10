@@ -509,8 +509,8 @@ if (!empty($_POST['newPost'])) {
                                                     } else {
                                                     }
 
-                                                    if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game']) || $hobbyUser['film'] == $hobbyOther['film']) {
-                                                        echo " en " . $hobbyOther['film'];
+                                                    if (($hobbyUser['hobby'] == $hobbyOther['hobby'] || $hobbyUser['game'] == $hobbyOther['game']) && $hobbyUser['film'] == $hobbyOther['film']) {
+                                                        echo " en " . $hobbyUser['film'];
                                                     } else if ($hobbyUser['film'] == $hobbyOther['film']) {
                                                         echo "jullie zijn allebei dol op " . $hobbyOther['film'];
                                                     } else {
