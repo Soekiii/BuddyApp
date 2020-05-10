@@ -211,7 +211,6 @@ class User
             $verkey = $this->getKey();
             Mail::sendMail($verkey['Ver_key'], "Account Activatie", $user['email'],$content);
             $_SESSION['succes'] = "Bevestig je registratie via email";
-            echo $user['email'];
         }
 
         return $result;
@@ -249,7 +248,7 @@ class User
         return $result;
     }
     public function activatieLink($id,$token){
-        $link = "<a href='http://localhost:8888/BuddyApp/activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
+        $link = "<a href='http://imdamigos.site/BuddyApp/activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
         return $link;
     }
     
