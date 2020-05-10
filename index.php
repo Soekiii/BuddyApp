@@ -87,7 +87,6 @@ if (!empty($_POST['sendRequest'])) {
     $buddyName = $request->buddyData($buddyID);
     $sendRequest = $request->buddyRequest($userID, $buddyID);
     $succes = "Buddy verzoek is verstuurd naar " . $buddyName['firstname'] . " " . $buddyName['lastname'];
-    header("Location: index.php");
 }
 
 // functie om users te displayen
@@ -108,7 +107,7 @@ if (!empty($_POST['newPost'])) {
     $postTxt = $_POST['postTxt'];
     $newPost->setPostTxt($postTxt);
     $createPost = $newPost->newPost($userID, $postTxt);
-    header("Location: index.php");
+    header('Location: index.php');
 } else {
 }
 ?>
