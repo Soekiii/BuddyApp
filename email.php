@@ -26,8 +26,8 @@ if (!empty($_POST)) {
     // create new instance of class User = changeEmail
     $changeEmail = new User();
     // retrieve submitted data and place in variables
-    $newEmail = htmlspecialchars($_POST['newEmail']);
-    $password = htmlspecialchars($_POST['password']);
+    $newEmail = $_POST['newEmail'];
+    $password = $_POST['password'];
 
     if (!empty($newEmail) && !empty($password)) {
         if (verifyUser($userID, $password)) {

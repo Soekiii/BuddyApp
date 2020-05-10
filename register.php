@@ -13,11 +13,11 @@ if(isset($_POST["register"])){
                 $user = new User();
                 $validate = new Validate($_POST);
                 //eerst checken of de email al bestaat voor je alle variabelen vult
-                $user->setEmail(htmlspecialchars($_POST['email']));
-                $user->setPassword(htmlspecialchars($_POST['password']));
-                $user->setFirstname(htmlspecialchars($_POST['firstName']));
-                $user->setLastname(htmlspecialchars($_POST['lastName']));
-                $user->setBuddy(htmlspecialchars($_POST['buddy'])); // ben ik buddy of zoek ik buddy?
+                $user->setEmail($_POST['email']);
+                $user->setPassword($_POST['password']);
+                $user->setFirstname($_POST['firstName']);
+                $user->setLastname($_POST['lastName']);
+                $user->setBuddy($_POST['buddy']); // ben ik buddy of zoek ik buddy?
                     // hier alle gegevens verzamelen voor inloggen en data bewaren op db
                 $validate->Emailvalidator();
                 $errorMessage=$validate->getErrors();

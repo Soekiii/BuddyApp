@@ -39,7 +39,7 @@ if (!empty($_POST)) {
                        <!-- END SIDEBAR USERPIC -->
                        <!-- SIDEBAR USER TITLE -->
                        <div class="bold m-4">
-                       <?php echo $userData['firstname'] . " " . $userData['lastname']; ?>
+                       <?php echo (htmlspecialchars($userData['firstname'] . " " . $userData['lastname'])); ?>
                        </div>
                        <!-- END SIDEBAR USER TITLE -->
                     <!-- SIDEBAR MENU -->
@@ -73,7 +73,7 @@ if (!empty($_POST)) {
             <div class="col-md-9">
                 <div class="card">
                         <div class="card-body ">
-                    Some user related content goes here...
+                        <?php echo htmlspecialchars($userData['bio']); ?>
                 </div>
             </div>
         </div>

@@ -117,7 +117,7 @@ class Buddy extends User
         if($request){
             $user = $this->getUserById($buddyID);
             //var_dump($user['email']);
-            
+            $verkey = $this->getKey();
             $content = "Iemand wilt je buddy worden.";
             Mail::sendMail($verkey['Ver_key'], "Buddy request", $user['email'],$content);
         }

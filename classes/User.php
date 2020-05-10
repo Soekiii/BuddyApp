@@ -184,23 +184,29 @@ class User
 
         //Hash the password  
 
-        $this->password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
-        $this->token = md5(time() . $this->email);
+        
+       
         //Registratie in database
         $statement = $conn->prepare("INSERT INTO user (firstname, lastname, email, password, buddy, avatar, token, active) values (:firstname, :lastname, :email, :password, :buddy, :avatar, :token, :active)");
-        $statement->bindValue(":firstname", $this->firstName);
-        $statement->bindValue(":lastname", $this->lastName);
-        $statement->bindValue(":email", $this->email);
-        $statement->bindValue(":password", $this->password);
-        $statement->bindValue(":buddy", $this->buddy);
-        $statement->bindValue(":token", $this->token);
+        $firstName = $this->getFirstname();
+        $lastName = $this->getLastName();
+        $email = $this->getEmail();
+        $password = password_hash($this->password, PASSWORD_BCRYPT, ["cost" => 12]);
+        $buddy = $this->getBuddy();
+        $token = md5(time() . $this->email);
+        $statement->bindValue(":firstname", $firstName);
+        $statement->bindValue(":lastname", $lastName);
+        $statement->bindValue(":email", $email);
+        $statement->bindValue(":password", $password);
+        $statement->bindValue(":buddy", $buddy);
+        $statement->bindValue(":token", $token);
         $statement->bindValue(":active", "0");
         $statement->bindValue(":avatar", "default.png");
 
         $result = $statement->execute();
         if($result){
             $user = $this->getUser();
-            $_SESSION['user_id'] = $this->getUserId();
+            $_SESSION['user_id'] = $user['userID'];
             $content = $this->activatieLink($user['userID'], $user['token']);
             $verkey = $this->getKey();
             Mail::sendMail($verkey['Ver_key'], "Account Activatie", $user['email'],$content);
@@ -242,7 +248,7 @@ class User
         return $result;
     }
     public function activatieLink($id,$token){
-        $link = "<a href='http://www.imdamigos.site/activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
+        $link = "<a href='http://localhost:8888/BuddyApp/activatie.php?token=$token&userID=$id'>" . 'Activeer Account' . '</a>';
         return $link;
     }
     

@@ -18,8 +18,8 @@ if ($_POST){
             $user = new User();
             $validate = new Validate($_POST);
             $errors = $validate->validateForm();
-            $user->setEmail(htmlspecialchars($_POST['email']));
-            $user->setPassword(htmlspecialchars($_POST['password']));
+            $user->setEmail($_POST['email']);
+            $user->setPassword($_POST['password']);
             if(empty($errors)){
             if($user->canILogin() == true){
            

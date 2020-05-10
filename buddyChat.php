@@ -17,7 +17,7 @@ if(!empty($_POST['message'])){
     $msg = new Message();
     $msg->setUserID($userID);
     $msg->setRecipientID($recipientID);
-    $msg->setMessage(htmlspecialchars($_POST['message']));
+    $msg->setMessage($_POST['message']);
     $msg->writeMessage();
 }
 
