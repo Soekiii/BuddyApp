@@ -2,7 +2,8 @@
 include_once(__DIR__ . "/Db.php");
 include_once(__DIR__ . "/Buddy.php");
 
-class Forum extends Buddy{
+class Forum extends Buddy
+{
     private $postID;
     private $postTxt;
     private $commentID;
@@ -12,7 +13,7 @@ class Forum extends Buddy{
 
     /**
      * Get the value of postID
-     */ 
+     */
     public function getPostID()
     {
         return $this->postID;
@@ -22,7 +23,7 @@ class Forum extends Buddy{
      * Set the value of postID
      *
      * @return  self
-     */ 
+     */
     public function setPostID($postID)
     {
         $this->postID = $postID;
@@ -32,7 +33,7 @@ class Forum extends Buddy{
 
     /**
      * Get the value of commentID
-     */ 
+     */
     public function getCommentID()
     {
         return $this->commentID;
@@ -42,7 +43,7 @@ class Forum extends Buddy{
      * Set the value of commentID
      *
      * @return  self
-     */ 
+     */
     public function setCommentID($commentID)
     {
         $this->commentID = $commentID;
@@ -50,9 +51,9 @@ class Forum extends Buddy{
         return $this;
     }
 
-        /**
+    /**
      * Get the value of commentTxt
-     */ 
+     */
     public function getCommentTxt()
     {
         return $this->commentTxt;
@@ -62,7 +63,7 @@ class Forum extends Buddy{
      * Set the value of commentTxt
      *
      * @return  self
-     */ 
+     */
     public function setCommentTxt($commentTxt)
     {
         $this->commentTxt = $commentTxt;
@@ -70,9 +71,9 @@ class Forum extends Buddy{
         return $this;
     }
 
-        /**
+    /**
      * Get the value of postTxt
-     */ 
+     */
     public function getPostTxt()
     {
         return $this->postTxt;
@@ -82,7 +83,7 @@ class Forum extends Buddy{
      * Set the value of postTxt
      *
      * @return  self
-     */ 
+     */
     public function setPostTxt($postTxt)
     {
         $this->postTxt = $postTxt;
@@ -91,7 +92,8 @@ class Forum extends Buddy{
     }
 
     // fetch alle forum posts en de bijhorende user
-    public function fetchPosts(){
+    public function fetchPosts()
+    {
         $conn = Db::getConnection();
         $stmt = $conn->prepare('SELECT * FROM post INNER JOIN user ON post.userID = user.userID ORDER BY post.postID DESC');
         $stmt->execute();
@@ -101,7 +103,8 @@ class Forum extends Buddy{
     }
 
     // verstuur comment
-    public function sendComment($postID, $userID, $commentTxt){
+    public function sendComment($postID, $userID, $commentTxt)
+    {
         $conn = Db::getConnection();
         $stmt = $conn->prepare('INSERT INTO comments (userID, postID, commentsTxt) VALUES (:userID, :postID, :commentsTxt)');
         $stmt->bindParam(':userID', $userID);
@@ -109,11 +112,11 @@ class Forum extends Buddy{
         $stmt->bindParam(':commentsTxt', $commentTxt);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
         return $result;
     }
 
-    public function fetchComments($postID){
+    public function fetchComments($postID)
+    {
         $conn = Db::getConnection();
         $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID');
         $stmt->bindParam(':postID', $postID);
@@ -123,7 +126,8 @@ class Forum extends Buddy{
         return $result;
     }
 
-    public function specificPost($postID){
+    public function specificPost($postID)
+    {
         $conn = Db::getConnection();
         $stmt = $conn->prepare('SELECT * FROM post INNER JOIN user ON post.userID = user.userID WHERE post.postID = :postID');
         $stmt->bindParam(':postID', $postID);
@@ -133,7 +137,8 @@ class Forum extends Buddy{
         return $result;
     }
 
-    public function specificComments($postID){
+    public function specificComments($postID)
+    {
         $conn = Db::getConnection();
         $stmt = $conn->prepare('SELECT * FROM comments INNER JOIN user on comments.userID = user.userID WHERE comments.postID = :postID');
         $stmt->bindParam(':postID', $postID);
@@ -145,7 +150,7 @@ class Forum extends Buddy{
 
     /**
      * Get the value of mod
-     */ 
+     */
     public function getMod()
     {
         return $this->mod;
@@ -155,7 +160,7 @@ class Forum extends Buddy{
      * Set the value of mod
      *
      * @return  self
-     */ 
+     */
     public function setMod($mod)
     {
         $this->mod = $mod;
@@ -164,7 +169,8 @@ class Forum extends Buddy{
     }
 
     // check if user is moderator
-    public function checkMod($userID){
+    public function checkMod($userID)
+    {
         $conn = Db::getConnection();
         $stmt = $conn->prepare('SELECT modStatus FROM modteam WHERE userID = :userID');
         $stmt->bindParam(':userID', $userID);
@@ -175,7 +181,8 @@ class Forum extends Buddy{
     }
 
     // create new post
-    public function newPost($userID, $postTxt){
+    public function newPost($userID, $postTxt)
+    {
         $conn = Db::getConnection();
         $stmt = $conn->prepare('INSERT INTO post (userID, postTxt) VALUES (:userID, :postTxt)');
         $stmt->bindParam(':userID', $userID);
@@ -187,9 +194,10 @@ class Forum extends Buddy{
     }
 
     // check if post is pinned
-    public function checkPinned(){
+    public function checkPinned()
+    {
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT * FROM pinned INNER JOIN post ON pinned.postID = post.postID');
+        $stmt = $conn->prepare('SELECT * FROM post');
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -197,10 +205,36 @@ class Forum extends Buddy{
     }
 
     // pin a post
-    public function pinPost($postID){
+    public function pinPost($postID)
+    {
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('INSERT INTO pinned(postID, pinnedStatus) VALUES (:postID, 1)');
+        $stmt = $conn->prepare('UPDATE post SET pin = 1 WHERE postID = :postID');
         $stmt->bindParam(':postID', $postID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function isPinned($postID)
+    {
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT pin FROM post WHERE postID = :postID');
+        $stmt->bindValue(':postID', $postID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result['pin'] == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function unpinPost($postID)
+    {
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('UPDATE post SET pin = 0 WHERE postID = :postID');
+        $stmt->bindValue(':postID', $postID);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -209,7 +243,7 @@ class Forum extends Buddy{
 
     /**
      * Get the value of limit
-     */ 
+     */
     public function getLimit()
     {
         return $this->limit;
@@ -219,7 +253,7 @@ class Forum extends Buddy{
      * Set the value of limit
      *
      * @return  self
-     */ 
+     */
     public function setLimit($limit)
     {
         $this->limit = $limit;
@@ -227,7 +261,8 @@ class Forum extends Buddy{
         return $this;
     }
 
-    public function saveLike(){
+    public function saveLike()
+    {
         $conn = Db::getConnection();
         $statement = $conn->prepare('INSERT into comments_like (userID, commentID) values (:userID, :commentID)');
         $userID = $this->userID;
@@ -238,7 +273,8 @@ class Forum extends Buddy{
         return $result;
     }
 
-    public function getAllLikes(){
+    public function getAllLikes()
+    {
         $conn = Db::getConnection();
         $statement = $conn->prepare('SELECT COUNT(comment_likeID) FROM comments_like WHERE commentID = :commentID');
         $commentID = $this->commentID;
@@ -247,7 +283,8 @@ class Forum extends Buddy{
         return $result;
     }
 
-    public function checkLike(){
+    public function checkLike()
+    {
         $conn = Db::getConnection();
         $statement = $conn->prepare('SELECT COUNT(comment_likeID) FROM comments_like WHERE userID = :userID AND commentID = :commentID');
         $commentID = $this->commentID;
@@ -259,5 +296,33 @@ class Forum extends Buddy{
 
         $liked = implode(" ", $result);
         return $liked;
+    }
+
+    // get comment with most likes from specific post and retrieve user data as well
+    public function mostLikes($postID)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare('SELECT * FROM comments_like INNER JOIN comments ON comments_like.commentID = comments.commentID INNER JOIN user ON comments.userID = user.userID WHERE comments.postID = :postID GROUP BY comments_like.commentID ORDER BY COUNT(comments_like.userID) DESC LIMIT 1');
+        $statement->bindValue(':postID', $postID);
+        $result = $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    // check if there's at least one liked comment in a topic
+    public function checkForLikes($postID)
+    {
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT * FROM comments_like INNER JOIN comments ON comments_like.commentID = comments.commentID WHERE postID = :postID');
+        $stmt->bindValue(':postID', $postID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
+
+        return $result;
     }
 }

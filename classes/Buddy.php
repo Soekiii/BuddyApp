@@ -100,6 +100,7 @@ class Buddy extends User
         $stmtRequest = $conn->prepare('INSERT INTO buddies(buddy1ID, buddy2ID, status) VALUES (:userID, :buddyID, 0)');
         $stmtRequest->bindParam(':userID', $userID);
         $stmtRequest->bindValue(':buddyID', $buddyID);
+        $verkey = $this->getKey();
         $request = $stmtRequest->execute();
         if($request){
             $user = $this->getUserById($buddyID);
