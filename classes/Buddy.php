@@ -106,6 +106,10 @@ class Buddy extends User
         }
     }
 
+    public function requestSent($userID, $buddyID){
+
+    }
+
     public function buddyRequest($userID, $buddyID){
         $conn = Db::getConnection();
         $stmtRequest = $conn->prepare('INSERT INTO buddies(buddy1ID, buddy2ID, status) VALUES (:userID, :buddyID, 0)');
@@ -150,12 +154,11 @@ class Buddy extends User
     // check if user already has a buddy
     public function buddyAvailable($userID){
         $conn = Db::getConnection();
-        $stmt = $conn->prepare('SELECT MAX(status) FROM buddies WHERE buddy2ID = :userID');
+        $stmt = $conn->prepare('SELECT * FROM buddies WHERE (buddy2ID = :userID OR buddy1ID = :userID) AND status = 1');
         $stmt->bindPAram(':userID', $userID);
         $stmt->execute();
         $buddyAvailable = $stmt->fetch(PDO::FETCH_ASSOC);
-        $available = implode(" ", $buddyAvailable);
-        if ($available == 0 || $available == 3) {
+        if (empty($buddyAvailable)) {
             return true;
         } else {
             return false;
