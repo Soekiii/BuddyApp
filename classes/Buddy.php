@@ -144,7 +144,11 @@ class Buddy extends User
         $stmt->execute();
         $buddyAvailable = $stmt->fetch(PDO::FETCH_ASSOC);
         $available = implode(" ", $buddyAvailable);
-        return $available;
+        if ($available == 0 || $available == 3) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function rejectRequest($userID, $buddyID, $rejectMsg){

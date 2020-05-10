@@ -67,7 +67,7 @@ if (isset($_POST['reject'])) {
 <?php
 // if user has no buddy yet --> user can still accept requests
     // if user has no buddy yet --> user is still available
-    if($available == "0"){
+    if($available == 1){
         foreach ($buddyRequests as $buddyRequest) : ?>
        
             <?php
