@@ -8,5 +8,6 @@
             "host"      => "localhost",
             "db"        => "popcoeq437_buddyphp"
             
+            
         ]
     ];
