@@ -206,11 +206,12 @@ class User
         $result = $statement->execute();
         if($result){
             $user = $this->getUser();
-            $_SESSION['user_id'] = $user['userID'];
+            $_SESSION['user_id'] = $this->getUserId();
             $content = $this->activatieLink($user['userID'], $user['token']);
             $verkey = $this->getKey();
             Mail::sendMail($verkey['Ver_key'], "Account Activatie", $user['email'],$content);
             $_SESSION['succes'] = "Bevestig je registratie via email";
+            echo $user['email'];
         }
 
         return $result;

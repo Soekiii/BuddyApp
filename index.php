@@ -463,7 +463,11 @@ if (!empty($_POST['newPost'])) {
                                     $userAvailable->setBuddyID($buddyID);
                                     $available = $userAvailable->usersAvailable($buddyID);
 
-                                    if ($available == 1) {
+                                    $requestSent = new Buddy();
+                                    $requestSent->setBuddyID($buddyID);
+                                    $pending = $requestSent->requestSent($userID, $buddyID);
+
+                                    if ($available == 1 && $pending == 1) {
                                         $scores = [];
                                         $score = 0;
 

@@ -107,7 +107,17 @@ class Buddy extends User
     }
 
     public function requestSent($userID, $buddyID){
-
+        $conn = Db::getConnection();
+        $stmt = $conn->prepare('SELECT * FROM buddies WHERE (buddy1ID = 8 AND buddy2ID = 2) AND status = 0');
+        $stmt->bindPAram(':userID', $userID);
+        $stmt->bindParam(':buddyID', $buddyID);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function buddyRequest($userID, $buddyID){
